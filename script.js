@@ -85,16 +85,6 @@
     if (!mnav.hidden && window.innerWidth > NAV_BP) setMenu(false);
   }, 150));
 
-  /* the About Us group inside the mobile menu */
-  $$('.mnav-toggle').forEach(function (b) {
-    var sub = document.getElementById(b.getAttribute('aria-controls'));
-    b.addEventListener('click', function () {
-      var open = b.getAttribute('aria-expanded') !== 'true';
-      b.setAttribute('aria-expanded', String(open));
-      sub.hidden = !open;
-    });
-  });
-
   /* About Us dropdown: the link opens the page, the chevron (or hovering) opens
      the four sections; Escape, focus leaving or a click outside closes it */
   $$('.has-drop').forEach(function (li) {

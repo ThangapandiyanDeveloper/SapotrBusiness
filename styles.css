@@ -158,15 +158,9 @@ figure{margin:0}
   padding:8px 24px 28px;background:rgba(255,255,255,.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid var(--line);box-shadow:0 24px 40px rgba(15,23,56,.12)}
 .mobile-nav[hidden]{display:none}
-.mobile-nav > a:not(.btn),.mnav-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:58px;padding:16px 2px;
+.mobile-nav > a:not(.btn){display:flex;align-items:center;justify-content:space-between;width:100%;min-height:58px;padding:16px 2px;
   font-weight:700;font-size:17px;color:var(--ink);border:0;border-bottom:1px solid var(--line);background:none;text-align:left;cursor:pointer}
 .mobile-nav > a:not(.btn)::after{content:"";width:8px;height:8px;margin-right:4px;border-right:2px solid var(--cyan);border-top:2px solid var(--cyan);transform:rotate(45deg)}
-.mnav-toggle .ic{width:18px;height:18px;color:var(--cyan-ink);stroke-width:2.4;transition:transform .3s var(--ease)}
-.mnav-toggle[aria-expanded="true"] .ic{transform:rotate(180deg)}
-.mnav-sub{display:flex;flex-direction:column;padding:6px 0 10px 16px;margin:4px 0 2px;border-left:2px solid rgba(18,199,199,.4)}
-.mnav-sub[hidden]{display:none}
-.mnav-sub a{padding:12px 4px;font-size:15.5px;font-weight:600;color:var(--ink-2)}
-.mnav-sub a:hover{color:var(--ink)}
 .mobile-nav .btn{margin-top:22px}
 .mobile-nav:not([hidden]) > *{animation:mnav-in .38s var(--ease) both}
 .mobile-nav > :nth-child(2){animation-delay:.04s}.mobile-nav > :nth-child(3){animation-delay:.08s}
@@ -558,6 +552,16 @@ figure{margin:0}
 .bf-chk{display:grid;place-items:center;width:24px;height:24px;flex:none;margin-top:1px;border-radius:8px;background:var(--acc-soft);color:var(--acc-ink)}
 .bf--navy .bf-chk{color:var(--navy);background:rgba(15,23,56,.07)}
 .bf-chk .ic{width:14px;height:14px;stroke-width:3}
+/* entrance: the panel fades up as it enters view (the shared data-r reveal), then its
+   header and points follow in a short, quiet cascade; the second column trails the first */
+.js .bf[data-r]{transition:opacity .7s var(--ease),transform .7s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+.js .bf[data-r] .bf-head,.js .bf[data-r] .bf-list li{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .6s var(--ease)}
+.js .bf[data-r].in .bf-head,.js .bf[data-r].in .bf-list li{opacity:1;transform:none}
+.js .bf[data-r].in .bf-head{transition-delay:calc(var(--bf-o,0ms) + 120ms)}
+.js .bf[data-r].in .bf-list li{transition-delay:calc(var(--bf-o,0ms) + 220ms + var(--n,0) * 60ms)}
+.bf:nth-child(even){--bf-o:120ms}
+.bf-list li:nth-child(2){--n:1}.bf-list li:nth-child(3){--n:2}.bf-list li:nth-child(4){--n:3}
+.bf-list li:nth-child(5){--n:4}.bf-list li:nth-child(6){--n:5}
 
 /* ───── 9 · Businesses across NZ — a directory of accordions ───── */
 .ind-title{max-width:30ch}
@@ -691,12 +695,13 @@ figure{margin:0}
 .dots button[aria-selected="true"]{width:24px;border-radius:4px;background:var(--cyan)}
 
 /* ───── 12 · Growing across NZ ───── */
-.grow{padding-top:0}
-.grow-panel{position:relative;overflow:hidden;isolation:isolate;padding:clamp(40px,5.4vw,76px);border-radius:32px;color:#fff;
-  background:radial-gradient(ellipse 70% 100% at 100% 0%,#1E2A63 0%,var(--navy) 55%,#0A1030 100%)}
-.grow-panel::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.6;
+/* the navy band spans the full viewport; .grow-panel inside .wrap only holds the content,
+   so the heading and stats keep the same alignment as every other section */
+.grow{overflow:hidden;isolation:isolate;color:#fff;
+  background:radial-gradient(ellipse 60% 100% at 100% 0%,#1E2A63 0%,var(--navy) 55%,#0A1030 100%)}
+.grow::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.6;
   background-image:radial-gradient(rgba(18,199,199,.22) 1.3px,transparent 1.3px);background-size:20px 20px;
-  mask-image:radial-gradient(ellipse 50% 70% at 90% 10%,#000,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 50% 70% at 90% 10%,#000,transparent 70%)}
+  mask-image:radial-gradient(ellipse 40% 70% at 92% 10%,#000,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 40% 70% at 92% 10%,#000,transparent 70%)}
 /* the mark's three swooshes, as a quiet corner flourish */
 .grow-stripes,.cta-stripes{position:absolute;z-index:-1;pointer-events:none}
 .grow-stripes{right:-60px;top:-40px;width:360px;height:260px;transform:rotate(-24deg)}
@@ -883,7 +888,9 @@ figure{margin:0}
 .foot-top-link:hover{color:var(--cyan)}
 
 /* ───── 17 · About page ───── */
-.page-hero{position:relative;isolation:isolate;overflow:hidden;display:flex;min-height:max(600px,86svh);background:var(--navy-deep);color:#fff}
+/* full screen: the fixed header sits transparent over the hero and .ph-inner pads for it,
+   so the hero takes the whole viewport (svh: the screen with the mobile browser bars showing) */
+.page-hero{position:relative;isolation:isolate;overflow:hidden;display:flex;min-height:max(600px,100vh);min-height:max(600px,100svh);background:var(--navy-deep);color:#fff}
 .page-hero .hs-photo{object-position:60% 40%}
 .ph-scrim{position:absolute;inset:0;z-index:0;background:
   linear-gradient(90deg,rgba(10,16,48,.95) 0%,rgba(10,16,48,.84) 34%,rgba(10,16,48,.4) 62%,rgba(10,16,48,.2) 100%),
@@ -1157,7 +1164,7 @@ figure{margin:0}
   .rd-searching,.rd-found{font-size:11.5px}
 
   /* benefits: one column, full text, nothing to swipe */
-  .bf-grid{gap:14px;margin-top:32px}
+  .bf-grid{gap:24px;margin-top:32px}
   .bf{border-radius:var(--r-l)}
   .bf-head{gap:14px;padding:20px 18px 18px}
   .bf-ic{width:46px;height:46px;border-radius:14px}
@@ -1198,7 +1205,6 @@ figure{margin:0}
   .tm-dots{display:none}
 
   /* growth */
-  .grow-panel{padding:36px 20px 22px;border-radius:24px}
   .grow-head h2{font-size:clamp(28px,8vw,34px)}
   .grow-sub{font-size:16px}
   .stats{margin-top:28px}
@@ -1292,7 +1298,7 @@ figure{margin:0}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;animation-delay:0s !important;transition-duration:.01ms !important;transition-delay:0s !important}
   .orb,.rd-sweep,.b6-cycle .ic,.cta-badge,.b3-path{animation:none !important}
-  .js [data-r],.js .hs [data-seq]{opacity:1 !important;transform:none !important}
+  .js [data-r],.js .hs [data-seq],.js .bf[data-r] .bf-head,.js .bf[data-r] .bf-list li{opacity:1 !important;transform:none !important}
   [data-split] .w i{transform:none !important}
   .cursor-glow,.b3-dot,.hero-meter .hero-prog{display:none}
 }
