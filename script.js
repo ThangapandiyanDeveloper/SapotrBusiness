@@ -1,11 +1,13 @@
 /* ═══════════════════════════════════════════════════════════
-   SAPOTR — landing page behaviour (vanilla JS, no libraries)
-    1 Helpers            7 Count-up numbers
-    2 Header + nav       8 Work types rail
-    3 Reveals + split    9 Swipe dots (mobile decks)
-    4 Scroll FX         10 FAQ accordion
-    5 Hero carousel     11 Journey + section cues
-    6 Hero map          12 Tilt + spotlight + magnet
+   SAPOTR Business — page behaviour (vanilla JS, no libraries)
+   One file for index.html and about.html; every block returns
+   early when its markup is not on the page.
+    1 Helpers             7 Testimonials
+    2 Header + nav        8 Hire steps
+    3 Reveals + split     9 Accordions (industries, FAQ)
+    4 Scroll FX          10 Count-up numbers
+    5 Carousel engine    11 Store links + back to top
+    6 Hero               12 Micro-interactions
    ═══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -15,6 +17,7 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var pad2 = function (n) { return (n < 10 ? '0' : '') + n; };
 
   function debounce(fn, wait) {
     var t;
@@ -48,11 +51,12 @@
     return function (f) { subs.push(f); f(window.scrollY); };
   })();
 
-  /* ───── 2 · Header + mobile nav ───── */
+  /* ───── 2 · Header + nav ───── */
   var header = $('.site-header');
-  var heroEl = $('#hero');
+  var heroEl = $('[data-hero]');          /* the home carousel, or the About page's banner */
   var burger = $('#burger');
   var mnav = $('#mobile-nav');
+  var NAV_BP = 1100;                      /* keep in step with the burger breakpoint in styles.css */
 
   function syncHeader(y) {
     var overHero = heroEl && (y === undefined ? window.scrollY : y) < heroEl.offsetHeight - 90;
@@ -68,7 +72,7 @@
   }
   burger.addEventListener('click', function () {
     setMenu(burger.getAttribute('aria-expanded') !== 'true');
-    if (!mnav.hidden) { var first = $('a', mnav); if (first) first.focus(); }
+    if (!mnav.hidden) { var first = $('a, button', mnav); if (first) first.focus(); }
   });
   mnav.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', function (e) {
@@ -78,26 +82,63 @@
     if (!mnav.hidden && !header.contains(e.target)) setMenu(false);
   });
   window.addEventListener('resize', debounce(function () {
-    if (!mnav.hidden && window.innerWidth > 900) setMenu(false);
+    if (!mnav.hidden && window.innerWidth > NAV_BP) setMenu(false);
   }, 150));
+
+  /* the About Us group inside the mobile menu */
+  $$('.mnav-toggle').forEach(function (b) {
+    var sub = document.getElementById(b.getAttribute('aria-controls'));
+    b.addEventListener('click', function () {
+      var open = b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', String(open));
+      sub.hidden = !open;
+    });
+  });
+
+  /* About Us dropdown: the link opens the page, the chevron (or hovering) opens
+     the four sections; Escape, focus leaving or a click outside closes it */
+  $$('.has-drop').forEach(function (li) {
+    var btn = $('.drop-btn', li), menu = $('.drop', li);
+    if (!btn || !menu) return;
+    var t = null, byHover = false;
+    function set(open) {
+      clearTimeout(t);
+      btn.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      if (!open) byHover = false;
+    }
+    btn.addEventListener('click', function () {
+      if (!menu.hidden && byHover) { byHover = false; return; }   /* hover opened it: the click keeps it open */
+      set(menu.hidden);
+    });
+    if (fine) {
+      li.addEventListener('mouseenter', function () { clearTimeout(t); if (menu.hidden) { set(true); byHover = true; } });
+      li.addEventListener('mouseleave', function () { if (byHover) t = setTimeout(function () { set(false); }, 180); });
+    }
+    li.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); }
+    });
+    li.addEventListener('focusout', function (e) { if (!li.contains(e.relatedTarget)) set(false); });
+    document.addEventListener('click', function (e) { if (!menu.hidden && !li.contains(e.target)) set(false); });
+  });
 
   /* the nav link for the section in view stays lit */
   (function scrollSpy() {
-    var links = $$('.nav a[href^="#"]');
+    var links = $$('.nav-list > li > a[href^="#"]');
     if (!links.length || !('IntersectionObserver' in window)) return;
     var map = {};
-    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    links.forEach(function (a) { map[a.dataset.spy || a.getAttribute('href').slice(1)] = a; });
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         var a = map[e.target.id];
-        if (!a) return;
-        if (e.isIntersecting) {
-          links.forEach(function (l) { l.removeAttribute('aria-current'); });
-          a.setAttribute('aria-current', 'true');
-        } else if (a.getAttribute('aria-current')) {
-          a.removeAttribute('aria-current');
-        }
+        if (a && !e.isIntersecting && a.getAttribute('aria-current')) a.removeAttribute('aria-current');
       });
+      /* side-by-side sections (Mission + Vision) arrive together: the first one leads */
+      var lead = es.filter(function (e) { return e.isIntersecting && map[e.target.id]; })[0];
+      if (lead) {
+        links.forEach(function (l) { l.removeAttribute('aria-current'); });
+        map[lead.target.id].setAttribute('aria-current', 'true');
+      }
     }, { rootMargin: '-45% 0px -50% 0px' });
     Object.keys(map).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
   })();
@@ -116,17 +157,17 @@
       host.appendChild(w);
     });
   }
+  /* elements (line spans, highlights) are kept and split inside, at any depth */
+  function splitNode(node, host) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+      if (c.nodeType === 3) splitInto(host, c.textContent);
+      else if (c.nodeType === 1) { var h = c.cloneNode(false); splitNode(c, h); host.appendChild(h); }
+    });
+  }
   $$('[data-split]').forEach(function (el) {
     var label = el.textContent.replace(/\s+/g, ' ').trim();
     var frag = document.createDocumentFragment();
-    Array.prototype.slice.call(el.childNodes).forEach(function (node) {
-      if (node.nodeType === 3) splitInto(frag, node.textContent);           /* plain text → split */
-      else if (node.nodeType === 1) {                                        /* element → keep, split inside */
-        var host = node.cloneNode(false);
-        splitInto(host, node.textContent);
-        frag.appendChild(host);
-      }
-    });
+    splitNode(el, frag);
     el.textContent = '';
     el.appendChild(frag);
     el.setAttribute('aria-label', label);   /* read as one phrase, not word by word */
@@ -154,7 +195,7 @@
     items.forEach(function (el) { io.observe(el); });
   })();
 
-  /* ───── 4 · Scroll FX: progress bar, parallax, cursor glow ───── */
+  /* ───── 4 · Scroll FX: progress bar, cursor glow ───── */
   (function scrollFx() {
     var bar = $('#scroll-bar span');
     onScroll(function (y) {
@@ -181,33 +222,27 @@
     }
   })();
 
-  /* ───── 5 · Hero carousel ─────
-     Two numbers describe everything on screen — `index` (the banner
+  /* ───── 5 · Carousel engine — the hero's, shared with the testimonials ─────
+     Two numbers describe everything on screen — `index` (the slide
      showing) and `leaving` (the one fading out, or -1) — and paint()
      derives every class from them, so nothing can accumulate.
      Navigation during a cross-fade is coalesced into one pending
-     request. There are no visible controls: banners move by
-     themselves and by swipe, drag, trackpad or arrow keys. Every
-     reason to wait (focus, drag, hovering a button, off screen,
-     hidden tab) is tracked separately, and the dwell resumes from
-     where it stopped. */
-  var hero = (function () {
-    var stage = $('#hero-stage');
-    var wrap = $('#hero-slides');
-    if (!stage || !wrap) return null;
-
-    var slides = $$('.hs', wrap);
-    var DWELL = [7600, 6200, 7400, 6600, 6200];  /* the storytelling banners hold a touch longer */
-    var MANUAL_DWELL = 11000;                     /* after a manual move, give the reader time */
-    var XFADE = 950;                              /* keep in step with .hs transitions */
+     request, so an arrow, a swipe or the clock always moves exactly
+     one slide. Every reason to wait (keyboard focus, a drag, hovering
+     the controls, off screen, hidden tab) is tracked separately, and
+     the dwell resumes from where it stopped. */
+  function carousel(o) {
+    var stage = o.stage, slides = o.slides;
+    if (!stage || !slides || slides.length < 2) return null;
+    var n = slides.length;
     var SWIPE_MIN = 40;     /* px of sideways travel that counts as a swipe */
     var SWIPE_LOCK = 8;     /* px before deciding whether it is a swipe or a scroll */
     var FLICK = 0.35;       /* px/ms: a quick short flick also counts */
+    var dwellFor = function (i) { return typeof o.dwell === 'number' ? o.dwell : o.dwell[i % o.dwell.length]; };
 
     var index = 0, leaving = -1, busy = false, queued = null;
-    var timer = null, fadeTimer = null, startedAt = 0, remaining = DWELL[0];
+    var timer = null, fadeTimer = null, startedAt = 0, remaining = dwellFor(0), fresh = true;
     var holds = { focus: false, drag: false, hover: false, off: false, hidden: false };
-    var listeners = [];
 
     slides.forEach(function (s) { s.removeAttribute('hidden'); });
 
@@ -219,23 +254,21 @@
         s.classList.toggle('is-active', on);
         s.classList.toggle('is-out', i === leaving);
         s.setAttribute('aria-hidden', on ? 'false' : 'true');
-        if ('inert' in s) s.inert = !on;           /* nothing focusable in a banner you cannot see */
+        if ('inert' in s) s.inert = !on;           /* nothing focusable in a slide you cannot see */
       });
-      var tone = slides[index].dataset.tone || 'dark';
-      heroEl.dataset.tone = tone;
-      header.dataset.tone = tone;
-      listeners.forEach(function (f) { f(index, slides[index]); });
+      if (o.onPaint) o.onPaint(index, slides[index]);
     }
 
     function syncClasses() {
-      heroEl.classList.toggle('is-auto', !reduced);
-      heroEl.classList.toggle('is-paused', paused() || busy);
+      o.root.classList.toggle('is-auto', !reduced);
+      o.root.classList.toggle('is-paused', paused() || busy);
     }
 
     function schedule() {
       clearTimeout(timer); timer = null;
       syncClasses();
       if (reduced || busy || paused()) return;
+      if (fresh) { fresh = false; if (o.onClock) o.onClock(remaining); }
       startedAt = Date.now();
       timer = setTimeout(function () { go(index + 1, false); }, remaining);
     }
@@ -266,33 +299,35 @@
 
     /* the one way the carousel ever moves */
     function go(i, manual) {
-      var n = slides.length;
       var target = ((i % n) + n) % n;
       if (busy) { queued = target; return; }
       if (target === index) return;
+      /* announce a slide the reader asked for; stay quiet while it turns by itself */
+      if (o.live) o.live.setAttribute('aria-live', manual ? 'polite' : 'off');
       leaving = index;
       index = target;
       busy = true;
       clearTimeout(timer); timer = null;
-      remaining = manual ? MANUAL_DWELL : DWELL[index];
-      heroEl.style.setProperty('--dwell', remaining + 'ms');
+      remaining = manual ? o.manualDwell : dwellFor(index);
+      fresh = true;
+      if (o.onReset) o.onReset();
       paint();
       syncClasses();
       clearTimeout(fadeTimer);
-      fadeTimer = setTimeout(endFade, reduced ? 20 : XFADE);
+      fadeTimer = setTimeout(endFade, reduced ? 20 : o.xfade);
     }
 
-    /* keyboard focus inside the banner holds it, so nobody is moved on mid-sentence */
+    /* keyboard focus inside the slides holds them, so nobody is moved on mid-sentence */
     stage.addEventListener('focusin', function (e) { if (e.target.matches(':focus-visible')) hold('focus', true); });
     stage.addEventListener('focusout', function () { hold('focus', false); });
-    /* the small arrows: one banner per click; a manual move resets the clock */
-    var prevBtn = $('#hero-prev'), nextBtn = $('#hero-next');
-    if (prevBtn) prevBtn.addEventListener('click', function () { go(index - 1, true); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { go(index + 1, true); });
+    /* the small arrows: one slide per click; a manual move resets the clock */
+    if (o.prev) o.prev.addEventListener('click', function () { go(index - 1, true); });
+    if (o.next) o.next.addEventListener('click', function () { go(index + 1, true); });
 
     /* hovering a button or an arrow means a click is coming */
-    if (fine) {
-      $$('.hs-cta, .hero-arrows-in', stage).forEach(function (el) {
+    if (fine && o.hoverEls) {
+      o.hoverEls.forEach(function (el) {
+        if (!el) return;
         el.addEventListener('mouseenter', function () { hold('hover', true); });
         el.addEventListener('mouseleave', function () { hold('hover', false); });
       });
@@ -305,20 +340,21 @@
     }
 
     stage.addEventListener('keydown', function (e) {
+      if (e.target.closest('input, textarea')) return;
       var k = e.key;
       if (k === 'ArrowLeft') go(index - 1, true);
       else if (k === 'ArrowRight') go(index + 1, true);
       else if (k === 'Home') go(0, true);
-      else if (k === 'End') go(slides.length - 1, true);
+      else if (k === 'End') go(n - 1, true);
       else return;
       e.preventDefault();
     });
 
     /* ---- gestures ----
        One code path for touch, pen and mouse. The first few pixels decide
-       the gesture: mostly sideways means a banner swipe, mostly vertical
-       means it belongs to the page and we let go at once, so scrolling
-       over the hero is never blocked (touch-action: pan-y does the rest).
+       the gesture: mostly sideways means a swipe, mostly vertical means it
+       belongs to the page and we let go at once, so scrolling over the
+       carousel is never blocked (touch-action: pan-y does the rest).
        A swipe is accepted at any moment, even mid cross-fade (go() queues
        it), and it resets the autoplay clock. */
     (function gestures() {
@@ -343,7 +379,7 @@
           hold('drag', true);
         }
         moved = true;
-        slides[index].style.setProperty('--hdx', (dx * 0.34).toFixed(1) + 'px');
+        slides[index].style.setProperty('--hdx', (dx * (o.dragFollow || 0.34)).toFixed(1) + 'px');
         return true;
       }
       function finish(x) {
@@ -364,7 +400,7 @@
       if (window.PointerEvent) {
         stage.addEventListener('pointerdown', function (e) {
           if (e.pointerType === 'mouse' && e.button !== 0) return;
-          if (e.target.closest('.c-arrow')) return;          /* an arrow is a click, never a drag */
+          if (e.target.closest('.c-arrow, .dots')) return;     /* an arrow is a click, never a drag */
           begin(e.clientX, e.clientY, e.pointerId);
         });
         stage.addEventListener('pointermove', function (e) {
@@ -392,7 +428,7 @@
       stage.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
       stage.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
-      /* a sideways two-finger swipe on a trackpad moves one banner */
+      /* a sideways two-finger swipe on a trackpad moves one slide */
       var acc = 0, lock = 0;
       stage.addEventListener('wheel', function (e) {
         if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
@@ -407,458 +443,209 @@
       }, { passive: false });
     })();
 
-    /* boot: banner 1 arrives like any other, then the clock starts */
-    heroEl.style.setProperty('--dwell', remaining + 'ms');
+    /* boot: the first slide arrives like any other, then the clock starts */
     busy = true;
     paint();
     syncClasses();
-    fadeTimer = setTimeout(endFade, reduced ? 20 : XFADE);
+    fadeTimer = setTimeout(endFade, reduced ? 20 : o.xfade);
 
     return {
       go: go,
-      onChange: function (f) { listeners.push(f); },
       current: function () { return index; },
       slides: slides,
       state: function () { return { armed: !!timer, index: index, busy: busy, queued: queued, holds: JSON.parse(JSON.stringify(holds)), remaining: remaining }; }
     };
+  }
+
+  /* ───── 6 · Hero — six banners ───── */
+  var hero = (function () {
+    var root = $('#hero');
+    if (!root) return null;
+    var now = $('#hero-now'), prog = $('#hero-prog');
+    return carousel({
+      root: root,
+      stage: $('#hero-stage'),
+      slides: $$('#hero-slides > .hs'),
+      dwell: [7200, 6200, 7600, 7000, 7600, 8000],   /* the busier banners hold a touch longer */
+      manualDwell: 11000,                              /* after a manual move, give the reader time */
+      xfade: 950,                                      /* keep in step with the .hs transitions */
+      prev: $('#hero-prev'),
+      next: $('#hero-next'),
+      live: $('#hero-slides'),
+      hoverEls: $$('#hero .hs-cta, #hero .hero-ui-in'),
+      onPaint: function (i, s) {
+        var tone = s.dataset.tone || 'dark';
+        root.dataset.tone = tone;
+        header.dataset.tone = tone;
+        if (now) now.textContent = pad2(i + 1);
+      },
+      onReset: function () { if (prog) prog.classList.remove('run'); },
+      onClock: function (ms) {
+        if (!prog) return;
+        root.style.setProperty('--dwell', ms + 'ms');
+        prog.classList.remove('run');
+        void prog.offsetWidth;                         /* restart the dwell bar from empty */
+        prog.classList.add('run');
+      }
+    });
   })();
-  window.SAPOTR = { hero: hero };
 
-  /* ───── 6 · Hero map — pins, the network, and cards pinned to real suburbs ─────
-     Coordinates are in the SVG's own units, so they stay on their suburb
-     whatever the viewBox. Cards are placed around their pin, clamped to
-     the part of the banner the copy does not use, and skipped rather
-     than squeezed when there is no room. */
-  (function heroMap() {
-    var box = $('#hmap');
-    var svg = $('#hmap-svg');
-    if (!box || !svg) return;
-    var slide = box.closest('.hs');
-    var pinsBox = $('#hmap-pins');
-    var cardsBox = $('#hmap-cards');
-    var hub = $('#hmap-hub');
-    var net = $('#hmap-net');
-    var HUB = { x: 452, y: 560 };
-
-    var PINS = {
-      orewa:      { x: 250, y: -10, c: 'r' },
-      albany:     { x: 305, y: 185, c: 'y' },
-      takapuna:   { x: 790, y: 244, c: 'c' },
-      devonport:  { x: 628, y: 272, c: 'r' },
-      westharb:   { x: 90,  y: 420, c: 'y' },
-      henderson:  { x: 120, y: 516, c: 'c' },
-      newlynn:    { x: 190, y: 624, c: 'y' },
-      newmarket:  { x: 610, y: 612, c: 'r' },
-      missionbay: { x: 850, y: 576, c: 'y' },
-      stheliers:  { x: 1010, y: 604, c: 'c' },
-      onehunga:   { x: 390, y: 716, c: 'c' },
-      mtwell:     { x: 700, y: 724, c: 'y' },
-      howick:     { x: 940, y: 724, c: 'c' },
-      botany:     { x: 960, y: 826, c: 'r' },
-      papatoetoe: { x: 520, y: 808, c: 'y' },
-      manukau:    { x: 700, y: 862, c: 'r' },
-      takanini:   { x: 760, y: 950, c: 'c' },
-      papakura:   { x: 660, y: 1030, c: 'y' },
-      waiheke:    { x: 1400, y: 440, c: 'c' }
-    };
-    var COLOURS = { y: '#FFC107', c: '#12C7C7', r: '#FF4B2B' };
-    var SUBURB = {
-      orewa: 'Orewa', albany: 'Albany', takapuna: 'Takapuna', devonport: 'Devonport', westharb: 'West Harbour',
-      henderson: 'Henderson', newlynn: 'New Lynn', newmarket: 'Newmarket', missionbay: 'Mission Bay', stheliers: 'St Heliers',
-      onehunga: 'Onehunga', mtwell: 'Mt Wellington', howick: 'Howick', botany: 'Botany', papatoetoe: 'Papatoetoe',
-      manukau: 'Manukau', takanini: 'Takanini', papakura: 'Papakura', waiheke: 'Waiheke'
-    };
-
-    /* category + job type are the client's own lists */
-    var CARDS = [
-      { pin: 'takapuna',   cat: 'Hospitality',              job: 'Kitchen Hand',          ic: 'c-hosp',      t: 'cyan' },
-      { pin: 'manukau',    cat: 'Warehousing & Logistics',  job: 'Picker / Packer',       ic: 'c-warehouse', t: 'red' },
-      { pin: 'newmarket',  cat: 'Retail & Shopping',        job: 'Retail Assistant',      ic: 'c-retail',    t: 'yellow' },
-      { pin: 'howick',     cat: 'Events & Entertainment',   job: 'Event Setup Assistant', ic: 'c-events',    t: 'cyan' },
-      { pin: 'albany',     cat: 'Cleaning & Facilities',    job: 'Cleaner',               ic: 'c-cleaning',  t: 'yellow' },
-      { pin: 'onehunga',   cat: 'Moving & Setup',           job: 'Moving Assistant',      ic: 'c-moving',    t: 'red' },
-      { pin: 'missionbay', cat: 'Delivery & Driving',       job: 'Delivery Assistant',    ic: 'c-delivery',  t: 'cyan' },
-      { pin: 'henderson',  cat: 'Education & Institutions', job: 'Grounds Support',       ic: 'c-education', t: 'yellow' },
-      { pin: 'takanini',   cat: 'General Business Support', job: 'General Assistant',     ic: 'c-general',   t: 'red' }
-    ];
-
-    /* the map is re-framed per shape of screen, not simply zoomed */
-    var VIEWS = { side: '-760 -80 2100 1180', tall: '-40 -60 1000 1240', phone: '120 -40 660 1200' };
-    var sideMq = window.matchMedia('(min-width: 901px) and (min-aspect-ratio: 1/1)');
-
-    var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
-
-    /* pins + the network */
-    var pinEls = {};
-    var NS = 'http://www.w3.org/2000/svg';
-    Object.keys(PINS).forEach(function (id, i) {
-      var p = PINS[id];
-      var el = document.createElement('i');
-      el.className = 'hpin';
-      el.style.setProperty('--pin', COLOURS[p.c]);
-      el.style.setProperty('--i', i);
-      el.innerHTML = '<i></i>';
-      pinsBox.appendChild(el);
-      pinEls[id] = el;
-
-      /* a gentle bow from the city out to each pin */
-      var mx = (HUB.x + p.x) / 2, my = (HUB.y + p.y) / 2;
-      var nx = -(p.y - HUB.y), ny = p.x - HUB.x;
-      var len = Math.sqrt(nx * nx + ny * ny) || 1;
-      var bow = 0.14 * Math.sqrt(Math.pow(p.x - HUB.x, 2) + Math.pow(p.y - HUB.y, 2));
-      var path = document.createElementNS(NS, 'path');
-      path.setAttribute('d', 'M' + HUB.x + ' ' + HUB.y + 'Q' + (mx + nx / len * bow).toFixed(1) + ' ' + (my + ny / len * bow).toFixed(1) + ' ' + p.x + ' ' + p.y);
-      net.appendChild(path);
-    });
-
-    var cardEls = CARDS.map(function (c, i) {
-      var el = document.createElement('div');
-      el.className = 'mcard';
-      el.style.setProperty('--i', i);
-      el.innerHTML =
-        '<div><span class="ocard-ic ic-' + c.t + '"><svg class="ic"><use href="#' + c.ic + '"/></svg></span>' +
-        '<span class="ocard-t"><small>' + esc(c.cat) + '</small><b>' + esc(c.job) + '</b></span>' +
-        '<span class="mcard-loc"><span><svg class="ic"><use href="#i-pin"/></svg>' + esc(SUBURB[c.pin]) + '</span><b class="mcard-go">Accept</b></span></div>';
-      cardsBox.appendChild(el);
-      return el;
-    });
-
-    function relRect(el) {
-      var r = el.getBoundingClientRect(), s = slide.getBoundingClientRect();
-      return { l: r.left - s.left - box.offsetLeft, t: r.top - s.top - box.offsetTop, r: r.right - s.left - box.offsetLeft, b: r.bottom - s.top - box.offsetTop };
-    }
-
-    function layout() {
-      var side = sideMq.matches;
-      var W = box.offsetWidth, H = box.offsetHeight;
-      if (!W || !H) return;
-      var mode = side ? 'side' : (W / H < 0.62 ? 'phone' : 'tall');
-      svg.setAttribute('viewBox', VIEWS[mode]);
-      var vb = VIEWS[mode].split(' ').map(Number);
-      var s = Math.max(W / vb[2], H / vb[3]);
-      var ox = (W - vb[2] * s) / 2, oy = (H - vb[3] * s) / 2;
-      var P = function (x, y) { return [ox + (x - vb[0]) * s, oy + (y - vb[1]) * s]; };
-
-      var h = P(HUB.x, HUB.y);
-      hub.style.transform = 'translate(' + h[0].toFixed(1) + 'px,' + h[1].toFixed(1) + 'px)';
-      Object.keys(PINS).forEach(function (id) {
-        var q = P(PINS[id].x, PINS[id].y);
-        pinEls[id].style.translate = q[0].toFixed(1) + 'px ' + q[1].toFixed(1) + 'px';   /* translate, so the pop-in transform cannot move it */
-        pinEls[id].classList.remove('has-card');
-      });
-
-      /* where cards may go: never over the copy, the button or the controls */
-      var copy = relRect($('.hs-copy', slide));
-      var cta = relRect($('.hs-cta .btn', slide));
-      var headH = header.offsetHeight + 24;
-      var uiH = 64;   /* the small arrow row at the foot of the banner */
-      var pad = 24;   /* .hmap bleeds 24px past the slide on every side */
-      var safe = side
-        ? { l: Math.max(copy.r, cta.r) + 32, t: headH + pad, r: W - pad - 20, b: H - pad - uiH - 8 }
-        : { l: pad + 8, t: copy.b + 14, r: W - pad - 8, b: cta.t - 14 };
-      var max = side ? 5 : (mode === 'tall' ? 4 : 3);
-      var placed = [];
-
-      /* a pin must never sit on the headline, the button, the header or the controls */
-      var keepOut = [copy, cta, { l: 0, t: 0, r: W, b: headH + pad - 10 }, { l: 0, t: H - pad - uiH, r: W, b: H }];
-      Object.keys(PINS).forEach(function (id) {
-        var q = P(PINS[id].x, PINS[id].y);
-        var under = keepOut.some(function (k) { return q[0] > k.l - 14 && q[0] < k.r + 14 && q[1] > k.t - 14 && q[1] < k.b + 14; });
-        pinEls[id].classList.toggle('is-under', under);
-      });
-
-      cardEls.forEach(function (el) { el.hidden = false; el.style.visibility = 'hidden'; });
-      cardEls.forEach(function (el, i) {
-        var c = CARDS[i];
-        if (placed.length >= max) { el.hidden = true; return; }
-        var q = P(PINS[c.pin].x, PINS[c.pin].y);
-        var cw = el.offsetWidth, ch = el.offsetHeight;
-        var tries = [
-          ['tr', q[0] - 20, q[1] - ch - 16], ['tl', q[0] - cw + 20, q[1] - ch - 16],
-          ['br', q[0] - 20, q[1] + 16],      ['bl', q[0] - cw + 20, q[1] + 16]
-        ];
-        var spot = null;
-        for (var k = 0; k < tries.length && !spot; k++) {
-          var x = tries[k][1], y = tries[k][2];
-          if (x < safe.l || y < safe.t || x + cw > safe.r || y + ch > safe.b) continue;
-          var clash = placed.some(function (p) {
-            return x < p.r + 12 && x + cw > p.l - 12 && y < p.b + 12 && y + ch > p.t - 12;
-          });
-          if (!clash) spot = tries[k];
-        }
-        if (!spot) { el.hidden = true; return; }
-        placed.push({ l: spot[1], t: spot[2], r: spot[1] + cw, b: spot[2] + ch });
-        el.dataset.a = spot[0];
-        el.style.transform = 'translate(' + spot[1].toFixed(1) + 'px,' + spot[2].toFixed(1) + 'px)';
-        el.style.visibility = '';
-        pinEls[c.pin].classList.add('has-card');
+  /* ───── 7 · Testimonials — one per view ───── */
+  var reviews = (function () {
+    var stage = $('#tm-stage');
+    if (!stage) return null;
+    var slides = $$('#tm-slides > .tm-slide');
+    var now = $('#tm-now'), dotsBox = $('#tm-dots'), dots = [];
+    var api = null;
+    if (dotsBox) {
+      slides.forEach(function (_, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.tabIndex = -1;
+        b.setAttribute('aria-label', 'Show testimonial ' + (i + 1) + ' of ' + slides.length);
+        b.addEventListener('click', function () { if (api) api.go(i, true); });
+        dotsBox.appendChild(b);
+        dots.push(b);
       });
     }
+    api = carousel({
+      root: $('#reviews'),
+      stage: stage,
+      slides: slides,
+      dwell: 8000,
+      manualDwell: 14000,
+      xfade: 650,
+      dragFollow: 0.5,
+      prev: $('#tm-prev'),
+      next: $('#tm-next'),
+      live: $('#tm-slides'),
+      hoverEls: [stage],                               /* reading a quote holds it */
+      onPaint: function (i) {
+        if (now) now.textContent = pad2(i + 1);
+        dots.forEach(function (d, k) { d.setAttribute('aria-selected', String(k === i)); });
+      }
+    });
+    return api;
+  })();
+  window.SAPOTR = { hero: hero, reviews: reviews };
 
-    /* measure only while the banner is on screen and settled */
-    function relayout() { if (slide.classList.contains('is-active') && !slide.classList.contains('is-out')) layout(); }
-    layout();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
-    window.addEventListener('resize', debounce(relayout, 140));
-    if (sideMq.addEventListener) sideMq.addEventListener('change', relayout);
-    if (hero) hero.onChange(function (i, s) { if (s === slide) requestAnimationFrame(layout); });
+  /* ───── 8 · Hire steps — the phone shows the step in focus ─────
+     Every step's text is always visible; the phone beside it plays
+     the matching screen. It moves on by itself while the section is
+     on screen, and a click (or keyboard) picks a step and holds it. */
+  (function hireSteps() {
+    var list = $('#hsteps');
+    if (!list) return;
+    var items = $$('.hstep', list);
+    var views = $$('.hp-view');
+    var STEP = 5600, HOLD = 12000, TICK = 100;
+    var at = 0, elapsed = 0, holdUntil = 0, onScreen = false, hovering = false, ticker = null;
 
-    /* depth: the map, the SAPOTR in banner 2 drift a little with the pointer */
-    if (fine && !reduced) {
-      var layers = [[box, 14], [$('.b2-art'), 10]];
-      var stage = $('#hero-stage');
-      stage.addEventListener('pointermove', function (e) {
-        if (stage.classList.contains('is-dragging')) return;
-        var r = stage.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
-        layers.forEach(function (l) {
-          if (l[0]) l[0].style.translate = (-px * l[1]).toFixed(1) + 'px ' + (-py * l[1] * 0.7).toFixed(1) + 'px';
-        });
+    function bar(i, p) {
+      var b = $('.hstep-bar i', items[i]);
+      if (b) b.style.transform = 'scaleX(' + p.toFixed(3) + ')';
+    }
+    function set(i) {
+      at = i; elapsed = 0;
+      items.forEach(function (li, k) {
+        li.classList.toggle('is-on', k === i);
+        $('button', li).setAttribute('aria-pressed', String(k === i));
+        bar(k, 0);
       });
-      stage.addEventListener('pointerleave', function () {
-        layers.forEach(function (l) { if (l[0]) l[0].style.translate = ''; });
-      });
+      views.forEach(function (v, k) { v.classList.toggle('is-on', k === i); });
+    }
+    items.forEach(function (li, k) {
+      $('button', li).addEventListener('click', function () { holdUntil = Date.now() + HOLD; set(k); });
+    });
+    if (fine) {
+      list.addEventListener('mouseenter', function () { hovering = true; });
+      list.addEventListener('mouseleave', function () { hovering = false; });
+    }
+    if (reduced) return;
+    function tick() {
+      if (hovering || document.hidden || Date.now() < holdUntil) return;
+      elapsed += TICK;
+      bar(at, Math.min(1, elapsed / STEP));
+      if (elapsed >= STEP) set((at + 1) % items.length);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        onScreen = es[0].isIntersecting;
+        clearInterval(ticker); ticker = null;
+        if (onScreen) ticker = setInterval(tick, TICK);
+      }, { threshold: 0.35 }).observe(list);
     }
   })();
 
-  /* ───── 7 · Count-up numbers ───── */
+  /* ───── 9 · Accordions — industries (any number open) and FAQ (one at a time) ───── */
+  function accordion(root, btnSel, single) {
+    if (!root) return;
+    var btns = $$(btnSel, root);
+    function setItem(btn, open) {
+      btn.setAttribute('aria-expanded', String(open));
+      btn.closest('[data-acc-item]').classList.toggle('is-open', open);
+    }
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') !== 'true';
+        if (single && open) btns.forEach(function (o) { if (o !== btn) setItem(o, false); });
+        setItem(btn, open);
+      });
+    });
+  }
+  accordion($('#ind-grid'), '.ind-q', false);
+  accordion($('#acc'), '.acc-q', true);
+
+  /* ───── 10 · Count-up numbers + section cues ───── */
   $$('[data-count]').forEach(function (el) {
     var target = parseInt(el.dataset.count, 10) || 0;
-    var comma = el.dataset.format === 'comma';
-    var fmt = function (n) { return comma ? n.toLocaleString('en-NZ') : String(n); };
-    if (reduced || !('IntersectionObserver' in window)) { el.textContent = fmt(target); return; }
-    el.textContent = fmt(0);
+    if (reduced || !('IntersectionObserver' in window)) { el.textContent = String(target); return; }
+    el.textContent = '0';
     once(el, function () {
       var start = null;
       (function frame(ts) {
         if (start === null) start = ts;
         var p = Math.min((ts - start) / 1800, 1);
-        el.textContent = fmt(Math.round(target * (1 - Math.pow(1 - p, 3))));
+        el.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
         if (p < 1) requestAnimationFrame(frame);
       })(performance.now());
     }, { threshold: 0.6 });
   });
+  once($('#trust-panel'), function (el) { el.classList.add('in'); }, { threshold: 0.4 });
 
-  /* ───── 8 · Work types rail ─────
-     One engine for every screen: three cards on a desktop, two on a
-     tablet, one wide card with a peek on a phone (all set in CSS —
-     the script only measures). The track moves by transform, one card
-     at a time; at the end it rewinds to the start, so no clones.
-     A single interval runs for the life of the page and simply skips
-     its turn while the rail is held (hover, a drag, a recent gesture),
-     off screen or in a hidden tab — nothing else creates a timer. */
-  (function workRail() {
-    var vp = $('#wc-viewport');
-    var track = $('#wc-grid');
-    var dotsBox = $('#wc-dots');
-    if (!vp || !track) return;
-    var cards = $$('.wc', track);
-    var INTERVAL = 4200;   /* the pace, as on the Demo 1 industry rail */
-    var HOLD = 5000;       /* how long a touched rail is left alone */
-
-    var at = 0, last = 0, step = 0, maxOff = 0, holdUntil = 0;
-    var hovering = false, onScreen = false, dragging = false;
-    var dots = [];
-
-    function offsetFor(i) { return Math.min(i * step, maxOff); }
-    function place(px, animate) {
-      track.style.transition = animate ? '' : 'none';
-      track.style.transform = 'translate3d(' + (-px).toFixed(1) + 'px,0,0)';
-    }
-    function paintDots() {
-      dots.forEach(function (d, i) { d.setAttribute('aria-selected', String(i === at)); });
-    }
-    function go(i, animate) {
-      at = Math.max(0, Math.min(last, i));
-      place(offsetFor(at), animate !== false);
-      paintDots();
-    }
-    function hold() { holdUntil = Date.now() + HOLD; }
-
-    function measure() {
-      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      var cs = getComputedStyle(vp);
-      var inner = vp.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
-      step = cards[0].getBoundingClientRect().width + gap;
-      maxOff = Math.max(0, cards.length * step - gap - inner);
-      last = step ? Math.ceil(maxOff / step - 0.01) : 0;
-      /* one dot per resting position */
-      if (dotsBox && dots.length !== last + 1) {
-        dotsBox.innerHTML = '';
-        dots = [];
-        for (var i = 0; i <= last; i++) {
-          var b = document.createElement('button');
-          b.type = 'button';
-          b.tabIndex = -1;
-          b.setAttribute('aria-label', 'Go to ' + (i + 1) + ' of ' + (last + 1));
-          b.addEventListener('click', (function (n) { return function () { hold(); go(n); }; })(i));
-          dotsBox.appendChild(b);
-          dots.push(b);
-        }
-      }
-      go(at, false);
-    }
-
-    /* ---- drag / swipe: sideways moves the rail, vertical scrolls the page ---- */
-    var down = false, decided = false, mine = false, moved = false, x0 = 0, y0 = 0, dx = 0, t0 = 0, pid = null;
-    vp.addEventListener('pointerdown', function (e) {
-      if (e.pointerType === 'mouse' && e.button !== 0) return;
-      down = true; decided = false; mine = false; moved = false;
-      x0 = e.clientX; y0 = e.clientY; dx = 0; t0 = Date.now(); pid = e.pointerId;
-    });
-    vp.addEventListener('pointermove', function (e) {
-      if (!down || e.pointerId !== pid) return;
-      dx = e.clientX - x0;
-      var dy = e.clientY - y0;
-      if (!decided) {
-        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-        decided = true;
-        mine = Math.abs(dx) > Math.abs(dy);
-        if (!mine) { down = false; return; }
-        dragging = true;
-        vp.classList.add('is-dragging');
-        if (e.pointerType === 'mouse') { try { vp.setPointerCapture(pid); } catch (err) { /* fine without */ } }
-      }
-      moved = true;
-      /* resist past either end, so the edges feel like edges */
-      var off = offsetFor(at) - dx;
-      if (off < 0) off *= 0.3;
-      else if (off > maxOff) off = maxOff + (off - maxOff) * 0.3;
-      place(off, false);
-    });
-    function release(e) {
-      if (!down || (e && e.pointerId !== pid)) return;
-      down = false;
-      if (!mine) return;
-      mine = false; dragging = false;
-      vp.classList.remove('is-dragging');
-      hold();
-      var speed = Math.abs(dx) / Math.max(1, Date.now() - t0);
-      var n = Math.round(Math.abs(dx) / step);
-      if (!n && (Math.abs(dx) > 40 || (Math.abs(dx) > 20 && speed > 0.35))) n = 1;
-      go(at + (dx < 0 ? n : -n));
-    }
-    vp.addEventListener('pointerup', release);
-    vp.addEventListener('pointercancel', release);
-    vp.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
-    vp.addEventListener('dragstart', function (e) { e.preventDefault(); });
-
-    /* a sideways two-finger swipe on a trackpad moves one card */
-    var acc = 0, lock = 0;
-    vp.addEventListener('wheel', function (e) {
-      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-      e.preventDefault();
-      hold();
-      if (Date.now() < lock) return;
-      acc += e.deltaX;
-      if (Math.abs(acc) > 50) { go(at + (acc > 0 ? 1 : -1)); acc = 0; lock = Date.now() + 600; }
-    }, { passive: false });
-
-    if (fine) {
-      vp.addEventListener('mouseenter', function () { hovering = true; });
-      vp.addEventListener('mouseleave', function () { hovering = false; hold(); });
-    }
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; }, { threshold: 0.35 }).observe(vp);
-    } else { onScreen = true; }
-
-    /* the small arrows: exactly one card per click; past either end they wrap,
-       the same way the autoplay rewinds */
-    var railPrev = $('#wc-prev'), railNext = $('#wc-next');
-    if (railPrev) railPrev.addEventListener('click', function () { hold(); go(at <= 0 ? last : at - 1); });
-    if (railNext) railNext.addEventListener('click', function () { hold(); go(at >= last ? 0 : at + 1); });
-
-    /* the one clock: move a card, or rewind from the end */
-    if (!reduced) {
-      setInterval(function () {
-        if (!onScreen || hovering || dragging || document.hidden || Date.now() < holdUntil) return;
-        go(at >= last ? 0 : at + 1);
-      }, INTERVAL);
-    }
-
-    measure();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-    window.addEventListener('resize', debounce(measure, 150));
-    window.SAPOTR.workRail = { go: go, at: function () { return at; }, last: function () { return last; } };
-  })();
-
-  /* ───── 9 · Swipe dots for the mobile safety deck ───── */
-  (function swipeDots() {
-    [['#safe-grid', '#safe-dots', '.safe']].forEach(function (set) {
-      var box = $(set[0]), holder = $(set[1]);
-      if (!box || !holder) return;
-      var items = $$(set[2], box);
-      if (items.length < 2) return;
-
-      items.forEach(function (_, i) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.tabIndex = -1;
-        b.setAttribute('aria-label', 'Go to ' + (i + 1) + ' of ' + items.length);
-        b.addEventListener('click', function () {
-          box.scrollTo({ left: items[i].offsetLeft - box.offsetLeft - 16, behavior: reduced ? 'auto' : 'smooth' });
-        });
-        holder.appendChild(b);
-      });
-      var dots = $$('button', holder);
-
-      function sync() {
-        /* whichever card sits nearest the middle of the viewport is "current" */
-        var mid = box.scrollLeft + box.clientWidth / 2, best = 0, dist = Infinity;
-        items.forEach(function (el, i) {
-          var c = el.offsetLeft - box.offsetLeft + el.offsetWidth / 2;
-          var d = Math.abs(c - mid);
-          if (d < dist) { dist = d; best = i; }
-        });
-        dots.forEach(function (d, i) { d.setAttribute('aria-selected', String(i === best)); });
-      }
-      var queued = false;
-      box.addEventListener('scroll', function () {
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(function () { queued = false; sync(); });
-      }, { passive: true });
-      sync();
+  /* ───── 11 · Store links + back to top ─────
+     Paste the live listings here once the apps are published; every
+     store badge and "Download the App" button picks them up. Until
+     then they stay placeholders that simply do nothing. */
+  var APP_LINKS = { ios: '', android: '' };
+  (function storeLinks() {
+    var ua = navigator.userAgent;
+    var mine = /iPhone|iPad|iPod/.test(ua) ? 'ios' : (/Android/.test(ua) ? 'android' : '');
+    $$('[data-store]').forEach(function (a) {
+      var key = a.dataset.store === 'auto' ? mine : a.dataset.store;
+      var url = APP_LINKS[key] || (a.dataset.store === 'auto' ? (APP_LINKS.ios || APP_LINKS.android) : '');
+      if (!url) return;
+      a.href = url;
+      a.removeAttribute('data-placeholder');
+      a.target = '_blank';
+      a.rel = 'noopener';
     });
   })();
 
-  /* ───── 10 · FAQ accordion — one answer open across both columns ───── */
-  $$('#acc .acc-q').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var wasOpen = btn.getAttribute('aria-expanded') === 'true';
-      $$('#acc .acc-q').forEach(function (o) {
-        o.setAttribute('aria-expanded', 'false');
-        o.closest('.acc-i').classList.remove('is-open');
-      });
-      if (!wasOpen) {
-        btn.setAttribute('aria-expanded', 'true');
-        btn.closest('.acc-i').classList.add('is-open');
-      }
-    });
+  /* Logo, footer link and Home all point at #top: one delegated listener
+     scrolls there smoothly and leaves the URL alone. Links marked
+     data-placeholder (stores, socials awaiting their live URLs) do nothing. */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href="#top"], a[data-placeholder]');
+    if (!a) return;
+    e.preventDefault();
+    if (a.hasAttribute('data-placeholder')) return;
+    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
   });
 
-  /* ───── 11 · Journey + section cues ───── */
-  once($('#journey'), function (el) { el.classList.add('in'); }, { threshold: 0.3 });
-  $$('#journey .step').forEach(function (s) { once(s, function (el) { el.classList.add('in'); }, { threshold: 0.35 }); });
-  once($('#why'), function (el) { el.classList.add('in-view'); }, { threshold: 0.2 });
-
-  /* ───── 12 · Tilt + spotlight + magnet micro-interactions ───── */
+  /* ───── 12 · Micro-interactions: spotlight + magnet ───── */
   if (fine && !reduced) {
-    $$('[data-tilt]').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
-        el.style.setProperty('--ty', (px * 6).toFixed(2) + 'deg');
-        el.style.setProperty('--tx', (-py * 6).toFixed(2) + 'deg');
-      });
-      el.addEventListener('pointerleave', function () {
-        el.style.setProperty('--ty', '0deg');
-        el.style.setProperty('--tx', '0deg');
-      });
-    });
-
-    /* tiles light up under the pointer */
     $$('[data-spot]').forEach(function (el) {
       el.addEventListener('pointermove', function (e) {
         var r = el.getBoundingClientRect();
@@ -866,7 +653,6 @@
         el.style.setProperty('--my', (e.clientY - r.top) + 'px');
       });
     });
-
     /* buttons drift a few pixels toward the cursor */
     $$('.magnet').forEach(function (el) {
       el.addEventListener('pointermove', function (e) {
@@ -877,32 +663,6 @@
       el.addEventListener('pointerleave', function () { el.style.transform = ''; });
     });
   }
-
-  /* ───── Ticker: duplicate the row so the marquee loops seamlessly ───── */
-  (function ticker() {
-    var inner = $('#ticker-inner');
-    if (!inner || reduced) return;
-    var copy = inner.firstElementChild.cloneNode(true);
-    copy.setAttribute('aria-hidden', 'true');
-    inner.appendChild(copy);
-    /* the bento's category strip loops the same way */
-    var row = $('.viz-cats-row');
-    if (row) row.innerHTML += row.innerHTML;
-  })();
-
-  /* ───── Back to top ─────
-     Both the header logo and the footer link point at #top. One delegated
-     listener scrolls there smoothly and leaves the URL alone. Links marked
-     data-placeholder (store badges, social icons awaiting their live URLs)
-     simply do nothing instead of jumping to the top of the page. */
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href="#top"], a[data-placeholder]');
-    if (!a) return;
-    e.preventDefault();
-    if (a.hasAttribute('data-placeholder')) return;
-    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
-    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
-  });
 
   /* ───── Misc ───── */
   var year = $('#year');
