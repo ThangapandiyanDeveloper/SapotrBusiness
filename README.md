@@ -8,16 +8,18 @@ build step, no dependencies.
 
 ## Structure
 
-    index.html      header (About Us dropdown), hero (6 banners), benefits,
-                    industries (accordions), safety & trust, testimonials,
-                    growth, 3 steps, FAQ, CTA, footer · FAQPage + Organization JSON-LD
-    about.html      hero, how SAPOTR got its name, the problem, mission, vision,
-                    the SAPOTR advantage, get in touch, careers, brand CTA, footer
+    index.html      header (About Us dropdown), hero (6 banners), category ticker,
+                    benefits bento, industry cards (details on demand), safety & trust,
+                    testimonials, growth, 3 hire steps, FAQ (2 columns), CTA, footer
+                    · FAQPage + Organization JSON-LD
+    about.html      hero, how SAPOTR got its name, the problem, then mission, vision
+                    and the SAPOTR advantage as a zig-zag, get in touch, careers,
+                    brand CTA, footer
     styles.css      one stylesheet for both pages: tokens, sections, responsive,
                     reduced motion
     script.js       one script for both pages: header + dropdown, reveals,
-                    carousel engine (hero + testimonials), hire steps,
-                    accordions, count-up, store links, back to top
+                    carousel engine (hero + testimonials), ticker loop,
+                    accordions (industries + FAQ), count-up, store links, back to top
     assets/img/     web-ready WebP crops of the photos listed in CREDITS.md
 
 ## Local preview
@@ -50,12 +52,13 @@ The hero and the testimonials run on one engine (`carousel()` in `script.js`):
 - **Social card**: once the Business domain is known, make `og:image` absolute
   and add `og:url` + `<link rel="canonical">` on both pages.
 - **"Become a SAPOTR"** links to `https://www.sapotr.co.nz/` (the Staff Partner site).
-- **Git remote**: this folder was cloned from the Staff Partner repo and still
-  pushes to the same `origin`. Point it at its own repository before pushing,
-  or the frozen Staff Partner site will be overwritten.
 
 ## Assets
 
-Only files referenced by the pages are kept in `assets/`; remove any image that
-stops being referenced. The SAPOTR wordmark and mark are the official brand
-files; every photograph is listed in `assets/img/CREDITS.md`.
+Only files referenced by the pages should be kept in `assets/`; remove any image
+that stops being referenced. Where every image comes from is listed in
+`assets/img/CREDITS.md`.
+
+Typography note: Plus Jakarta Sans has a narrow word space, so headings carry a
+small positive `word-spacing` (see section 2 of `styles.css`). Keep it when
+tightening `letter-spacing`, or words start to run together again.

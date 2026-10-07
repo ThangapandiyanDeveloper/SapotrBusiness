@@ -1,4 +1,22 @@
-# Photo credits
+# Image credits
+
+## SAPOTR brand imagery
+
+The client's own SAPOTR character images. Converted to WebP for the web; the
+originals are the source of truth.
+
+| File | Source | Used for |
+| --- | --- | --- |
+| hero-cafe-1800.png, hero-cafe-m.png, hero-instant.png, about-hero-*.png | Supplied by the client for this site | Hero banners 1–2, About hero |
+| step-hire-760.webp, step-arrive-760.webp, step-done-760.webp | WebP copies of the client's step-*.png | Banner 5 board, Hire steps, Safety |
+| app-phone-760.webp | WebP copy of hero-instant.png | Hire step 1 |
+| bf-kitchen-760.webp | Crop of hero-cafe-m.png | Benefits — staffing crisis tile |
+| sapotr-flex.webp, sapotr-walk.webp, sapotr-watch.webp, banner4-group.webp | Copied unchanged from the frozen Brand2 site | About: mission, vision, advantage, name |
+| cta-team-1600.webp, cta-team-900.webp | Brand2 `cta-team-1400.png`, as WebP | Final CTA (the frozen CTA image) |
+| ind-*.webp (9) | Brand2's work-type images, as WebP, one per category | Businesses Across NZ cards |
+
+## Stock photography
+
 
 All photographs are from Pexels and used under the Pexels License (free for
 commercial use, modification allowed, attribution not required). Each was

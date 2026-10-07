@@ -3,7 +3,7 @@
    One file for index.html and about.html; every block returns
    early when its markup is not on the page.
     1 Helpers             7 Testimonials
-    2 Header + nav        8 Hire steps
+    2 Header + nav        8 Ticker
     3 Reveals + split     9 Accordions (industries, FAQ)
     4 Scroll FX          10 Count-up numbers
     5 Carousel engine    11 Store links + back to top
@@ -456,7 +456,7 @@
       root: root,
       stage: $('#hero-stage'),
       slides: $$('#hero-slides > .hs'),
-      dwell: [7200, 6200, 7600, 7000, 7600, 8000],   /* the busier banners hold a touch longer */
+      dwell: [7200, 6200, 7600, 7600, 8000, 7000],   /* the busier banners hold a touch longer */
       manualDwell: 11000,                              /* after a manual move, give the reader time */
       xfade: 950,                                      /* keep in step with the .hs transitions */
       prev: $('#hero-prev'),
@@ -519,52 +519,14 @@
   })();
   window.SAPOTR = { hero: hero, reviews: reviews };
 
-  /* ───── 8 · Hire steps — the phone shows the step in focus ─────
-     Every step's text is always visible; the phone beside it plays
-     the matching screen. It moves on by itself while the section is
-     on screen, and a click (or keyboard) picks a step and holds it. */
-  (function hireSteps() {
-    var list = $('#hsteps');
-    if (!list) return;
-    var items = $$('.hstep', list);
-    var views = $$('.hp-view');
-    var STEP = 5600, HOLD = 12000, TICK = 100;
-    var at = 0, elapsed = 0, holdUntil = 0, onScreen = false, hovering = false, ticker = null;
-
-    function bar(i, p) {
-      var b = $('.hstep-bar i', items[i]);
-      if (b) b.style.transform = 'scaleX(' + p.toFixed(3) + ')';
-    }
-    function set(i) {
-      at = i; elapsed = 0;
-      items.forEach(function (li, k) {
-        li.classList.toggle('is-on', k === i);
-        $('button', li).setAttribute('aria-pressed', String(k === i));
-        bar(k, 0);
-      });
-      views.forEach(function (v, k) { v.classList.toggle('is-on', k === i); });
-    }
-    items.forEach(function (li, k) {
-      $('button', li).addEventListener('click', function () { holdUntil = Date.now() + HOLD; set(k); });
-    });
-    if (fine) {
-      list.addEventListener('mouseenter', function () { hovering = true; });
-      list.addEventListener('mouseleave', function () { hovering = false; });
-    }
-    if (reduced) return;
-    function tick() {
-      if (hovering || document.hidden || Date.now() < holdUntil) return;
-      elapsed += TICK;
-      bar(at, Math.min(1, elapsed / STEP));
-      if (elapsed >= STEP) set((at + 1) % items.length);
-    }
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        onScreen = es[0].isIntersecting;
-        clearInterval(ticker); ticker = null;
-        if (onScreen) ticker = setInterval(tick, TICK);
-      }, { threshold: 0.35 }).observe(list);
-    }
+  /* ───── 8 · Ticker — one copy of the row follows the other, so the loop
+     has no seam. With reduced motion it stays a single, wrapped row. ───── */
+  (function ticker() {
+    var inner = $('#ticker-inner');
+    if (!inner || reduced) return;
+    var copy = inner.firstElementChild.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    inner.appendChild(copy);
   })();
 
   /* ───── 9 · Accordions — industries (any number open) and FAQ (one at a time) ───── */
@@ -583,7 +545,7 @@
       });
     });
   }
-  accordion($('#ind-grid'), '.ind-q', false);
+  accordion($('#ind-grid'), '.ind-btn', false);
   accordion($('#acc'), '.acc-q', true);
 
   /* ───── 10 · Count-up numbers + section cues ───── */
@@ -601,7 +563,8 @@
       })(performance.now());
     }, { threshold: 0.6 });
   });
-  once($('#trust-panel'), function (el) { el.classList.add('in'); }, { threshold: 0.4 });
+  /* the dashed road under the three hire steps fills in once */
+  once($('#journey'), function (el) { el.classList.add('in'); }, { threshold: 0.3 });
 
   /* ───── 11 · Store links + back to top ─────
      Paste the live listings here once the apps are published; every
