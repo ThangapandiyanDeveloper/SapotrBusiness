@@ -8,10 +8,13 @@ originals are the source of truth.
 | File | Source | Used for |
 | --- | --- | --- |
 | hero-cafe-1800.png, hero-cafe-m.png, hero-instant.png, about-hero-*.png | Supplied by the client for this site | Hero banners 1–2, About hero |
-| step-hire-760.webp, step-arrive-760.webp, step-done-760.webp | WebP copies of the client's step-*.png | Banner 5 board, Hire steps, Safety |
-| app-phone-760.webp | WebP copy of hero-instant.png | Hire step 1 |
-| bf-kitchen-760.webp | Crop of hero-cafe-m.png | Benefits — staffing crisis tile |
-| sapotr-flex.webp, sapotr-walk.webp, sapotr-watch.webp, banner4-group.webp | Copied unchanged from the frozen Brand2 site | About: mission, vision, advantage, name |
+| step-hire-760.webp, step-arrive-760.webp | WebP copies of the client's step-*.png | Banner 5 board |
+| sapotr-flex.webp | Copied unchanged from the frozen Brand2 site | Benefits — staffing crisis tile; About: mission |
+| sapotr-walk.webp, sapotr-watch.webp, banner4-group.webp | Copied unchanged from the frozen Brand2 site | About: vision, advantage, name |
+
+Not referenced since the Phase 3 changes (the Hire steps now use the frozen
+site's drawn phones, and the Benefits tile uses sapotr-flex.webp):
+step-done-760.webp, app-phone-760.webp, bf-kitchen-760.webp.
 | cta-team-1600.webp, cta-team-900.webp | Brand2 `cta-team-1400.png`, as WebP | Final CTA (the frozen CTA image) |
 | ind-*.webp (9) | Brand2's work-type images, as WebP, one per category | Businesses Across NZ cards |
 
@@ -27,7 +30,7 @@ cropped and converted to WebP for this site. Find the original at
 | --- | --- | --- |
 | hero-cafe-1800.webp, hero-cafe-m.webp | 6612691 | Café manager on the phone with a tablet |
 | hero-instant.webp | 8476592 | Shop assistant bagging produce at a grocery counter |
-| hero-warehouse-1600.webp, hero-warehouse-m.webp | 4487365 | Warehouse staff in a racking aisle |
+| hero-warehouse-1600.png, hero-warehouse-m.png | 4487365 | Warehouse staff in a racking aisle |
 | step-hire.webp | 5410101 | Florist on the phone in her shop |
 | step-arrive.webp | 36581576 | Waiter ready with a tray of drinks |
 | step-done.webp | 16154014 | Grocer stocking a fruit display |

@@ -317,7 +317,7 @@
             <div class="b6-board">
               <figure class="b6-card" style="--i:0"><img src="assets/img/step-hire-760.webp" alt="" width="760" height="950" decoding="async" fetchpriority="low" draggable="false"><span class="b6-tag"><b>01</b>Hire</span></figure>
               <figure class="b6-card" style="--i:1"><img src="assets/img/step-arrive-760.webp" alt="" width="760" height="950" decoding="async" fetchpriority="low" draggable="false"><span class="b6-tag"><b>02</b>SAPOTR Arrives</span></figure>
-              <figure class="b6-card" style="--i:2"><img src="assets/img/step-done-760.webp" alt="" width="760" height="950" decoding="async" fetchpriority="low" draggable="false"><span class="b6-tag"><b>03</b>Work Done</span></figure>
+              <figure class="b6-card" style="--i:2"><img src="assets/img/ind-warehouse.webp" alt="" width="760" height="950" decoding="async" fetchpriority="low" draggable="false"><span class="b6-tag"><b>03</b>Work Done</span></figure>
               <span class="b6-cycle"><svg class="ic"><use href="#i-repeat"/></svg></span>
             </div>
           </div>
@@ -328,8 +328,8 @@
       <article class="hs hs--urgent" id="hs-6" data-tone="dark" role="group" aria-roledescription="slide" aria-label="6 of 6" hidden>
         <div class="hs-bg">
           <picture>
-            <source media="(max-width:900px), (max-aspect-ratio:1/1)" srcset="assets/img/hero-warehouse-m.webp" width="760" height="929">
-            <img class="hs-photo" src="assets/img/hero-warehouse-1600.webp" width="1600" height="1067" decoding="async" fetchpriority="low" draggable="false"
+            <source media="(max-width:900px), (max-aspect-ratio:1/1)" srcset="assets/img/hero-warehouse-m.png" width="760" height="929">
+            <img class="hs-photo" src="assets/img/hero-warehouse-1600.png" width="1600" height="1067" decoding="async" fetchpriority="low" draggable="false"
                  alt="Warehouse staff moving stock along a long aisle of racking">
           </picture>
           <span class="b4-panel" aria-hidden="true"></span>
@@ -393,7 +393,16 @@
 </section>
 
 <!-- ══════════ 2 · How SAPOTR benefits you — a bento of four benefit tiles ══════════ -->
-<section class="section" id="benefits">
+<section class="section bn-sec" id="benefits">
+  <div class="bn-bg" aria-hidden="true">
+    <span class="bn-blob bn-blob--c"></span><span class="bn-blob bn-blob--y"></span><span class="bn-blob bn-blob--r"></span>
+    <span class="bn-dots"></span>
+    <svg class="bn-swoosh" viewBox="0 0 600 400" preserveAspectRatio="none">
+      <path class="sw-y" d="M-20 300C120 180 260 360 420 200S620 120 640 60"/>
+      <path class="sw-r" d="M-20 340C140 230 280 400 440 250S620 170 640 120"/>
+      <path class="sw-c" d="M-20 380C150 280 300 440 460 300S620 220 640 180"/>
+    </svg>
+  </div>
   <div class="wrap">
     <h2 class="sec-title sec-title--center" data-split>How <span class="hl">SAPOTR</span> Benefits You?</h2>
 
@@ -414,9 +423,10 @@
             <li><span class="bn-li-ic" aria-hidden="true"><svg class="ic"><use href="#i-repeat"/></svg></span>Keeps Work Moving, 24/7.</li>
           </ul>
         </div>
-        <figure class="bn-photo">
-          <img src="assets/img/bf-kitchen-760.webp" width="760" height="950" loading="lazy" decoding="async"
-               alt="A SAPOTR in a navy SAPOTR cap and apron giving a thumbs up in a busy restaurant kitchen">
+        <figure class="bn-figure">
+          <span class="bn-disc" aria-hidden="true"></span>
+          <img src="assets/img/sapotr-flex.webp" width="604" height="1000" loading="lazy" decoding="async"
+               alt="A smiling SAPOTR with a backpack, flexing his arm">
           <span class="bn-toggle" aria-hidden="true"><i>Instantly</i><i>Scheduled</i></span>
           <span class="ocard bn-badge" aria-hidden="true"><span class="ocard-ic ic-cyan"><svg class="ic"><use href="#i-repeat"/></svg></span><span class="ocard-t"><small>Keeps Work Moving</small><b>24/7</b></span></span>
         </figure>
@@ -489,204 +499,175 @@
   </div>
 </section>
 
-<!-- ══════════ 3 · Businesses across NZ — photo cards, details on demand ══════════ -->
+<!-- ══════════ 3 · Businesses across NZ — the frozen site's card rail ══════════ -->
 <section class="section section--tint ind-sec" id="industries">
   <div class="wrap">
     <h2 class="sec-title sec-title--center ind-title" data-split><span class="ln">Businesses Across NZ Trust <span class="hl">SAPOTR</span></span> <span class="ln">for Last Minute STAFF SUPPORT</span></h2>
 
-    <div class="ind-grid" id="ind-grid">
-      <article class="ind ind--red r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-events.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR with a radio working backstage at a live concert"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-events"/></svg></span><span class="ind-n" aria-hidden="true">01</span></div>
-          <h3 class="ind-name" id="ind-t1">Events &amp; Entertainment</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a1">View business types<span class="sr-only"> for Events &amp; Entertainment</span><span class="ind-count" aria-hidden="true">7</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a1" role="region" aria-labelledby="ind-t1"><div>
+    <div class="rail-vp ind-vp r" data-r id="ind-vp" role="group" aria-roledescription="carousel" aria-label="Businesses SAPOTR supports">
+      <div class="rail-track" id="ind-track">
+        <article class="ind ind--red" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-events.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR with a radio working backstage at a live concert"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-events"/></svg></span><span class="ind-n" aria-hidden="true">01</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a1" id="ind-q1">Events &amp; Entertainment<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a1" role="region" aria-labelledby="ind-q1"><div>
             <ul class="ind-tags"><li>Concerts</li><li>Weddings</li><li>Exhibitions</li><li>Festivals</li><li>Promotions</li><li>Corporate Events</li><li>Mall Events</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--cyan r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-hospitality.webp" width="800" height="400" loading="lazy" decoding="async" alt="A SAPOTR serving plates to smiling diners in a busy café"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-hosp"/></svg></span><span class="ind-n" aria-hidden="true">02</span></div>
-          <h3 class="ind-name" id="ind-t2">Hospitality &amp; Food Services</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a2">View business types<span class="sr-only"> for Hospitality &amp; Food Services</span><span class="ind-count" aria-hidden="true">5</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a2" role="region" aria-labelledby="ind-t2"><div>
+          </div>
+        </article>
+        <article class="ind ind--cyan" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-hospitality.webp" width="800" height="400" loading="lazy" decoding="async" alt="A SAPOTR serving plates to smiling diners in a busy café"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-hosp"/></svg></span><span class="ind-n" aria-hidden="true">02</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a2" id="ind-q2">Hospitality &amp; Food Services<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a2" role="region" aria-labelledby="ind-q2"><div>
             <ul class="ind-tags"><li>Hotels</li><li>Restaurants</li><li>Cafés</li><li>Catering</li><li>Food Service</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--yellow r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-retail.webp" width="800" height="553" loading="lazy" decoding="async" alt="A SAPOTR shaking hands with a supermarket manager"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-retail"/></svg></span><span class="ind-n" aria-hidden="true">03</span></div>
-          <h3 class="ind-name" id="ind-t3">Retail &amp; Shopping</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a3">View business types<span class="sr-only"> for Retail &amp; Shopping</span><span class="ind-count" aria-hidden="true">5</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a3" role="region" aria-labelledby="ind-t3"><div>
+          </div>
+        </article>
+        <article class="ind ind--yellow" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-retail.webp" width="800" height="553" loading="lazy" decoding="async" alt="A SAPOTR shaking hands with a supermarket manager"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-retail"/></svg></span><span class="ind-n" aria-hidden="true">03</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a3" id="ind-q3">Retail &amp; Shopping<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a3" role="region" aria-labelledby="ind-q3"><div>
             <ul class="ind-tags"><li>Retail Stores</li><li>Supermarkets</li><li>Showrooms</li><li>Shopping Centres</li><li>Malls</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--cyan r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-warehouse.webp" width="800" height="400" loading="lazy" decoding="async" alt="A SAPOTR taping boxes on a warehouse packing line"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-warehouse"/></svg></span><span class="ind-n" aria-hidden="true">04</span></div>
-          <h3 class="ind-name" id="ind-t4">Warehousing &amp; Logistics</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a4">View business types<span class="sr-only"> for Warehousing &amp; Logistics</span><span class="ind-count" aria-hidden="true">5</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a4" role="region" aria-labelledby="ind-t4"><div>
+          </div>
+        </article>
+        <article class="ind ind--cyan" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-warehouse.webp" width="800" height="400" loading="lazy" decoding="async" alt="A SAPOTR taping boxes on a warehouse packing line"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-warehouse"/></svg></span><span class="ind-n" aria-hidden="true">04</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a4" id="ind-q4">Warehousing &amp; Logistics<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a4" role="region" aria-labelledby="ind-q4"><div>
             <ul class="ind-tags"><li>Warehouses</li><li>Distribution</li><li>Fulfilment</li><li>Loading &amp; Unloading</li><li>Logistics Operations</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--yellow r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-delivery.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR at the wheel giving a thumbs up"><p class="ind-flag"><svg class="ic" aria-hidden="true"><use href="#i-id"/></svg>Need Valid License</p></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-delivery"/></svg></span><span class="ind-n" aria-hidden="true">05</span></div>
-          <h3 class="ind-name" id="ind-t5">Delivery &amp; Driving</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a5">View business types<span class="sr-only"> for Delivery &amp; Driving</span><span class="ind-count" aria-hidden="true">4</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a5" role="region" aria-labelledby="ind-t5"><div>
+          </div>
+        </article>
+        <article class="ind ind--yellow" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-delivery.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR at the wheel giving a thumbs up"><p class="ind-flag"><svg class="ic" aria-hidden="true"><use href="#i-id"/></svg>Need Valid License</p></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-delivery"/></svg></span><span class="ind-n" aria-hidden="true">05</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a5" id="ind-q5">Delivery &amp; Driving<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a5" role="region" aria-labelledby="ind-q5"><div>
             <ul class="ind-tags"><li>Delivery</li><li>Drivers</li><li>Couriers</li><li>Last-Mile Operations</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--red r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-moving.webp" width="800" height="533" loading="lazy" decoding="async" alt="SAPOTRs carrying boxes and furniture into a home"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-moving"/></svg></span><span class="ind-n" aria-hidden="true">06</span></div>
-          <h3 class="ind-name" id="ind-t6">Moving &amp; Setup</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a6">View business types<span class="sr-only"> for Moving &amp; Setup</span><span class="ind-count" aria-hidden="true">5</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a6" role="region" aria-labelledby="ind-t6"><div>
+          </div>
+        </article>
+        <article class="ind ind--red" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-moving.jpg" width="800" height="533" loading="lazy" decoding="async" alt="SAPOTRs carrying boxes and furniture into a home"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-moving"/></svg></span><span class="ind-n" aria-hidden="true">06</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a6" id="ind-q6">Moving &amp; Setup<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a6" role="region" aria-labelledby="ind-q6"><div>
             <ul class="ind-tags"><li>Loading</li><li>Unloading</li><li>Moving</li><li>Furniture Handling</li><li>Pack Down Programs</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--cyan r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-education.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR handing out brochures at a school community event"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-education"/></svg></span><span class="ind-n" aria-hidden="true">07</span></div>
-          <h3 class="ind-name" id="ind-t7">Education &amp; Institutions</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a7">View business types<span class="sr-only"> for Education &amp; Institutions</span><span class="ind-count" aria-hidden="true">5</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a7" role="region" aria-labelledby="ind-t7"><div>
+          </div>
+        </article>
+        <article class="ind ind--cyan" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-education.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR handing out brochures at a school community event"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-education"/></svg></span><span class="ind-n" aria-hidden="true">07</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a7" id="ind-q7">Education &amp; Institutions<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a7" role="region" aria-labelledby="ind-q7"><div>
             <ul class="ind-tags"><li>Schools</li><li>Universities</li><li>Sports Events</li><li>School Events</li><li>Institutional Programs</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--yellow r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-cleaning.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR cleaning a table in a bright modern space"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-cleaning"/></svg></span><span class="ind-n" aria-hidden="true">08</span></div>
-          <h3 class="ind-name" id="ind-t8">Cleaning &amp; Facilities</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a8">View business types<span class="sr-only"> for Cleaning &amp; Facilities</span><span class="ind-count" aria-hidden="true">4</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a8" role="region" aria-labelledby="ind-t8"><div>
+          </div>
+        </article>
+        <article class="ind ind--yellow" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-cleaning.jpg" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR cleaning a table in a bright modern space"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-cleaning"/></svg></span><span class="ind-n" aria-hidden="true">08</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a8" id="ind-q8">Cleaning &amp; Facilities<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a8" role="region" aria-labelledby="ind-q8"><div>
             <ul class="ind-tags"><li>Commercial Cleaning</li><li>Property Cleaning</li><li>Facility Support</li><li>Event Cleanup</li></ul>
           </div></div>
-        </div>
-      </article>
-
-      <article class="ind ind--red r" data-r data-acc-item>
-        <figure class="ind-media"><img src="assets/img/ind-general.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR with a clipboard and boxes in a busy office"></figure>
-        <div class="ind-body">
-          <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-general"/></svg></span><span class="ind-n" aria-hidden="true">09</span></div>
-          <h3 class="ind-name" id="ind-t9">General Business Support / Any Other Business</h3>
-          <button class="ind-btn" type="button" aria-expanded="false" aria-controls="ind-a9">View details<span class="sr-only"> for General Business Support</span><span class="ind-x" aria-hidden="true"></span></button>
-          <div class="ind-a" id="ind-a9" role="region" aria-labelledby="ind-t9"><div>
+          </div>
+        </article>
+        <article class="ind ind--red" data-acc-item>
+          <figure class="ind-media"><img src="assets/img/ind-general.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR with a clipboard and boxes in a busy office"></figure>
+          <div class="ind-body">
+            <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-general"/></svg></span><span class="ind-n" aria-hidden="true">09</span></div>
+            <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a9" id="ind-q9">General Business Support / Any Other Business<span class="ind-x" aria-hidden="true"></span></button></h3>
+            <div class="ind-a" id="ind-a9" role="region" aria-labelledby="ind-q9"><div>
             <p class="ind-p">Any business can book verified temporary staff when extra support is needed.</p>
           </div></div>
-        </div>
-      </article>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="rail-ui">
+      <button class="c-arrow" id="ind-prev" type="button" aria-label="Previous business type" aria-controls="ind-track"><svg class="ic" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+      <div class="dots" id="ind-dots" aria-hidden="true"></div>
+      <button class="c-arrow" id="ind-next" type="button" aria-label="Next business type" aria-controls="ind-track"><svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
     </div>
   </div>
 </section>
 
-<!-- ══════════ 4 · Safety & trust ══════════ -->
+<!-- ══════════ 4 · Safety & trust — the frozen site's heading and cards ══════════ -->
 <section class="section safe-sec" id="safety">
   <div class="wrap">
-    <div class="safe-top">
-      <div class="safe-copy">
-        <h2 class="sec-title safe-title" data-split>Your Confidence in <span class="hl">SAPOTR</span> is Our Priority</h2>
-        <div class="safe-feats">
-          <div class="safe-feat r" data-r>
-            <span class="safe-feat-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-user-check"/></svg></span>
-            <h3 class="safe-feat-t">Every SAPOTR is Verified Before Activation.</h3>
-          </div>
-          <div class="safe-feat r" data-r>
-            <span class="safe-feat-ic ic-yellow"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg></span>
-            <h3 class="safe-feat-t">Tracked From Hiring to Work Completion.</h3>
-          </div>
-        </div>
-      </div>
-
-      <figure class="safe-visual r" data-r>
-        <span class="safe-ring" aria-hidden="true"></span>
-        <div class="safe-photo">
-          <img src="assets/img/step-arrive-760.webp" width="760" height="950" loading="lazy" decoding="async"
-               alt="A verified SAPOTR, ID badge on a lanyard, shaking hands with a manager on arrival">
-        </div>
-        <div class="ocard safe-card safe-card--id" aria-hidden="true">
-          <span class="ocard-ic ic-cyan"><svg class="ic"><use href="#i-shield"/></svg></span>
-          <span class="ocard-t"><small>SAPOTR profile</small><b>Verified</b></span>
-        </div>
-        <div class="safe-card safe-card--track" aria-hidden="true">
-          <b>Booking journey</b>
-          <ol><li style="--i:0">On the way</li><li style="--i:1">Arrived</li><li style="--i:2">Working</li><li style="--i:3">Completed</li></ol>
-        </div>
-      </figure>
+    <div class="safe-head">
+      <h2 class="sec-title safe-title" data-split><span class="ln">Your Confidence in <span class="hl">SAPOTR</span> is Our Priority</span> <span class="ln">Every SAPOTR is Verified Before Activation.</span> <span class="ln">Tracked From Hiring to Work Completion.</span></h2>
+      <span class="safe-badge r" data-r aria-hidden="true"><svg class="ic"><use href="#i-shield"/></svg></span>
     </div>
 
-    <div class="safe-grid">
-      <article class="safe r" data-r>
-        <div class="safe-viz sv-id" aria-hidden="true">
-          <span class="sv-card"><span class="sv-av"></span><span class="sv-lines"><i></i><i></i><i></i></span></span>
-          <span class="sv-lic"><svg class="ic"><use href="#c-delivery"/></svg></span>
-          <span class="sv-tick sv-tick--1"><svg class="ic"><use href="#i-check"/></svg></span>
-          <span class="sv-tick sv-tick--2"><svg class="ic"><use href="#i-check"/></svg></span>
-        </div>
-        <span class="safe-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-id"/></svg></span>
-        <h3>Identity Verification &amp; Licence Checks</h3>
-        <p>Government-issued ID, profile details and required licences are checked.</p>
-      </article>
+    <!-- four cards in a row on desktop, two by two on tablets, a one-card rail on phones -->
+    <div class="rail-vp safe-vp r" data-r id="safe-vp" role="group" aria-roledescription="carousel" aria-label="How every SAPOTR is checked and tracked">
+      <div class="rail-track safe-grid" id="safe-grid">
+        <article class="safe">
+          <div class="safe-viz sv-id" aria-hidden="true">
+            <span class="sv-card"><span class="sv-av"></span><span class="sv-lines"><i></i><i></i><i></i></span></span>
+            <span class="sv-lic"><svg class="ic"><use href="#c-delivery"/></svg></span>
+            <span class="sv-tick sv-tick--1"><svg class="ic"><use href="#i-check"/></svg></span>
+            <span class="sv-tick sv-tick--2"><svg class="ic"><use href="#i-check"/></svg></span>
+          </div>
+          <span class="safe-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-id"/></svg></span>
+          <h3>Identity Verification &amp; Licence Checks</h3>
+          <p>Government-issued ID, profile details and required licences are checked.</p>
+        </article>
 
-      <article class="safe r" data-r>
-        <div class="safe-viz sv-nz" aria-hidden="true">
-          <span class="sv-doc"><b>NZ</b><i></i><i></i><i></i></span>
-          <span class="sv-stamp"><svg class="ic"><use href="#i-check"/></svg></span>
-        </div>
-        <span class="safe-ic ic-yellow"><svg class="ic" aria-hidden="true"><use href="#i-nz"/></svg></span>
-        <h3>Right to Work in NZ</h3>
-        <p>Work eligibility is verified before activation.</p>
-      </article>
+        <article class="safe">
+          <div class="safe-viz sv-nz" aria-hidden="true">
+            <span class="sv-doc"><b>NZ</b><i></i><i></i><i></i></span>
+            <span class="sv-stamp"><svg class="ic"><use href="#i-check"/></svg></span>
+          </div>
+          <span class="safe-ic ic-yellow"><svg class="ic" aria-hidden="true"><use href="#i-nz"/></svg></span>
+          <h3>Right to Work in NZ</h3>
+          <p>Work eligibility is verified before activation.</p>
+        </article>
 
-      <article class="safe r" data-r>
-        <div class="safe-viz sv-police" aria-hidden="true">
-          <span class="sv-doc"><i></i><i></i><i></i><i></i></span>
-          <span class="sv-scan"></span>
-          <span class="sv-shield"><svg class="ic"><use href="#i-badge"/></svg></span>
-        </div>
-        <span class="safe-ic ic-red"><svg class="ic" aria-hidden="true"><use href="#i-badge"/></svg></span>
-        <h3>Police Verification</h3>
-        <p>Criminal-history screening is completed where applicable.</p>
-      </article>
+        <article class="safe">
+          <div class="safe-viz sv-police" aria-hidden="true">
+            <span class="sv-doc"><i></i><i></i><i></i><i></i></span>
+            <span class="sv-scan"></span>
+            <span class="sv-shield"><svg class="ic"><use href="#i-badge"/></svg></span>
+          </div>
+          <span class="safe-ic ic-red"><svg class="ic" aria-hidden="true"><use href="#i-badge"/></svg></span>
+          <h3>Police Verification</h3>
+          <p>Criminal-history screening is completed where applicable.</p>
+        </article>
 
-      <article class="safe r" data-r>
-        <div class="safe-viz sv-track" aria-hidden="true">
-          <svg class="sv-route" viewBox="0 0 240 90" preserveAspectRatio="none"><path d="M18 64C70 64 70 26 120 26s50 38 102 38"/></svg>
-          <span class="sv-stop sv-stop--1"><i></i>On the way</span>
-          <span class="sv-stop sv-stop--2"><i></i>Arrived</span>
-          <span class="sv-stop sv-stop--3"><i></i>Working</span>
-          <span class="sv-stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg></span>
-        </div>
-        <span class="safe-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg></span>
-        <h3>Booking Tracking &amp; Performance Rating</h3>
-        <p>Track the SAPOTR journey through the app, from on-the-way to arrival and work.</p>
-      </article>
+        <article class="safe">
+          <div class="safe-viz sv-track" aria-hidden="true">
+            <svg class="sv-route" viewBox="0 0 240 90" preserveAspectRatio="none"><path d="M18 64C70 64 70 26 120 26s50 38 102 38"/></svg>
+            <span class="sv-stop sv-stop--1"><i></i>On the way</span>
+            <span class="sv-stop sv-stop--2"><i></i>Arrived</span>
+            <span class="sv-stop sv-stop--3"><i></i>Working</span>
+            <span class="sv-stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg></span>
+          </div>
+          <span class="safe-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg></span>
+          <h3>Booking Tracking &amp; Performance Rating</h3>
+          <p>Track the SAPOTR journey through the app, from on-the-way to arrival and work.</p>
+        </article>
+      </div>
+    </div>
+    <div class="rail-ui safe-ui">
+      <button class="c-arrow" id="safe-prev" type="button" aria-label="Previous safety check" aria-controls="safe-grid"><svg class="ic" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+      <div class="dots" id="safe-dots" aria-hidden="true"></div>
+      <button class="c-arrow" id="safe-next" type="button" aria-label="Next safety check" aria-controls="safe-grid"><svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
     </div>
   </div>
 </section>
@@ -780,17 +761,21 @@
   </div>
 </section>
 
-<!-- ══════════ 7 · Hire a SAPOTR — three steps ══════════ -->
+<!-- ══════════ 7 · Hire a SAPOTR — the frozen site's three steps, with Business screens ══════════ -->
 <section class="section hire" id="hire">
   <div class="wrap">
     <h2 class="sec-title sec-title--center" data-split>Hire a <span class="hl">SAPOTR</span> in 3 Simple Steps</h2>
 
     <ol class="journey" id="journey">
       <li class="step r" data-r>
-        <div class="step-viz sx-1">
-          <img src="assets/img/app-phone-760.webp" width="760" height="760" loading="lazy" decoding="async"
-               alt="A SAPOTR holding a phone with the SAPOTR app open">
-          <span class="ocard step-chip" aria-hidden="true"><span class="ocard-ic ic-cyan"><svg class="ic"><use href="#i-download"/></svg></span><span class="ocard-t"><small>SAPOTR App</small><b>Sign up</b></span></span>
+        <div class="step-viz sx-1" aria-hidden="true">
+          <div class="mini-phone">
+            <span class="mp-app"><img src="assets/img/logo-mark-256.webp" alt="" width="256" height="202" loading="lazy"></span>
+            <span class="mp-name">SAPOTR App</span>
+            <span class="mp-dl"><svg class="ic"><use href="#i-download"/></svg></span>
+            <span class="mp-row" style="--i:0"><svg class="ic"><use href="#i-check"/></svg>Sign up</span>
+            <span class="mp-badge" style="--i:1"><svg class="ic"><use href="#i-store"/></svg>Start using SAPOTR</span>
+          </div>
         </div>
         <span class="step-n" aria-hidden="true">01</span>
         <h3>Download the SAPOTR App</h3>
@@ -798,15 +783,16 @@
       </li>
 
       <li class="step r" data-r>
-        <div class="step-viz sx-2">
-          <img src="assets/img/step-hire-760.webp" width="760" height="950" loading="lazy" decoding="async"
-               alt="A business owner on the phone, hiring a SAPOTR from a laptop">
-          <span class="step-form" aria-hidden="true">
-            <span><svg class="ic"><use href="#c-general"/></svg>Staff role</span>
-            <span><svg class="ic"><use href="#i-calendar"/></svg>Time</span>
-            <span><svg class="ic"><use href="#i-clock"/></svg>Work hours</span>
-            <b>Hire a SAPOTR</b>
-          </span>
+        <div class="step-viz sx-2" aria-hidden="true">
+          <div class="mini-phone">
+            <span class="mp-job">
+              <span class="ocard-ic ic-cyan"><svg class="ic"><use href="#c-hosp"/></svg></span>
+              <span class="ocard-t"><small>Staff role</small><b>Kitchen Hand</b></span>
+            </span>
+            <span class="mp-pick"><i><svg class="ic"><use href="#i-calendar"/></svg>Today</i><i><svg class="ic"><use href="#i-clock"/></svg>4 hrs</i></span>
+            <span class="mp-days"><i>M</i><i class="on">T</i><i>W</i><i class="on">T</i><i>F</i><i class="on">S</i><i>S</i></span>
+            <span class="mp-accept"><svg class="ic"><use href="#i-check"/></svg>Hire</span>
+          </div>
         </div>
         <span class="step-n" aria-hidden="true">02</span>
         <h3>Hire a SAPOTR</h3>
@@ -814,14 +800,13 @@
       </li>
 
       <li class="step r" data-r>
-        <div class="step-viz sx-3">
-          <img src="assets/img/step-done-760.webp" width="760" height="950" loading="lazy" decoding="async"
-               alt="A SAPOTR and a business owner giving a thumbs up after the work is done">
-          <span class="step-done" aria-hidden="true">
-            <span><svg class="ic"><use href="#i-route"/></svg>Track</span>
-            <span><svg class="ic"><use href="#i-card"/></svg>Pay</span>
-            <span class="step-stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg></span>
-          </span>
+        <div class="step-viz sx-3" aria-hidden="true">
+          <div class="mini-phone">
+            <span class="mp-done"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22"/><path d="M15 27l7 7 15-16"/></svg></span>
+            <span class="mp-stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg></span>
+            <span class="mp-row"><svg class="ic"><use href="#i-route"/></svg>Track work</span>
+            <span class="mp-row mp-row--pay"><svg class="ic"><use href="#i-card"/></svg>Pay securely</span>
+          </div>
         </div>
         <span class="step-n" aria-hidden="true">03</span>
         <h3>Track Work, Pay &amp; Review</h3>

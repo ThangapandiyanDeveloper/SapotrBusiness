@@ -2,12 +2,13 @@
    SAPOTR Business — page behaviour (vanilla JS, no libraries)
    One file for index.html and about.html; every block returns
    early when its markup is not on the page.
-    1 Helpers             7 Testimonials
-    2 Header + nav        8 Ticker
-    3 Reveals + split     9 Accordions (industries, FAQ)
-    4 Scroll FX          10 Count-up numbers
-    5 Carousel engine    11 Store links + back to top
-    6 Hero               12 Micro-interactions
+    1 Helpers             8 Ticker
+    2 Header + nav        9 Card rails (industries, safety)
+    3 Reveals + split    10 Accordions (industries, FAQ)
+    4 Scroll FX          11 Count-up numbers
+    5 Carousel engine    12 Store links + back to top
+    6 Hero               13 Micro-interactions
+    7 Testimonials
    ═══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -529,7 +530,183 @@
     inner.appendChild(copy);
   })();
 
-  /* ───── 9 · Accordions — industries (any number open) and FAQ (one at a time) ───── */
+  /* ───── 9 · Card rails — the frozen site's work-types carousel ─────
+     One engine for the industry cards and the phone-size safety deck:
+     how many cards show is set in CSS, the script only measures. The
+     track moves by transform, one card per arrow, swipe or tick; at the
+     end it rewinds to the start, so no clones. When every card already
+     fits (the safety grid on larger screens) the rail goes static and
+     its arrows and dots step aside. Autoplay skips its turn while the
+     rail is held (hover, a drag, a recent gesture, an open card in
+     view), off screen or in a hidden tab. */
+  function rail(o) {
+    var vp = $(o.vp), track = $(o.track);
+    if (!vp || !track) return null;
+    var cards = Array.prototype.slice.call(track.children);
+    var dotsBox = $(o.dots), ui = dotsBox && dotsBox.parentNode;
+    var INTERVAL = 4200;   /* the frozen site's pace */
+    var HOLD = 5000;       /* how long a touched rail is left alone */
+
+    var at = 0, last = 0, step = 0, maxOff = 0, inner = 0, holdUntil = 0;
+    var hovering = false, onScreen = false, dragging = false;
+    var dots = [];
+
+    function offsetFor(i) { return Math.min(i * step, maxOff); }
+    function place(px, animate) {
+      track.style.transition = animate ? '' : 'none';
+      track.style.transform = px ? 'translate3d(' + (-px).toFixed(1) + 'px,0,0)' : '';
+    }
+    function paintDots() {
+      dots.forEach(function (d, i) { d.setAttribute('aria-selected', String(i === at)); });
+    }
+    function go(i, animate) {
+      at = Math.max(0, Math.min(last, i));
+      place(offsetFor(at), animate !== false);
+      paintDots();
+    }
+    function hold() { holdUntil = Date.now() + HOLD; }
+    /* is card c fully inside the window the rail is resting on? */
+    function inView(c) {
+      var x = c.offsetLeft - cards[0].offsetLeft - offsetFor(at);
+      return x > -1 && x + c.offsetWidth < inner + 1;
+    }
+
+    function measure() {
+      /* the card titles share one height, so closed cards line up even
+         when one name runs to an extra line */
+      if (o.equal) {
+        var heads = $$(o.equal, track);
+        heads.forEach(function (h) { h.style.minHeight = ''; });
+        var tall = Math.max.apply(null, heads.map(function (h) { return h.offsetHeight; }));
+        heads.forEach(function (h) { h.style.minHeight = tall + 'px'; });
+      }
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      var cs = getComputedStyle(vp);
+      inner = vp.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+      step = cards[0].getBoundingClientRect().width + gap;
+      /* the furthest right edge — a wrapped grid never passes the window */
+      var right = 0;
+      cards.forEach(function (c) { right = Math.max(right, c.offsetLeft + c.offsetWidth); });
+      maxOff = Math.max(0, right - cards[0].offsetLeft - inner);
+      if (maxOff < 1) maxOff = 0;
+      last = step && maxOff ? Math.ceil(maxOff / step - 0.01) : 0;
+      vp.classList.toggle('is-static', !last);
+      if (ui) ui.hidden = !last;
+      /* one dot per resting position */
+      if (dotsBox && dots.length !== last + 1) {
+        dotsBox.innerHTML = '';
+        dots = [];
+        for (var i = 0; last && i <= last; i++) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.tabIndex = -1;
+          b.setAttribute('aria-label', 'Go to ' + (i + 1) + ' of ' + (last + 1));
+          b.addEventListener('click', (function (n) { return function () { hold(); go(n); }; })(i));
+          dotsBox.appendChild(b);
+          dots.push(b);
+        }
+      }
+      go(at, false);
+    }
+
+    /* ---- drag / swipe: sideways moves the rail, vertical scrolls the page ---- */
+    var down = false, decided = false, mine = false, moved = false, x0 = 0, y0 = 0, dx = 0, t0 = 0, pid = null;
+    vp.addEventListener('pointerdown', function (e) {
+      if (!last || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      down = true; decided = false; mine = false; moved = false;
+      x0 = e.clientX; y0 = e.clientY; dx = 0; t0 = Date.now(); pid = e.pointerId;
+    });
+    vp.addEventListener('pointermove', function (e) {
+      if (!down || e.pointerId !== pid) return;
+      dx = e.clientX - x0;
+      var dy = e.clientY - y0;
+      if (!decided) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        decided = true;
+        mine = Math.abs(dx) > Math.abs(dy);
+        if (!mine) { down = false; return; }
+        dragging = true;
+        vp.classList.add('is-dragging');
+        if (e.pointerType === 'mouse') { try { vp.setPointerCapture(pid); } catch (err) { /* fine without */ } }
+      }
+      moved = true;
+      /* the track follows the finger for one card, then resists — as it
+         does past either end — since a swipe only ever moves one card */
+      var base = offsetFor(at), off = base - dx;
+      var lo = Math.max(0, base - step), hi = Math.min(maxOff, base + step);
+      if (off < lo) off = lo - (lo - off) * 0.3;
+      else if (off > hi) off = hi + (off - hi) * 0.3;
+      place(off, false);
+    });
+    function release(e) {
+      if (!down || (e && e.pointerId !== pid)) return;
+      down = false;
+      if (!mine) return;
+      mine = false; dragging = false;
+      vp.classList.remove('is-dragging');
+      hold();
+      var speed = Math.abs(dx) / Math.max(1, Date.now() - t0);
+      var n = Math.abs(dx) > 40 || (Math.abs(dx) > 20 && speed > 0.35) ? 1 : 0;
+      go(at + (dx < 0 ? n : -n));
+    }
+    vp.addEventListener('pointerup', release);
+    vp.addEventListener('pointercancel', release);
+    vp.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    vp.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    /* a sideways two-finger swipe on a trackpad moves one card */
+    var acc = 0, lock = 0;
+    vp.addEventListener('wheel', function (e) {
+      if (!last || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      hold();
+      if (Date.now() < lock) return;
+      acc += e.deltaX;
+      if (Math.abs(acc) > 50) { go(at + (acc > 0 ? 1 : -1)); acc = 0; lock = Date.now() + 600; }
+    }, { passive: false });
+
+    /* tabbing onto a card out of view brings it into the window */
+    vp.addEventListener('focusin', function (e) {
+      vp.scrollLeft = 0;
+      var c = cards.filter(function (k) { return k.contains(e.target); })[0];
+      if (!c || !last || inView(c)) return;
+      hold();
+      go(cards.indexOf(c));
+    });
+
+    if (fine) {
+      vp.addEventListener('mouseenter', function () { hovering = true; });
+      vp.addEventListener('mouseleave', function () { hovering = false; hold(); });
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; }, { threshold: 0.35 }).observe(vp);
+    } else { onScreen = true; }
+
+    /* the arrows: exactly one card per click; past either end they wrap,
+       the same way the autoplay rewinds */
+    var prev = $(o.prev), next = $(o.next);
+    if (prev) prev.addEventListener('click', function () { hold(); go(at <= 0 ? last : at - 1); });
+    if (next) next.addEventListener('click', function () { hold(); go(at >= last ? 0 : at + 1); });
+
+    /* the one clock: move a card, or rewind from the end */
+    if (!reduced) {
+      setInterval(function () {
+        if (!last || !onScreen || hovering || dragging || document.hidden || Date.now() < holdUntil) return;
+        if (o.openSel && cards.some(function (c) { return c.matches(o.openSel) && inView(c); })) return;
+        go(at >= last ? 0 : at + 1);
+      }, INTERVAL);
+    }
+
+    measure();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    window.addEventListener('load', measure);
+    window.addEventListener('resize', debounce(measure, 150));
+    return { go: go, at: function () { return at; }, last: function () { return last; } };
+  }
+  window.SAPOTR.industries = rail({ vp: '#ind-vp', track: '#ind-track', dots: '#ind-dots', prev: '#ind-prev', next: '#ind-next', openSel: '.is-open', equal: '.ind-q' });
+  window.SAPOTR.safety = rail({ vp: '#safe-vp', track: '#safe-grid', dots: '#safe-dots', prev: '#safe-prev', next: '#safe-next' });
+
+  /* ───── 10 · Accordions — industries (any number open) and FAQ (one at a time) ───── */
   function accordion(root, btnSel, single) {
     if (!root) return;
     var btns = $$(btnSel, root);
@@ -545,10 +722,10 @@
       });
     });
   }
-  accordion($('#ind-grid'), '.ind-btn', false);
+  accordion($('#ind-track'), '.ind-q', false);
   accordion($('#acc'), '.acc-q', true);
 
-  /* ───── 10 · Count-up numbers + section cues ───── */
+  /* ───── 11 · Count-up numbers + section cues ───── */
   $$('[data-count]').forEach(function (el) {
     var target = parseInt(el.dataset.count, 10) || 0;
     if (reduced || !('IntersectionObserver' in window)) { el.textContent = String(target); return; }
@@ -566,7 +743,7 @@
   /* the dashed road under the three hire steps fills in once */
   once($('#journey'), function (el) { el.classList.add('in'); }, { threshold: 0.3 });
 
-  /* ───── 11 · Store links + back to top ─────
+  /* ───── 12 · Store links + back to top ─────
      Paste the live listings here once the apps are published; every
      store badge and "Download the App" button picks them up. Until
      then they stay placeholders that simply do nothing. */
@@ -597,7 +774,7 @@
     if (location.hash) history.replaceState(null, '', location.pathname + location.search);
   });
 
-  /* ───── 12 · Micro-interactions: spotlight + magnet ───── */
+  /* ───── 13 · Micro-interactions: spotlight + magnet ───── */
   if (fine && !reduced) {
     $$('[data-spot]').forEach(function (el) {
       el.addEventListener('pointermove', function (e) {

@@ -9,8 +9,9 @@ build step, no dependencies.
 ## Structure
 
     index.html      header (About Us dropdown), hero (6 banners), category ticker,
-                    benefits bento, industry cards (details on demand), safety & trust,
-                    testimonials, growth, 3 hire steps, FAQ (2 columns), CTA, footer
+                    benefits bento, industry card rail (details on demand), safety & trust
+                    (card rail on phones), testimonials, growth, 3 hire steps, FAQ
+                    (2 columns), CTA, footer
                     · FAQPage + Organization JSON-LD
     about.html      hero, how SAPOTR got its name, the problem, then mission, vision
                     and the SAPOTR advantage as a zig-zag, get in touch, careers,
@@ -18,8 +19,9 @@ build step, no dependencies.
     styles.css      one stylesheet for both pages: tokens, sections, responsive,
                     reduced motion
     script.js       one script for both pages: header + dropdown, reveals,
-                    carousel engine (hero + testimonials), ticker loop,
-                    accordions (industries + FAQ), count-up, store links, back to top
+                    carousel engine (hero + testimonials), ticker loop, card rails
+                    (industries + safety), accordions (industries + FAQ), count-up,
+                    store links, back to top
     assets/img/     web-ready WebP crops of the photos listed in CREDITS.md
 
 ## Local preview
@@ -40,12 +42,29 @@ The hero and the testimonials run on one engine (`carousel()` in `script.js`):
   quote), when off screen and when the tab is hidden. With reduced motion there
   is no autoplay.
 
+The industry cards and, on phones, the safety cards run on a second engine
+(`rail()` in `script.js`), the frozen site's work-types rail:
+
+- Cards sit side by side and the track slides: three per view on a desktop,
+  two on a tablet, one wide card (the next one peeking in) on a phone. How many
+  show is set in CSS (`--rail-per`, and the card width under 680px); the script
+  only measures.
+- Arrows, dots, a swipe or mouse drag and a sideways trackpad scroll each move
+  exactly one card; the arrows wrap at either end. Autoplay moves one card
+  every 4.2 s and rewinds at the end.
+- Autoplay waits 5 s after any touch, and pauses on hover, while an opened
+  industry card is in view, off screen, in a hidden tab, and always with
+  reduced motion. Tabbing to a card out of view brings it in.
+- When every card already fits (the safety cards above 680px) the rail is
+  static and its arrows and dots are hidden. Without JavaScript each rail is a
+  plain scroll-snapping row.
+
 ## Before launch
 
 - **Testimonial photos** (`assets/img/tm-*.webp`) are stock placeholders. Swap
   each one for the real customer's own photo, with their consent — stock
   licences do not allow a model to appear to endorse a product.
-- **Store links**: set `APP_LINKS` at the top of section 11 in `script.js`; every
+- **Store links**: set `APP_LINKS` at the top of section 12 in `script.js`; every
   "Download the App" button and store badge picks them up. Until then they are
   placeholders that do nothing (as on the Staff Partner site).
 - **Social links** in both footers are placeholders (`data-placeholder`).
