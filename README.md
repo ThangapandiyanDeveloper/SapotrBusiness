@@ -9,9 +9,9 @@ build step, no dependencies.
 ## Structure
 
     index.html      header (About Us dropdown), hero (6 banners), category ticker,
-                    benefits bento, industry card rail (details on demand), safety & trust
-                    (card rail on phones), testimonials, growth, 3 hire steps, FAQ
-                    (2 columns), CTA, footer
+                    benefits (four picture-led zig-zag rows), industry card rail
+                    (details on demand), safety & trust (card rail on phones),
+                    testimonials, growth, 3 hire steps, FAQ (2 columns), CTA, footer
                     · FAQPage + Organization JSON-LD
     about.html      hero, how SAPOTR got its name, the problem, then mission, vision
                     and the SAPOTR advantage as a zig-zag, get in touch, careers,

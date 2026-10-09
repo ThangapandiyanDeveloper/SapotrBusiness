@@ -404,27 +404,32 @@ figure{margin:0}
 
 /* 4 · last-minute support for urgent work */
 .hs--urgent .hs-bg{background:var(--navy)}
-.hs--urgent .hs-photo{object-position:65% 50%}
+/* Banner6.jpg puts the SAPOTR mid-frame with a checklist on the right. The photo
+   keeps to the right two-thirds, and the cut follows the headline (page margin +
+   headline width + a gap) rather than a fixed share of the screen, so the
+   headline, the bands and his face never meet at any width. */
+.hs--urgent{--b4-cut:calc(max(24px,(100% - 1240px) / 2) + min(470px,35%) + 16px)}
+.hs--urgent .hs-photo{left:auto;width:68%;object-position:100% 50%;transform-origin:70% 30%}
 .hs--urgent.is-active .hs-photo{animation:kb 12s var(--ease) both}
 .b4-panel{position:absolute;inset:0;background:linear-gradient(125deg,#0A1030 0%,#0F1738 55%,#17225A 100%);
-  clip-path:polygon(0 0,57% 0,45% 100%,0 100%)}
+  clip-path:polygon(0 0,calc(var(--b4-cut) + 2.5%) 0,calc(var(--b4-cut) - 2.5%) 100%,0 100%)}
 /* three brand bands along the cut, drawn like the mark's swooshes */
 .b4-stripe{position:absolute;inset:0;pointer-events:none;
   mask-image:linear-gradient(180deg,transparent 0,transparent calc(var(--head-h) + 6px),#000 calc(var(--head-h) + 90px));
   -webkit-mask-image:linear-gradient(180deg,transparent 0,transparent calc(var(--head-h) + 6px),#000 calc(var(--head-h) + 90px))}
 .hs--urgent .hs-bg::after{content:"";position:absolute;left:0;right:0;top:0;height:180px;background:linear-gradient(180deg,rgba(10,16,48,.8),rgba(10,16,48,0))}
-.b4-stripe--y{background:var(--yellow);clip-path:polygon(57.6% 0,58.8% 0,46.8% 100%,45.6% 100%)}
-.b4-stripe--r{background:var(--red);clip-path:polygon(59.6% 0,60.8% 0,48.8% 100%,47.6% 100%)}
-.b4-stripe--c{background:var(--cyan);clip-path:polygon(61.6% 0,62.8% 0,50.8% 100%,49.6% 100%)}
+.b4-stripe--y{background:var(--yellow);clip-path:polygon(calc(var(--b4-cut) + 3.1%) 0,calc(var(--b4-cut) + 4.3%) 0,calc(var(--b4-cut) - .7%) 100%,calc(var(--b4-cut) - 1.9%) 100%)}
+.b4-stripe--r{background:var(--red);clip-path:polygon(calc(var(--b4-cut) + 5.1%) 0,calc(var(--b4-cut) + 6.3%) 0,calc(var(--b4-cut) + 1.3%) 100%,calc(var(--b4-cut) + .1%) 100%)}
+.b4-stripe--c{background:var(--cyan);clip-path:polygon(calc(var(--b4-cut) + 7.1%) 0,calc(var(--b4-cut) + 8.3%) 0,calc(var(--b4-cut) + 3.3%) 100%,calc(var(--b4-cut) + 2.1%) 100%)}
 .hs--urgent.is-active .b4-stripe{animation:b4-band 1s var(--ease) both}
 .hs--urgent.is-active .b4-stripe--r{animation-delay:.12s}
 .hs--urgent.is-active .b4-stripe--c{animation-delay:.24s}
 @keyframes b4-band{from{opacity:0;translate:0 -40px}to{opacity:1;translate:0 0}}
-.b4-inner .hs-copy{max-width:min(560px,42%)}
-.b4-title{line-height:1.2}
+.b4-inner .hs-copy{max-width:min(470px,35%)}
+.b4-title{font-size:calc(var(--ht) * .92);line-height:1.2}
 .b4-name{display:block}
 .b4-line{display:block}
-.b4-card{position:absolute;z-index:3;width:300px;right:max(24px,calc((100% - 1240px) / 2));top:50%;translate:0 -42%;
+.b4-card{position:absolute;z-index:3;width:300px;right:max(24px,calc((100% - 1240px) / 2));bottom:calc(var(--ui-h) + clamp(18px,3.2vh,40px));
   display:flex;flex-direction:column;gap:12px;padding:16px;background:rgba(255,255,255,.97);color:var(--ink);border-radius:20px;
   box-shadow:0 30px 70px rgba(0,0,0,.4)}
 .hs--urgent.is-active .b4-card{animation:pop .7s var(--ease) .8s both}
@@ -531,115 +536,60 @@ figure{margin:0}
 .ticker-row:hover .ticker-inner{animation-play-state:paused}
 @keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 
-/* ───── 9 · How SAPOTR benefits you — a bento of four tiles ─────
-   One SAPOTR tile, three drawn ones; every point keeps its own icon.
-   The backdrop borrows the frozen site's "why" language: soft brand
-   blobs, a dot field and the three swooshes. */
-.bn-sec{overflow:hidden;isolation:isolate;background:linear-gradient(180deg,#FFFFFF 0%,#F6FAFB 52%,#FFFFFF 100%)}
-.bn-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.bn-blob{position:absolute;border-radius:50%;filter:blur(70px)}
-.bn-blob--c{width:440px;height:440px;left:-140px;top:12%;background:rgba(18,199,199,.16)}
-.bn-blob--y{width:520px;height:520px;right:-160px;top:38%;background:rgba(255,193,7,.16)}
-.bn-blob--r{width:340px;height:340px;left:30%;bottom:-180px;background:rgba(255,75,43,.08)}
-.bn-dots{position:absolute;right:6%;top:6%;width:220px;height:150px;opacity:.55;
-  background-image:radial-gradient(rgba(15,23,56,.18) 1.4px,transparent 1.4px);background-size:18px 18px}
-.bn-swoosh{position:absolute;left:-8%;bottom:-6%;width:70%;height:42%}
-.bn-swoosh path{fill:none;stroke-width:30;stroke-linecap:round;opacity:.1}
+/* ───── 9 · How SAPOTR benefits you — four benefits, each told with a picture ─────
+   A left-aligned lead, then picture and points in turn, the About page's
+   zig-zag (.bn--flip puts the picture first). The points use the frozen
+   site's benefit language: a tinted icon chip beside plain text, divided by
+   hairlines instead of boxed. One accent per benefit, nothing louder. */
+.bn-intro{max-width:900px}
+.bn-intro::before{content:"";display:block;width:72px;height:4px;margin-bottom:24px;border-radius:2px;
+  background:linear-gradient(90deg,var(--yellow) 0 33.3%,var(--red) 33.3% 66.6%,var(--cyan) 66.6%)}
+.bn-lead{margin:0;max-width:34ch;font-size:clamp(24px,2.5vw,34px);font-weight:700;line-height:1.32;letter-spacing:-.02em;word-spacing:.08em;color:var(--ink);text-wrap:balance}
 
-.bn-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px;margin-top:var(--title-gap)}
-.bn{--acc:var(--cyan);--acc-soft:rgba(18,199,199,.1);--acc-ink:var(--cyan-ink);
-  position:relative;display:flex;flex-direction:column;min-width:0;padding:34px;background:#fff;border:1px solid var(--line);
-  border-radius:var(--r-xl);overflow:hidden;isolation:isolate;box-shadow:0 1px 2px rgba(15,23,56,.04),0 18px 44px rgba(15,23,56,.06)}
-.js .bn[data-r]{transition:opacity .7s var(--ease),transform .7s var(--ease),box-shadow .35s var(--ease),border-color .3s var(--ease)}
-.bn:hover{box-shadow:0 2px 4px rgba(15,23,56,.04),0 28px 60px rgba(15,23,56,.11);border-color:var(--line-2)}
-.js .bn[data-r].in:hover{transform:translateY(-4px)}
-/* a soft accent glow tucked into each tile's corner */
-.bn::before{content:"";position:absolute;right:-70px;top:-70px;z-index:-1;width:220px;height:220px;border-radius:50%;
-  background:radial-gradient(circle,var(--acc-soft),transparent 70%)}
-/* cursor spotlight — the tile lights up under the pointer */
-.bn::after{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s var(--ease);
-  background:radial-gradient(460px circle at var(--mx,50%) var(--my,50%),var(--acc-soft),transparent 62%)}
-.bn:hover::after{opacity:1}
-.bn--crisis{grid-column:span 7}
-.bn--time{grid-column:span 5;background:linear-gradient(180deg,#EEF9F9 0%,#FFFFFF 46%);border-color:rgba(18,199,199,.24)}
-.bn--grow{grid-column:span 5;--acc:var(--yellow);--acc-soft:rgba(255,193,7,.16);--acc-ink:var(--yellow-ink);
-  background:linear-gradient(180deg,#FFF7E2 0%,#FFFFFF 46%);border-color:rgba(255,193,7,.32)}
-.bn--cost{grid-column:span 7;--acc:var(--red);--acc-soft:rgba(255,75,43,.08);--acc-ink:var(--red-ink);
-  background:linear-gradient(180deg,#FFF3F0 0%,#FFFFFF 50%);border-color:rgba(255,75,43,.18)}
-.bn-head{display:flex;align-items:center;gap:16px;margin-bottom:24px}
-.bn-ic{display:grid;place-items:center;width:52px;height:52px;flex:none;border-radius:16px;background:var(--acc-soft);color:var(--acc-ink);transition:transform .3s var(--ease)}
-.bn-ic .ic{width:25px;height:25px}
-.bn:hover .bn-ic{transform:scale(1.06) rotate(-4deg)}
-.bn-title{margin:0;font-size:var(--box-title);font-weight:800;line-height:1.3;text-wrap:balance}
-.bn-list{display:flex;flex-direction:column;gap:14px}
-.bn-list li{display:flex;align-items:flex-start;gap:13px;font-size:15.5px;font-weight:600;line-height:1.5;color:var(--ink-2)}
-.bn-li-ic{display:grid;place-items:center;width:30px;height:30px;flex:none;margin-top:-3px;border-radius:9px;background:var(--acc-soft);color:var(--acc-ink)}
-.bn-li-ic .ic{width:16px;height:16px;stroke-width:2}
-.bn-viz{position:relative;margin-bottom:28px}
+.bn{--acc-soft:rgba(18,199,199,.12);--acc-ink:var(--cyan-ink);
+  --stage:linear-gradient(165deg,#EFFAFA 0%,#D6F2F2 100%);--disc:radial-gradient(circle at 40% 35%,#5FE0E0,var(--cyan) 58%,#0AA9A9);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:clamp(40px,6vw,96px);margin-top:clamp(80px,8vw,120px)}
+.bn-intro + .bn{margin-top:clamp(48px,5vw,72px)}
+.bn--flip{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.bn--flip .bn-stage{order:-1}
+.bn--crisis{--acc-soft:rgba(255,75,43,.1);--acc-ink:var(--red-ink);
+  --stage:linear-gradient(165deg,#FFF5F2 0%,#FFDDD4 100%);--disc:radial-gradient(circle at 40% 35%,#FF8F75,var(--red) 60%,#E5391B)}
+.bn--grow{--acc-soft:rgba(255,193,7,.18);--acc-ink:var(--yellow-ink);
+  --stage:linear-gradient(165deg,#FFF9E8 0%,#FFEDBE 100%);--disc:radial-gradient(circle at 40% 35%,#FFD34D,var(--yellow) 60%,#F5B400)}
+.bn--cost{--acc-soft:rgba(15,23,56,.07);--acc-ink:var(--navy);
+  --stage:linear-gradient(165deg,#F1F3FA 0%,#DFE4F2 100%);--disc:radial-gradient(circle at 40% 35%,#2B3A85,var(--navy-2) 58%,var(--navy))}
 
-/* 1 · the crisis tile: navy, the copy beside a SAPOTR standing on a yellow disc */
-.bn--crisis{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);padding:0;border-color:transparent;color:#fff;
-  background:radial-gradient(ellipse 80% 80% at 0% 0%,#1E2A63 0%,var(--navy) 62%)}
-.bn--crisis::before{background:radial-gradient(circle,rgba(18,199,199,.22),transparent 70%)}
-.bn--crisis::after{background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(255,193,7,.12),transparent 62%)}
-.bn--crisis .bn-body{padding:36px 18px 36px 36px}
-.bn--crisis .bn-title{color:#fff}
-.bn--crisis .bn-ic{background:rgba(255,193,7,.16);color:var(--yellow)}
-.bn--crisis .bn-list li{color:rgba(255,255,255,.86)}
-.bn--crisis .bn-li-ic{background:rgba(255,255,255,.08);color:var(--cyan)}
-.bn-figure{position:relative;margin:0;isolation:isolate}
-.bn-disc{position:absolute;left:50%;bottom:-14%;z-index:-1;width:min(92%,300px);aspect-ratio:1;translate:-50% 0;border-radius:50%;
-  background:radial-gradient(circle at 40% 35%,#FFD34D,var(--yellow) 60%,#F5B400)}
-.bn-disc::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1.5px dashed rgba(255,255,255,.28)}
-.bn-figure img{position:absolute;left:50%;bottom:0;width:auto;height:calc(100% - 92px);max-width:none;translate:-50% 0;object-fit:contain;object-position:50% 100%;
-  filter:drop-shadow(0 24px 40px rgba(0,0,0,.28));transition:transform .8s var(--ease)}
-.bn--crisis:hover .bn-figure img{transform:translateY(-6px)}
-.bn-toggle{position:absolute;z-index:2;left:8px;top:26px;display:flex;gap:2px;padding:4px;border-radius:13px;background:rgba(255,255,255,.96);
-  box-shadow:0 12px 30px rgba(0,0,0,.25)}
-.bn-toggle i{padding:7px 12px;border-radius:9px;font-style:normal;font-size:12.5px;font-weight:800;color:var(--ink-2)}
-.bn.in .bn-toggle i{animation:tgl 6s var(--ease) infinite}
-.bn.in .bn-toggle i:nth-child(2){animation-delay:3s}
-@keyframes tgl{0%,6%{background:transparent;color:var(--ink-2)}10%,46%{background:var(--navy);color:#fff}50%,100%{background:transparent;color:var(--ink-2)}}
-.bn-badge{position:absolute;z-index:2;right:18px;bottom:24px}
-.bn.in .bn-badge{animation:pop .6s var(--ease) .6s both}
+/* copy: number and category, the benefit, its points */
+.bn-copy{min-width:0}
+.bn-tag{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-ink)}
+.bn-tag b{display:grid;place-items:center;min-width:40px;height:28px;padding:0 9px;border-radius:9px;background:var(--acc-soft);font-size:12.5px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.bn-title{margin:0;max-width:22ch;font-size:clamp(26px,2.5vw,36px);font-weight:800;line-height:1.18;letter-spacing:-.025em;word-spacing:.1em;color:var(--ink);text-wrap:balance}
+.bn-points{display:flex;flex-direction:column;margin-top:clamp(24px,2.6vw,32px);border-top:1px solid var(--line)}
+.bn-points li{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:16.5px;font-weight:600;line-height:1.5;color:var(--ink-2);text-wrap:pretty}
+.bn-ic{display:grid;place-items:center;width:42px;height:42px;flex:none;border-radius:13px;background:var(--acc-soft);color:var(--acc-ink);transition:transform .3s var(--ease)}
+.bn-ic .ic{width:20px;height:20px}
+.bn-points li:hover .bn-ic{transform:scale(1.08) rotate(-4deg)}
+.bn-copy.in .bn-points li{animation:bn-in .6s var(--ease) backwards}
+.bn-copy.in .bn-points li:nth-child(1){animation-delay:.15s}.bn-copy.in .bn-points li:nth-child(2){animation-delay:.23s}
+.bn-copy.in .bn-points li:nth-child(3){animation-delay:.31s}.bn-copy.in .bn-points li:nth-child(4){animation-delay:.39s}
+.bn-copy.in .bn-points li:nth-child(5){animation-delay:.47s}.bn-copy.in .bn-points li:nth-child(6){animation-delay:.55s}
+@keyframes bn-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* 2 · time: the old way struck through, minutes on the clock */
-.tv{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-radius:18px;background:#fff;border:1px solid rgba(18,199,199,.24);
-  box-shadow:0 10px 26px rgba(15,23,56,.05)}
-.tv-chips{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.tv-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:10px;background:var(--tint);white-space:nowrap;
-  font-size:13px;font-weight:700;color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:transparent;
-  transition:text-decoration-color .4s var(--ease) calc(.5s + var(--i) * .25s)}
-.tv-chip .ic{width:20px;height:20px;padding:4px;box-sizing:border-box;border-radius:50%;background:rgba(255,75,43,.12);color:var(--red);stroke-width:3}
-.bn.in .tv-chip{text-decoration-color:rgba(255,75,43,.65)}
-.tv-clock{position:relative;display:grid;place-items:center;width:104px;height:104px;flex:none}
-.tv-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.tv-ring circle{fill:none;stroke:var(--line);stroke-width:7}
-.tv-ring .tv-run{stroke:var(--cyan);stroke-linecap:round;stroke-dasharray:264;stroke-dashoffset:264;transition:stroke-dashoffset 1.6s var(--ease) .6s}
-.bn.in .tv-run{stroke-dashoffset:64}
-.tv-clock b{position:relative;font-size:14px;font-weight:800;color:var(--ink)}
-
-/* 3 · growth: rising bars, every shift covered */
-.gv{display:flex;align-items:flex-end;height:128px;padding:16px 18px 0;border-radius:18px;background:#fff;border:1px solid rgba(255,193,7,.32);overflow:hidden;
-  box-shadow:0 10px 26px rgba(15,23,56,.05)}
-.gv-bars{display:flex;align-items:flex-end;gap:9px;flex:1;height:100%;padding-right:130px}
-.gv-bars i{flex:1;height:0;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,var(--yellow),rgba(255,193,7,.22));transition:height .9s var(--ease) var(--d)}
-.bn.in .gv-bars i{height:var(--h)}
-.gv-chip{position:absolute;right:14px;top:16px}
-
-/* 4 · costs: the usual costs, shrinking */
-.bn--cost{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:center}
-.bn--cost .bn-viz{margin:0}
-.cv{display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:20px;color:#fff;
-  background:radial-gradient(ellipse 90% 90% at 100% 0%,#1E2A63 0%,var(--navy) 65%);box-shadow:0 22px 50px rgba(15,23,56,.2)}
-.cv-mark{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.08)}
-.cv-mark img{width:28px;height:auto}
-.cv-row{display:flex;flex-direction:column;gap:8px}
-.cv-row b{font-size:13px;font-weight:700;color:rgba(255,255,255,.84)}
-.cv-row i{position:relative;display:block;height:10px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden}
-.cv-row i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:inherit;background:linear-gradient(90deg,var(--red),#ff8a6e);
-  transition:width 1.3s var(--ease) calc(.5s + var(--i) * .2s)}
-.bn.in .cv-row i::after{width:var(--w)}
+/* picture: the SAPOTR on a brand disc, in a soft framed stage */
+.bn-stage{position:relative;margin:0;height:clamp(440px,42vw,580px);border-radius:var(--r-xl);background:var(--stage);overflow:hidden;isolation:isolate}
+.bn-stage::before{content:"";position:absolute;inset:0;z-index:-2;opacity:.55;
+  background-image:radial-gradient(rgba(15,23,56,.12) 1.2px,transparent 1.2px);background-size:18px 18px;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 80%);mask-image:linear-gradient(180deg,#000,transparent 80%)}
+.bn-disc{position:absolute;left:50%;bottom:13%;z-index:-1;width:min(76%,430px);aspect-ratio:1;translate:-50% 0;border-radius:50%;background:var(--disc);
+  opacity:0;transform:scale(.9);transition:opacity .8s var(--ease),transform 1s var(--ease)}
+.bn-disc::after{content:"";position:absolute;inset:-16px;border-radius:50%;border:1.5px dashed rgba(15,23,56,.16)}
+.bn-stage img{position:absolute;left:50%;bottom:0;width:auto;height:93%;max-width:92%;object-fit:contain;object-position:50% 100%;translate:-50% 0;
+  filter:drop-shadow(0 22px 26px rgba(15,23,56,.2));opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease) .1s,transform 1s var(--ease) .1s}
+.bn-stage.in .bn-disc,.bn-stage.in img{opacity:1;transform:none}
+/* full-length figures stand on a soft shadow, clear of the frame's edge */
+.bn-stage--floor img{bottom:5%;height:89%}
+.bn-stage--floor::after{content:"";position:absolute;left:50%;bottom:3.2%;z-index:-1;width:min(60%,300px);height:24px;translate:-50% 0;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(15,23,56,.26),transparent)}
 
 /* ───── 10 · Businesses across NZ — the frozen site's card rail ─────
    The rail (also used by the safety cards on phones) is the frozen
@@ -860,62 +810,86 @@ figure{margin:0}
 
 /* ───── 14 · Hire a SAPOTR — the frozen site's three steps ─────
    Same cards, road and mini phones as "Become a SAPOTR"; the screens
-   carry the Business steps instead of the worker's. */
+   carry the first Business version's app screens. */
 .journey{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.4vw,30px);margin-top:var(--title-gap)}
 /* the dashed road between the three step badges, filled as it enters view */
-.journey::before,.journey::after{content:"";position:absolute;top:270px;left:48px;right:calc((100% - 2 * clamp(20px,2.4vw,32px)) / 3 - 48px);height:2px;margin-top:-1px}
+.journey::before,.journey::after{content:"";position:absolute;top:368px;left:48px;right:calc((100% - 2 * clamp(20px,2.4vw,32px)) / 3 - 48px);height:2px;margin-top:-1px}
 .journey::before{background:repeating-linear-gradient(90deg,var(--line-2) 0 8px,transparent 8px 16px)}
 .journey::after{background:linear-gradient(90deg,var(--cyan),var(--yellow),var(--red));transform:scaleX(0);transform-origin:left;transition:transform 1.8s var(--ease) .3s}
 .journey.in::after{transform:scaleX(1)}
 .step{position:relative;display:flex;flex-direction:column}
-.step-viz{position:relative;height:270px;border-radius:var(--r-xl);overflow:hidden}
+.step-viz{position:relative;height:368px;border-radius:var(--r-xl);overflow:hidden}
 .sx-1{background:linear-gradient(165deg,#EFFAFA,#D6F2F2)}
 .sx-2{background:linear-gradient(165deg,#FFF8E6,#FFECBA)}
 .sx-3{background:linear-gradient(165deg,#FFF2EF,#FFDAD1)}
 .step-viz::before{content:"";position:absolute;inset:0;opacity:.5;background-image:radial-gradient(rgba(15,23,56,.12) 1.2px,transparent 1.2px);background-size:18px 18px}
-.mini-phone{position:absolute;left:50%;bottom:-34px;display:flex;flex-direction:column;gap:9px;width:190px;height:290px;padding:22px 14px;
-  transform:translateX(-50%) translateY(20px);background:#fff;border:7px solid var(--navy);border-radius:32px;box-shadow:0 30px 60px rgba(15,23,56,.22);
-  transition:transform .8s var(--ease)}
-.step.in .mini-phone{transform:translateX(-50%)}
-.step:hover .mini-phone{transform:translateX(-50%) translateY(-6px)}
-.mp-app{display:grid;place-items:center;width:52px;height:52px;margin:0 auto;border-radius:15px;background:var(--navy)}
-.mp-app img{width:30px;height:auto}
-.mp-name{text-align:center;font-size:12.5px;font-weight:800;color:var(--ink);line-height:1.2}
-.mp-dl{display:grid;place-items:center;width:34px;height:34px;margin:0 auto 4px;border-radius:50%;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(255,75,43,.4)}
-.mp-dl .ic{width:18px;height:18px;stroke-width:2.4}
-.mp-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:var(--tint);font-size:12px;font-weight:700;color:var(--ink-2)}
-.mp-row .ic{width:16px;height:16px;padding:2px;border-radius:50%;background:var(--cyan);color:#fff;stroke-width:3;box-sizing:content-box}
-.mp-badge{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 6px;border-radius:10px;background:var(--navy);color:#fff;font-size:11.5px;font-weight:800;white-space:nowrap}
-.mp-badge .ic{width:16px;height:16px;color:var(--cyan)}
-.step.in .sx-1 .mp-row,.step.in .sx-1 .mp-badge{animation:hs-rise .5s var(--ease) both;animation-delay:calc(.5s + var(--i,2) * .2s)}
-.mp-job{display:flex;align-items:center;gap:9px;padding:10px;border-radius:13px;border:1px solid var(--line);box-shadow:0 8px 20px rgba(15,23,56,.08)}
-.mp-job .ocard-ic{width:34px;height:34px}
-.mp-job .ocard-ic .ic{width:18px;height:18px}
-.mp-job .ocard-t small{font-size:10px}
-.mp-job .ocard-t b{font-size:12.5px}
-.mp-pick{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.mp-pick i{display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 4px;border-radius:9px;background:var(--tint);font-style:normal;font-size:11.5px;font-weight:800;color:var(--ink-2)}
-.mp-pick .ic{width:13px;height:13px;color:var(--cyan-ink)}
-.mp-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.mp-days i{display:grid;place-items:center;height:24px;border-radius:7px;background:var(--tint);font-style:normal;font-size:10.5px;font-weight:800;color:var(--ink-3)}
-.mp-days i.on{background:var(--yellow);color:var(--navy)}
-.mp-accept{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:auto;margin-bottom:26px;padding:11px;border-radius:12px;background:var(--red);color:#fff;
-  font-size:13.5px;font-weight:800;box-shadow:0 10px 22px rgba(255,75,43,.35)}
-.mp-accept .ic{width:16px;height:16px;stroke-width:3}
-.step.in .mp-accept{animation:tap 2.4s var(--ease) 1s infinite}
-@keyframes tap{0%,70%,100%{transform:scale(1)}78%{transform:scale(.94)}86%{transform:scale(1.02)}}
-.mp-done{display:grid;place-items:center}
-.mp-done svg{width:58px;height:58px;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.mp-done circle{stroke:rgba(18,199,199,.25);stroke-width:4}
-.mp-done path{stroke:var(--cyan);stroke-width:4.5;stroke-dasharray:36;stroke-dashoffset:36;transition:stroke-dashoffset .7s var(--ease) .5s}
-.step.in .mp-done path{stroke-dashoffset:0}
-.mp-stars{display:flex;justify-content:center;gap:3px;color:var(--yellow)}
-.mp-stars .ic{width:19px;height:19px;fill:currentColor;stroke-width:1;opacity:0;transform:scale(.4);transition:opacity .3s,transform .4s var(--ease)}
-.step.in .mp-stars .ic{opacity:1;transform:none}
-.step.in .mp-stars .ic:nth-child(1){transition-delay:.9s}.step.in .mp-stars .ic:nth-child(2){transition-delay:1s}
-.step.in .mp-stars .ic:nth-child(3){transition-delay:1.1s}.step.in .mp-stars .ic:nth-child(4){transition-delay:1.2s}
-.step.in .mp-stars .ic:nth-child(5){transition-delay:1.3s}
-.mp-row--pay .ic{background:var(--yellow);color:var(--navy)}
+/* the phone: centred, shrinking a little on a narrow card and kept clear of
+   the step badge that sits on the card's bottom-left corner */
+.mini-phone{--pw:min(248px,100% - 88px);position:absolute;left:max(78px,50% - var(--pw) / 2);bottom:-34px;display:flex;flex-direction:column;
+  width:var(--pw);height:384px;padding:22px 18px;transform:translateY(20px);background:#fff;border:7px solid var(--navy);border-radius:32px;
+  box-shadow:0 30px 60px rgba(15,23,56,.22);transition:transform .8s var(--ease)}
+.step.in .mini-phone{transform:none}
+.step:hover .mini-phone{transform:translateY(-6px)}
+/* inside each phone: the first Business version's app screens, scaled to
+   the mini phone. All three show at once, so each one plays its moment
+   (account ready · finding → matched · tracked, paid, rated) when its
+   step comes into view. */
+.hp-view{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:10px}
+.hp-h,.hp-btn,.hp-ok,.hp-match,.hp-pay,.hp-track li{white-space:nowrap}
+.hp-h{font-size:14px;font-weight:800;line-height:1.25;letter-spacing:-.02em;color:var(--ink)}
+.hp-app{display:grid;place-items:center;justify-self:center;width:44px;height:44px;margin-top:2px;border-radius:13px;background:var(--navy);box-shadow:0 10px 22px rgba(15,23,56,.25)}
+.hp-app img{width:26px;height:auto}
+.sx-1 .hp-h{text-align:center;margin-bottom:2px}
+.hp-field{display:flex;flex-direction:column;gap:2px;padding:8px 11px;border-radius:10px;background:#fff;border:1px solid var(--line);
+  font-size:12px;font-weight:700;line-height:1.3;color:var(--ink);white-space:nowrap}
+.hp-field small{font-size:9px;font-weight:700;color:var(--ink-3)}
+.hp-btn{display:grid;place-items:center;padding:9px;border-radius:10px;background:var(--navy);color:#fff;font-size:12px;font-weight:800;line-height:1.25}
+.hp-btn--red{background:var(--red);box-shadow:0 8px 18px rgba(255,75,43,.3)}
+.hp-ok{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px;font-weight:800;line-height:1.25;color:var(--cyan-ink);opacity:0}
+.hp-ok .ic{width:13px;height:13px;stroke-width:3}
+.step.in .hp-ok{animation:fade-in .4s var(--ease) 1.4s both}
+.hp-lbl{font-size:9px;font-weight:800;letter-spacing:.06em;line-height:1.25;text-transform:uppercase;color:var(--ink-3)}
+/* the four roles as a two-by-two grid: the screen is too narrow for a wrapping row */
+.hp-roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.hp-roles i{display:flex;align-items:center;padding:6px 8px;border-radius:8px;background:#fff;border:1px solid var(--line);
+  font-style:normal;font-size:10px;font-weight:700;line-height:1.3;color:var(--ink-2)}
+.hp-roles i.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.hp-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:#fff;border:1px solid var(--line);
+  font-size:11px;font-weight:700;line-height:1.25;color:var(--ink);white-space:nowrap}
+.hp-row .ic{width:14px;height:14px;flex:none;color:var(--cyan-ink)}
+.hp-hrs{margin-left:auto;padding:3px 7px;border-radius:6px;background:rgba(255,193,7,.2);color:var(--yellow-ink);font-size:10px}
+/* "finding" and then "matched" take the Hire Now button's place */
+.hp-btn--red,.hp-find,.hp-match{grid-row:6;grid-column:1}
+.hp-find,.hp-match{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;opacity:0}
+.hp-find{background:var(--navy);color:#fff;font-size:11px;font-weight:800;line-height:1.25}
+.hp-find small{display:block;font-size:9px;font-weight:600;color:rgba(255,255,255,.7)}
+.hp-spin{width:16px;height:16px;flex:none;border-radius:50%;border:2px solid rgba(255,255,255,.2);border-top-color:var(--cyan)}
+.hp-match{justify-content:center;background:var(--cyan);color:var(--navy);font-size:12px;font-weight:800}
+.hp-match .ic{width:15px;height:15px;stroke-width:2.4}
+.step.in .hp-find{animation:hp-find 2.4s var(--ease) 1.2s both}
+.step.in .hp-spin{animation:spin .8s linear 1.2s 3}
+.step.in .hp-match{animation:fade-in .4s var(--ease) 3.4s both}
+@keyframes hp-find{0%{opacity:0;transform:translateY(6px)}15%,85%{opacity:1;transform:none}100%{opacity:0}}
+.hp-track{position:relative;display:flex;flex-direction:column;gap:12px;padding:12px 12px 12px 30px;border-radius:11px;background:#fff;border:1px solid var(--line)}
+.hp-track::before{content:"";position:absolute;left:14px;top:20px;bottom:20px;width:2px;background:var(--line)}
+.hp-track li{position:relative;font-size:11px;font-weight:700;line-height:1.3;color:var(--ink-3)}
+.hp-track li::before{content:"";position:absolute;left:-22px;top:1.5px;width:13px;height:13px;box-sizing:border-box;border-radius:50%;background:#fff;border:2px solid var(--line-2)}
+.step.in .hp-track li{animation:hp-step .3s var(--ease) both;animation-delay:calc(.6s + var(--i) * .5s)}
+.step.in .hp-track li::before{animation:hp-dot .3s var(--ease) both;animation-delay:calc(.6s + var(--i) * .5s)}
+@keyframes hp-step{to{color:var(--ink)}}
+@keyframes hp-dot{to{background:var(--cyan);border-color:#fff;box-shadow:0 0 0 2px var(--cyan)}}
+.hp-pay{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;background:var(--navy);color:#fff;font-size:11.5px;font-weight:800;line-height:1.25}
+.hp-pay .ic{width:14px;height:14px;color:var(--yellow)}
+.hp-pay b{margin-left:auto;padding:3px 7px;border-radius:6px;background:var(--cyan);color:var(--navy);font-size:9.5px;opacity:0}
+.step.in .hp-pay b{animation:fade-in .35s var(--ease) 2.8s both}
+.hp-pay + .hp-lbl{margin-top:4px}
+.hp-stars{display:flex;justify-content:center;gap:5px;color:var(--line-2)}
+.hp-stars .ic{width:18px;height:18px;fill:currentColor;stroke-width:1}
+.step.in .hp-stars .ic{animation:hp-star .3s var(--ease) both}
+.step.in .hp-stars .ic:nth-child(1){animation-delay:3.2s}.step.in .hp-stars .ic:nth-child(2){animation-delay:3.32s}
+.step.in .hp-stars .ic:nth-child(3){animation-delay:3.44s}.step.in .hp-stars .ic:nth-child(4){animation-delay:3.56s}
+.step.in .hp-stars .ic:nth-child(5){animation-delay:3.68s}
+@keyframes hp-star{from{transform:scale(.6)}to{color:var(--yellow);transform:none}}
 .step-n{position:relative;z-index:2;display:grid;place-items:center;width:50px;height:50px;margin:-25px 0 0 20px;border-radius:15px;border:4px solid #fff;
   background:var(--navy);color:#fff;font-size:15px;font-weight:800;letter-spacing:.02em;box-shadow:0 12px 26px rgba(15,23,56,.24)}
 .step:nth-child(2) .step-n{background:var(--yellow);color:var(--navy)}
@@ -1137,8 +1111,6 @@ figure{margin:0}
   .burger{display:flex}
   .header-actions .btn{display:none}
   .header-inner{justify-content:space-between}
-  .bn--crisis,.bn--cost{grid-column:span 12}
-  .bn--time,.bn--grow{grid-column:span 6}
 }
 
 @media (max-width:1000px){
@@ -1200,7 +1172,7 @@ figure{margin:0}
   .b4-stripe--y{clip-path:polygon(0 61.6%,100% 53.6%,100% 54.6%,0 62.6%)}
   .b4-stripe--r{clip-path:polygon(0 63.2%,100% 55.2%,100% 56.2%,0 64.2%)}
   .b4-stripe--c{clip-path:polygon(0 64.8%,100% 56.8%,100% 57.8%,0 65.8%)}
-  .hs--urgent .hs-photo{object-position:50% 70%}
+  .hs--urgent .hs-photo{top:auto;left:0;width:100%;height:42%;object-position:50% 0;transform-origin:50% 100%}
   .b4-inner{justify-content:flex-start}
   .b4-card{top:auto;bottom:calc(var(--ui-h) + 16px);right:auto;left:50%;translate:-50% 0;width:min(320px,100% - 32px);padding:12px;gap:9px}
   .b4-role{padding:8px}
@@ -1224,9 +1196,10 @@ figure{margin:0}
 }
 
 @media (max-width:860px){
-  /* one tile per row: a single column, so the wider phone gap never adds up to eleven */
-  .bn-grid{grid-template-columns:minmax(0,1fr)}
-  .bn-grid > .bn{grid-column:auto}
+  /* benefits: one column, the picture leading every benefit */
+  .bn,.bn--flip{grid-template-columns:minmax(0,1fr);gap:clamp(26px,5vw,40px);margin-top:64px}
+  .bn-stage{order:-1;height:clamp(280px,70vw,420px)}
+  .bn-title{max-width:none}
 }
 
 @media (max-width:760px){
@@ -1235,15 +1208,6 @@ figure{margin:0}
   .tm-photo{min-height:0;aspect-ratio:16/11}
   .tm-photo img{object-position:50% 24%}
   .acc{grid-template-columns:1fr}
-  .bn--crisis,.bn--cost{grid-template-columns:1fr}
-  /* the SAPOTR stands above the copy: him on the right, the two chips on the left */
-  .bn-figure{order:-1;height:300px;overflow:hidden}
-  .bn-figure img{left:auto;right:max(14px,50% - 200px);translate:none;height:92%;
-    -webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
-  .bn-disc{left:auto;right:calc(max(14px,50% - 200px) - 48px);translate:none;width:260px;bottom:-34%}
-  .bn-toggle{left:22px;top:24px;flex-direction:column}
-  .bn-badge{left:22px;right:auto;bottom:30px}
-  .bn--crisis .bn-body{padding-top:12px}
 }
 
 @media (max-width:680px){
@@ -1278,26 +1242,17 @@ figure{margin:0}
   .tk-ic{width:30px;height:30px;border-radius:9px}
   .tk-ic .ic{width:16px;height:16px}
 
-  /* benefits: one column, every point readable, nothing to swipe */
-  .bn-grid{gap:36px}
-  .bn{padding:24px 22px 26px;border-radius:var(--r-l)}
-  .bn--crisis{padding:0}
-  .bn--crisis .bn-body{padding:12px 22px 28px}
-  .bn-head{gap:14px;margin-bottom:20px}
-  .bn-ic{width:46px;height:46px;border-radius:14px}
-  .bn-ic .ic{width:22px;height:22px}
-  .bn-list{gap:16px}
-  .bn-list li{gap:12px;font-size:15.5px}
-  .bn-viz{margin-bottom:24px}
-  .tv{padding:16px}
-  .tv-clock{width:88px;height:88px}
-  .gv{height:116px}
-  .gv-bars{padding-right:120px;gap:7px}
-  .bn--cost{gap:24px}
-  .cv{padding:20px}
-  .bn-toggle i{padding:6px 10px;font-size:12px}
-  .bn-dots{right:-40px;top:2%}
-  .bn-swoosh{width:150%;left:-30%;height:28%}
+  /* benefits */
+  .bn-intro::before{width:60px;margin-bottom:20px}
+  .bn-lead{font-size:clamp(21px,5.7vw,25px);line-height:1.36}
+  .bn-intro + .bn{margin-top:44px}
+  .bn-tag{margin-bottom:12px;font-size:12px}
+  .bn-title{font-size:clamp(23px,6.4vw,28px)}
+  .bn-points{margin-top:22px}
+  .bn-points li{gap:14px;padding:13px 0;font-size:15.5px}
+  .bn-ic{width:38px;height:38px;border-radius:12px}
+  .bn-ic .ic{width:18px;height:18px}
+  .bn-stage{border-radius:var(--r-l)}
 
   /* industries */
   .ind-vp{--rail-gap:14px;margin-inline:-18px;padding-inline:18px}
@@ -1343,8 +1298,7 @@ figure{margin:0}
 
   /* hire */
   .journey{gap:52px}
-  .step-viz{height:250px;border-radius:var(--r-l)}
-  .mini-phone{width:176px;height:262px;padding:18px 12px}
+  .step-viz{border-radius:var(--r-l)}
   .step-n{width:50px;height:50px;margin:-25px 0 0 16px}
   .step h3{margin-top:20px}
   .step p{font-size:15px}
@@ -1404,19 +1358,20 @@ figure{margin:0}
 @media (max-width:380px){
   .wrap{width:calc(100% - 28px)}
   .hero{--ht:clamp(26px,7.6vw,29px)}
-  .bn-list li{font-size:15px}
-  .gv-bars{padding-right:112px}
   .ind-vp,.safe-vp{margin-inline:-14px;padding-inline:14px}
-  .bn-figure img{right:6px}
-  .mp-badge{font-size:10.5px}
   .foot-grid{grid-template-columns:1fr}
   .foot-col:last-child{grid-column:auto;grid-row:auto}
   .stat dd{font-size:26px}
   .prob-grid{grid-template-columns:1fr}
   .prob{flex-direction:row;align-items:center}
-  .tv{gap:10px;padding:14px}
-  .tv-clock{width:72px;height:72px}
-  .tv-clock b{font-size:12px}
+}
+/* portrait tablets: the job card sits in the navy above the bands, not over the photo */
+@media (min-width:681px) and (max-aspect-ratio:1/1){
+  .b4-card{bottom:calc(42% + 72px)}
+}
+/* near-square landscape screens: a slightly shorter photo keeps the SAPOTR right of the bands */
+@media (min-width:901px) and (min-aspect-ratio:1001/1000) and (max-aspect-ratio:7/5){
+  .hs--urgent .hs-photo{top:auto;height:85%}
 }
 /* short screens: keep every banner inside the frame */
 @media (max-height:700px) and (max-width:900px){
