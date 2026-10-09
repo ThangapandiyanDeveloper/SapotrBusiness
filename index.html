@@ -392,93 +392,181 @@
   </div>
 </section>
 
-<!-- ══════════ 2 · How SAPOTR benefits you — four benefits, each told with a picture ══════════
-     Copy and picture swap sides on every other benefit (.bn--flip). -->
-<section class="section bn-sec" id="benefits">
+<!-- ══════════ 2 · How SAPOTR benefits you — the frozen site's benefit bento ══════════
+     Four benefits, each a short header over a bento of key-point cards built
+     from the frozen site's card system (.tile / .tile-ic / .viz / .loop).
+     Cards are named .p1–.p6 in reading order; each group's grid template
+     places them, so the DOM (and phones, which stack it) keep the original
+     order of the points. -->
+<section class="section bf-sec" id="benefits">
   <div class="wrap">
-    <div class="bn-intro">
-      <!-- <h2 class="bn-lead" data-split><span class="hl">SAPOTR</span> supports your last-minute staffing, saves your time, helps your business grow and reduces your ongoing costs.</h2> -->
-    </div>
+    <h2 class="sec-title sec-title--center" data-split>How <span class="hl">SAPOTR</span> Benefits You?</h2>
 
     <!-- 1 · the staffing crisis -->
-    <article class="bn bn--crisis">
-      <div class="bn-copy r" data-r>
-        <p class="bn-tag"><b>01</b>Staffing Crisis</p>
-        <h3 class="bn-title"><span class="hl">SAPOTR</span> Supports My Last Min Staffing Crisis</h3>
-        <ul class="bn-points">
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-bolt"/></svg></span><span>Get Staff Support “Instantly or Schedule it” Whenever Needed</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-clock"/></svg></span><span>Get Urgent &amp; Extra Work Done On Time</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-user-check"/></svg></span><span>Get Replacement Staff When Someone Is Unavailable</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-people"/></svg></span><span>Works Independently or Works Along Your Existing Team</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-calendar"/></svg></span><span>Hire for a Few Hours, a Day, Every Week or Any Shift.</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-repeat"/></svg></span><span>Keeps Work Moving, 24/7.</span></li>
-        </ul>
+    <div class="bf bf--crisis">
+      <header class="bf-head r" data-r>
+        <p class="bf-tag"><b>01</b>Staffing Crisis</p>
+        <h3 class="bf-title"><span class="hl">SAPOTR</span> Supports My Last Min Staffing Crisis</h3>
+      </header>
+      <div class="bento">
+        <article class="tile tile--navy p1 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg></span>
+          <h4>Get Staff Support “Instantly or Schedule it”</h4>
+          <p>Whenever Needed</p>
+          <span class="viz viz-toggles" aria-hidden="true"><i><svg class="ic"><use href="#i-bolt"/></svg>Instantly</i><i><svg class="ic"><use href="#i-calendar"/></svg>Schedule it</i></span>
+        </article>
+        <article class="tile p2 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg></span>
+          <h4>Get Urgent &amp; Extra Work Done On Time</h4>
+        </article>
+        <article class="tile tile--pic p3 r" data-r data-spot>
+          <div class="pic-copy">
+            <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-user-check"/></svg></span>
+            <h4>Get Replacement Staff</h4>
+            <p>When Someone Is Unavailable</p>
+          </div>
+          <img class="pic-person" src="assets/img/bn-crisis.webp" width="717" height="1100" loading="lazy" decoding="async"
+               alt="A SAPOTR in uniform running with his backpack, on his way to help">
+        </article>
+        <article class="tile p4 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-people"/></svg></span>
+          <h4>Works Independently</h4>
+          <p>or Works Along Your Existing Team</p>
+        </article>
+        <article class="tile p5 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></span>
+          <h4>Hire for a Few Hours, a Day, Every Week or Any Shift.</h4>
+          <span class="viz viz-days" aria-hidden="true"><i>M</i><i class="on">T</i><i>W</i><i class="on">T</i><i class="on">F</i><i class="on">S</i><i>S</i></span>
+        </article>
+        <article class="tile p6 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg></span>
+          <h4>Keeps Work Moving, 24/7.</h4>
+        </article>
       </div>
-      <figure class="bn-stage bn-stage--floor r" data-r>
-        <span class="bn-disc" aria-hidden="true"></span>
-        <img src="assets/img/bn-crisis.webp" width="717" height="1100" loading="lazy" decoding="async"
-             alt="A SAPOTR in uniform running with his backpack, on his way to help">
-      </figure>
-    </article>
+    </div>
 
     <!-- 2 · time saved -->
-    <article class="bn bn--time bn--flip">
-      <div class="bn-copy r" data-r>
-        <p class="bn-tag"><b>02</b>Time Saving</p>
-        <h3 class="bn-title"><span class="hl">SAPOTR</span> Saves My Time Without Lengthy Hiring Process for Urgent Work</h3>
-        <ul class="bn-points">
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-nosearch"/></svg></span><span>No Posting / No Waiting / No Follow-Ups</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-tap"/></svg></span><span>Any One Can Directly Hire a SAPOTR.</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-search"/></svg></span><span>Our Tech Finds SAPOTR Staff in Minutes</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-repeat"/></svg></span><span>Hire. SAPOTR Arrives. Work Done. Repeat.</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-tag"/></svg></span><span>Transparent Flat Pricing. No Bargaining.</span></li>
-        </ul>
+    <div class="bf bf--time">
+      <header class="bf-head r" data-r>
+        <p class="bf-tag"><b>02</b>Time Saving</p>
+        <h3 class="bf-title"><span class="hl">SAPOTR</span> Saves My Time Without Lengthy Hiring Process for Urgent Work</h3>
+      </header>
+      <div class="bento">
+        <article class="tile p1 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-nosearch"/></svg></span>
+          <h4>No Posting / No Waiting / No Follow-Ups</h4>
+        </article>
+        <article class="tile p2 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-tap"/></svg></span>
+          <h4>Any One Can Directly Hire a SAPOTR.</h4>
+        </article>
+        <article class="tile tile--radar p3 r" data-r data-spot>
+          <span class="viz viz-radar" aria-hidden="true"><i></i><i></i><i></i><b></b><b></b><b></b></span>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg></span>
+          <h4>Our Tech Finds SAPOTR Staff in Minutes</h4>
+        </article>
+        <!-- the business loop, drawn round the SAPOTR mark like the frozen app card -->
+        <article class="tile tile--loop p4 r" data-r data-spot>
+          <div class="loop-copy">
+            <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg></span>
+            <h4>Hire. SAPOTR Arrives. Work Done. Repeat.</h4>
+          </div>
+          <div class="loop" aria-hidden="true">
+            <svg class="loop-ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="78"/><circle class="loop-run" cx="100" cy="100" r="78"/></svg>
+            <img class="loop-mark" src="assets/img/logo-mark-256.webp" alt="" width="256" height="202" loading="lazy">
+            <span class="loop-n" style="--i:0;--a:-90deg"><svg class="ic"><use href="#i-tap"/></svg><b>Hire</b></span>
+            <span class="loop-n" style="--i:1;--a:0deg"><svg class="ic"><use href="#i-pin"/></svg><b>SAPOTR Arrives</b></span>
+            <span class="loop-n" style="--i:2;--a:90deg"><svg class="ic"><use href="#i-check"/></svg><b>Work Done</b></span>
+            <span class="loop-n" style="--i:3;--a:180deg"><svg class="ic"><use href="#i-repeat"/></svg><b>Repeat</b></span>
+          </div>
+        </article>
+        <article class="tile p5 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-tag"/></svg></span>
+          <h4>Transparent Flat Pricing.</h4>
+          <p>No Bargaining.</p>
+        </article>
       </div>
-      <figure class="bn-stage bn-stage--floor r" data-r>
-        <span class="bn-disc" aria-hidden="true"></span>
-        <img src="assets/img/bn-time.webp" width="700" height="1100" loading="lazy" decoding="async"
-             alt="A smiling SAPOTR with a backpack, pointing the way">
-      </figure>
-    </article>
+    </div>
 
     <!-- 3 · growth -->
-    <article class="bn bn--grow">
-      <div class="bn-copy r" data-r>
-        <p class="bn-tag"><b>03</b>Business Growth</p>
-        <h3 class="bn-title"><span class="hl">SAPOTR</span> Helps Grow My Business</h3>
-        <ul class="bn-points">
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-trend"/></svg></span><span>Increase Revenue by Serving More Customers When Demand Increases</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-star"/></svg></span><span>Improve Customer Service by Keeping Every Shift Covered</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-heart"/></svg></span><span>Increase Existing Team Wellbeing by Sharing Excess Workload with SAPOTR</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-bars"/></svg></span><span>Increase Staff ROI by Using SAPOTR Staff On Demand and Existing Staff for Normal Days</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-shield"/></svg></span><span>Avoids Losing Business When Demand Increases</span></li>
-        </ul>
+    <div class="bf bf--grow">
+      <header class="bf-head r" data-r>
+        <p class="bf-tag"><b>03</b>Business Growth</p>
+        <h3 class="bf-title"><span class="hl">SAPOTR</span> Helps Grow My Business</h3>
+      </header>
+      <div class="bento">
+        <article class="tile tile--wash p1 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg></span>
+          <h4>Increase Revenue</h4>
+          <p>by Serving More Customers When Demand Increases</p>
+          <span class="viz viz-rise" aria-hidden="true">
+            <i style="--d:.05s;--h:34%"></i><i style="--d:.11s;--h:46%"></i><i style="--d:.17s;--h:42%"></i><i style="--d:.23s;--h:58%"></i>
+            <i style="--d:.29s;--h:66%"></i><i style="--d:.35s;--h:62%"></i><i style="--d:.41s;--h:80%"></i><i style="--d:.47s;--h:100%"></i>
+          </span>
+        </article>
+        <article class="tile tile--pic p2 r" data-r data-spot>
+          <div class="pic-copy">
+            <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg></span>
+            <h4>Improve Customer Service</h4>
+            <p>by Keeping Every Shift Covered</p>
+          </div>
+          <img class="pic-person" src="assets/img/bn-grow.webp" width="600" height="1100" loading="lazy" decoding="async"
+               alt="A SAPOTR in an apron serving two plates of food">
+        </article>
+        <article class="tile p3 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></span>
+          <h4>Increase Existing Team Wellbeing</h4>
+          <p>by Sharing Excess Workload with SAPOTR</p>
+        </article>
+        <article class="tile p4 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-bars"/></svg></span>
+          <h4>Increase Staff ROI</h4>
+          <p>by Using SAPOTR Staff On Demand and Existing Staff for Normal Days</p>
+        </article>
+        <article class="tile p5 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>
+          <h4>Avoids Losing Business</h4>
+          <p>When Demand Increases</p>
+        </article>
       </div>
-      <figure class="bn-stage r" data-r>
-        <span class="bn-disc" aria-hidden="true"></span>
-        <img src="assets/img/bn-grow.webp" width="600" height="1100" loading="lazy" decoding="async"
-             alt="A SAPOTR in an apron serving two plates of food">
-      </figure>
-    </article>
+    </div>
 
     <!-- 4 · costs -->
-    <article class="bn bn--cost bn--flip">
-      <div class="bn-copy r" data-r>
-        <p class="bn-tag"><b>04</b>Cost Savings</p>
-        <h3 class="bn-title"><span class="hl">SAPOTR</span> Reduces My Ongoing Business Costs</h3>
-        <ul class="bn-points">
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-user-minus"/></svg></span><span>Saves Cost on Permanent Hiring for Occasional Demands</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-percent"/></svg></span><span>Saves Cost on Traditional Agency Commissions</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-cup"/></svg></span><span>Saves Cost on Staff’s Unworked Break Time</span></li>
-          <li><span class="bn-ic" aria-hidden="true"><svg class="ic"><use href="#i-gift"/></svg></span><span>Saves Cost Without a Long-Term Staff Benefits &amp; Incentives</span></li>
-        </ul>
+    <div class="bf bf--cost">
+      <header class="bf-head r" data-r>
+        <p class="bf-tag"><b>04</b>Cost Savings</p>
+        <h3 class="bf-title"><span class="hl">SAPOTR</span> Reduces My Ongoing Business Costs</h3>
+      </header>
+      <div class="bento">
+        <!-- a week drawn twice: a permanent hire fills every day, occasional demand only a few -->
+        <article class="tile tile--week p1 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-user-minus"/></svg></span>
+          <h4>Saves Cost on Permanent Hiring</h4>
+          <p>for Occasional Demands</p>
+          <div class="viz viz-week2" aria-hidden="true">
+            <span class="wk-days"><i>M</i><i>T</i><i>W</i><i>T</i><i>F</i><i>S</i><i>S</i></span>
+            <span class="wk-row"><b>Permanent Hiring</b><span class="wk-cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></span>
+            <span class="wk-row wk-row--sap"><b>Occasional Demands</b><span class="wk-cells"><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i></span></span>
+          </div>
+        </article>
+        <article class="tile p2 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-percent"/></svg></span>
+          <h4>Saves Cost on Traditional Agency Commissions</h4>
+        </article>
+        <article class="tile tile--pic p3 r" data-r data-spot>
+          <div class="pic-copy">
+            <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-cup"/></svg></span>
+            <h4>Saves Cost on Staff’s Unworked Break Time</h4>
+          </div>
+          <img class="pic-person" src="assets/img/bn-cost.webp" width="729" height="1100" loading="lazy" decoding="async"
+               alt="A SAPOTR mopping the floor beside a cleaning cart">
+        </article>
+        <article class="tile p4 r" data-r data-spot>
+          <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-gift"/></svg></span>
+          <h4>Saves Cost Without a Long-Term Staff Benefits &amp; Incentives</h4>
+        </article>
       </div>
-      <figure class="bn-stage bn-stage--floor r" data-r>
-        <span class="bn-disc" aria-hidden="true"></span>
-        <img src="assets/img/bn-cost.webp" width="729" height="1100" loading="lazy" decoding="async"
-             alt="A SAPOTR mopping the floor beside a cleaning cart">
-      </figure>
-    </article>
+    </div>
   </div>
 </section>
 
@@ -665,7 +753,7 @@
     <div class="tm-stage" id="tm-stage" role="region" aria-roledescription="carousel" aria-label="What businesses say about SAPOTR">
       <div class="tm-slides" id="tm-slides" aria-live="off">
         <figure class="tm-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 6">
-          <div class="tm-photo"><img src="assets/img/tm-sarah.webp" alt="" width="600" height="750" loading="lazy" decoding="async" draggable="false"></div>
+          <div class="tm-photo"><img src="assets/img/tm-sarah.png" alt="" width="600" height="750" loading="lazy" decoding="async" draggable="false"></div>
           <div class="tm-body">
             <span class="tm-mark" aria-hidden="true">“</span>
             <blockquote><p>Adding SAPOTR Store Assistants during our busy periods helped us serve more customers and increased our revenue by 13%.</p></blockquote>

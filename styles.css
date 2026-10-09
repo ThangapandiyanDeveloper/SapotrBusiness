@@ -536,60 +536,143 @@ figure{margin:0}
 .ticker-row:hover .ticker-inner{animation-play-state:paused}
 @keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 
-/* ───── 9 · How SAPOTR benefits you — four benefits, each told with a picture ─────
-   A left-aligned lead, then picture and points in turn, the About page's
-   zig-zag (.bn--flip puts the picture first). The points use the frozen
-   site's benefit language: a tinted icon chip beside plain text, divided by
-   hairlines instead of boxed. One accent per benefit, nothing louder. */
-.bn-intro{max-width:900px}
-.bn-intro::before{content:"";display:block;width:72px;height:4px;margin-bottom:24px;border-radius:2px;
-  background:linear-gradient(90deg,var(--yellow) 0 33.3%,var(--red) 33.3% 66.6%,var(--cyan) 66.6%)}
-.bn-lead{margin:0;max-width:34ch;font-size:clamp(24px,2.5vw,34px);font-weight:700;line-height:1.32;letter-spacing:-.02em;word-spacing:.08em;color:var(--ink);text-wrap:balance}
+/* ───── 9 · How SAPOTR benefits you — the frozen site's benefit bento ─────
+   Four benefits, each a short header over a bento of key-point cards. The
+   cards are the frozen site's: white tiles, one tinted icon chip, a pointer
+   spotlight, a lift on hover, and a featured card or two per group. Each
+   group keeps a single accent (crisis red, time cyan, growth yellow, cost
+   navy), so neighbouring cards never compete for colour. */
+.bf{--acc:var(--cyan);--acc-ink:var(--cyan-ink);--acc-soft:rgba(18,199,199,.12);--acc-wash:linear-gradient(180deg,#EFFAFA 0%,#D8F3F3 100%);
+  margin-top:clamp(64px,6.4vw,96px)}
+.sec-title + .bf{margin-top:var(--title-gap)}
+.bf--crisis{--acc:var(--red);--acc-ink:var(--red-ink);--acc-soft:rgba(255,75,43,.1);--acc-wash:linear-gradient(180deg,#FFF6F3 0%,#FFE0D8 100%)}
+.bf--grow{--acc:var(--yellow);--acc-ink:var(--yellow-ink);--acc-soft:rgba(255,193,7,.18);--acc-wash:linear-gradient(180deg,#FFFBEC 0%,#FFEDBE 100%)}
+.bf--cost{--acc:var(--navy);--acc-ink:var(--navy);--acc-soft:rgba(15,23,56,.07);--acc-wash:linear-gradient(180deg,#F4F6FB 0%,#E0E5F2 100%)}
 
-.bn{--acc-soft:rgba(18,199,199,.12);--acc-ink:var(--cyan-ink);
-  --stage:linear-gradient(165deg,#EFFAFA 0%,#D6F2F2 100%);--disc:radial-gradient(circle at 40% 35%,#5FE0E0,var(--cyan) 58%,#0AA9A9);
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:clamp(40px,6vw,96px);margin-top:clamp(80px,8vw,120px)}
-.bn-intro + .bn{margin-top:clamp(48px,5vw,72px)}
-.bn--flip{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
-.bn--flip .bn-stage{order:-1}
-.bn--crisis{--acc-soft:rgba(255,75,43,.1);--acc-ink:var(--red-ink);
-  --stage:linear-gradient(165deg,#FFF5F2 0%,#FFDDD4 100%);--disc:radial-gradient(circle at 40% 35%,#FF8F75,var(--red) 60%,#E5391B)}
-.bn--grow{--acc-soft:rgba(255,193,7,.18);--acc-ink:var(--yellow-ink);
-  --stage:linear-gradient(165deg,#FFF9E8 0%,#FFEDBE 100%);--disc:radial-gradient(circle at 40% 35%,#FFD34D,var(--yellow) 60%,#F5B400)}
-.bn--cost{--acc-soft:rgba(15,23,56,.07);--acc-ink:var(--navy);
-  --stage:linear-gradient(165deg,#F1F3FA 0%,#DFE4F2 100%);--disc:radial-gradient(circle at 40% 35%,#2B3A85,var(--navy-2) 58%,var(--navy))}
+/* group header: number and category, then the benefit itself */
+.bf-head{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(20px,2.2vw,28px)}
+.bf-tag{display:flex;align-items:center;gap:12px;margin:0;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-ink)}
+.bf-tag b{display:grid;place-items:center;min-width:40px;height:28px;padding:0 9px;border-radius:9px;background:var(--acc-soft);font-size:12.5px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.bf-title{margin:0;max-width:34ch;font-size:clamp(22px,2.2vw,30px);font-weight:800;line-height:1.2;letter-spacing:-.022em;word-spacing:.06em;color:var(--ink);text-wrap:balance}
 
-/* copy: number and category, the benefit, its points */
-.bn-copy{min-width:0}
-.bn-tag{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-ink)}
-.bn-tag b{display:grid;place-items:center;min-width:40px;height:28px;padding:0 9px;border-radius:9px;background:var(--acc-soft);font-size:12.5px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
-.bn-title{margin:0;max-width:22ch;font-size:clamp(26px,2.5vw,36px);font-weight:800;line-height:1.18;letter-spacing:-.025em;word-spacing:.1em;color:var(--ink);text-wrap:balance}
-.bn-points{display:flex;flex-direction:column;margin-top:clamp(24px,2.6vw,32px);border-top:1px solid var(--line)}
-.bn-points li{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:16.5px;font-weight:600;line-height:1.5;color:var(--ink-2);text-wrap:pretty}
-.bn-ic{display:grid;place-items:center;width:42px;height:42px;flex:none;border-radius:13px;background:var(--acc-soft);color:var(--acc-ink);transition:transform .3s var(--ease)}
-.bn-ic .ic{width:20px;height:20px}
-.bn-points li:hover .bn-ic{transform:scale(1.08) rotate(-4deg)}
-.bn-copy.in .bn-points li{animation:bn-in .6s var(--ease) backwards}
-.bn-copy.in .bn-points li:nth-child(1){animation-delay:.15s}.bn-copy.in .bn-points li:nth-child(2){animation-delay:.23s}
-.bn-copy.in .bn-points li:nth-child(3){animation-delay:.31s}.bn-copy.in .bn-points li:nth-child(4){animation-delay:.39s}
-.bn-copy.in .bn-points li:nth-child(5){animation-delay:.47s}.bn-copy.in .bn-points li:nth-child(6){animation-delay:.55s}
-@keyframes bn-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* the bento: four columns; each group's template places its cards (.p1–.p6) */
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(196px,auto);gap:16px}
+.p1{grid-area:p1}.p2{grid-area:p2}.p3{grid-area:p3}.p4{grid-area:p4}.p5{grid-area:p5}.p6{grid-area:p6}
+.bf--crisis .bento{grid-template-areas:"p1 p1 p3 p2" "p4 p5 p3 p6"}
+.bf--time   .bento{grid-template-areas:"p1 p3 p4 p4" "p2 p5 p4 p4"}
+.bf--grow   .bento{grid-template-areas:"p2 p1 p1 p5" "p2 p3 p4 p4"}
+.bf--cost   .bento{grid-template-areas:"p1 p1 p2 p3" "p1 p1 p4 p3"}
 
-/* picture: the SAPOTR on a brand disc, in a soft framed stage */
-.bn-stage{position:relative;margin:0;height:clamp(440px,42vw,580px);border-radius:var(--r-xl);background:var(--stage);overflow:hidden;isolation:isolate}
-.bn-stage::before{content:"";position:absolute;inset:0;z-index:-2;opacity:.55;
-  background-image:radial-gradient(rgba(15,23,56,.12) 1.2px,transparent 1.2px);background-size:18px 18px;
-  -webkit-mask-image:linear-gradient(180deg,#000,transparent 80%);mask-image:linear-gradient(180deg,#000,transparent 80%)}
-.bn-disc{position:absolute;left:50%;bottom:13%;z-index:-1;width:min(76%,430px);aspect-ratio:1;translate:-50% 0;border-radius:50%;background:var(--disc);
-  opacity:0;transform:scale(.9);transition:opacity .8s var(--ease),transform 1s var(--ease)}
-.bn-disc::after{content:"";position:absolute;inset:-16px;border-radius:50%;border:1.5px dashed rgba(15,23,56,.16)}
-.bn-stage img{position:absolute;left:50%;bottom:0;width:auto;height:93%;max-width:92%;object-fit:contain;object-position:50% 100%;translate:-50% 0;
-  filter:drop-shadow(0 22px 26px rgba(15,23,56,.2));opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease) .1s,transform 1s var(--ease) .1s}
-.bn-stage.in .bn-disc,.bn-stage.in img{opacity:1;transform:none}
-/* full-length figures stand on a soft shadow, clear of the frame's edge */
-.bn-stage--floor img{bottom:5%;height:89%}
-.bn-stage--floor::after{content:"";position:absolute;left:50%;bottom:3.2%;z-index:-1;width:min(60%,300px);height:24px;translate:-50% 0;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(15,23,56,.26),transparent)}
+/* the card — the frozen .tile */
+.tile{position:relative;display:flex;flex-direction:column;padding:24px;background:#fff;border:1px solid var(--line);
+  border-radius:var(--r-l);overflow:hidden;isolation:isolate;
+  transition:box-shadow .3s var(--ease),border-color .3s var(--ease),transform .4s var(--ease)}
+.tile:hover,.js .tile[data-r].in:hover{box-shadow:var(--sh-m);border-color:var(--line-2);transform:translateY(-3px)}
+/* cursor spotlight — the card lights up under the pointer, in the group's accent */
+.tile::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s var(--ease);
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),var(--acc-soft),transparent 62%)}
+.tile:hover::before{opacity:1}
+.tile h4{margin:0 0 6px;font-size:var(--box-title);font-weight:800;letter-spacing:-.022em;line-height:1.24;color:var(--ink);text-wrap:balance}
+.tile p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-3);max-width:34ch}
+.tile-ic{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:13px;margin-bottom:16px;flex:none;
+  background:var(--acc-soft);color:var(--acc-ink);transition:transform .3s var(--ease)}
+.tile-ic .ic{width:21px;height:21px}
+.tile:hover .tile-ic{transform:scale(1.08) rotate(-4deg)}
+.viz{display:block;margin-top:auto;padding-top:20px}
+
+/* featured: navy, like the frozen earnings card */
+.tile--navy{background:radial-gradient(ellipse 80% 70% at 100% 0%,#1E2A63,var(--navy) 60%);border-color:transparent;padding:30px}
+.tile--navy::before{background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(255,75,43,.16),transparent 62%)}
+.tile--navy .tile-ic{background:rgba(255,75,43,.16);color:#FF7A5F}
+.tile--navy h4{font-size:clamp(24px,2.2vw,30px);line-height:1.16;color:#fff;max-width:20ch}
+.tile--navy p{color:rgba(255,255,255,.72);font-size:16px}
+.viz-toggles{display:flex;flex-wrap:wrap;gap:10px}
+.viz-toggles i{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:12px;font-style:normal;font-size:13.5px;font-weight:800;
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.16);transition:background .4s var(--ease),color .4s var(--ease)}
+.viz-toggles .ic{width:16px;height:16px}
+.tile.in .viz-toggles i{animation:bf-tog 6s var(--ease) infinite}
+.tile.in .viz-toggles i:nth-child(2){animation-delay:3s}
+@keyframes bf-tog{0%,4%{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}8%,44%{background:var(--red);border-color:var(--red);color:#fff}50%,100%{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}}
+
+/* featured: a SAPOTR rising out of a tinted card, like the frozen "Work Flexibly" card */
+.tile--pic{padding-bottom:0;background:var(--acc-wash);border-color:transparent}
+.tile--pic .tile-ic{background:#fff}
+.pic-copy{position:relative;z-index:1}
+.pic-person{display:block;width:auto;max-width:100%;height:clamp(220px,21vw,270px);margin:auto auto 0;object-fit:contain;object-position:50% 100%;
+  mask-image:linear-gradient(180deg,#000 84%,transparent);-webkit-mask-image:linear-gradient(180deg,#000 84%,transparent);
+  transform:translateY(10px);transition:transform .6s var(--ease)}
+.tile--pic:hover .pic-person{transform:translateY(0)}
+
+/* "our tech finds staff" — the frozen radar */
+.tile--radar h4{padding-right:56px}
+.viz-radar{position:absolute;right:-34px;top:-34px;width:150px;height:150px;margin:0;padding:0;pointer-events:none}
+.viz-radar i{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(18,199,199,.22)}
+.viz-radar i:nth-child(2){inset:24px}
+.viz-radar i:nth-child(3){inset:48px;background:rgba(18,199,199,.08)}
+.viz-radar b{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(18,199,199,.18)}
+.viz-radar b:nth-of-type(1){left:44px;top:92px}
+.viz-radar b:nth-of-type(2){left:92px;top:108px}
+.viz-radar b:nth-of-type(3){left:30px;top:56px}
+.tile.in .viz-radar b{animation:bf-blink 2.6s var(--ease) infinite}
+.tile.in .viz-radar b:nth-of-type(2){animation-delay:.8s}
+.tile.in .viz-radar b:nth-of-type(3){animation-delay:1.6s}
+@keyframes bf-blink{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+
+/* "hire for a few hours, a day, every week" — a week of shifts */
+.viz-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;max-width:250px}
+.viz-days i{display:grid;place-items:center;height:30px;border-radius:9px;background:var(--tint);font-style:normal;font-size:11.5px;font-weight:800;color:var(--ink-3);
+  transition:background .4s var(--ease),color .4s var(--ease)}
+.tile.in .viz-days i.on{background:var(--acc-soft);color:var(--acc-ink)}
+.tile.in .viz-days i:nth-child(2){transition-delay:.2s}.tile.in .viz-days i:nth-child(4){transition-delay:.3s}
+.tile.in .viz-days i:nth-child(5){transition-delay:.4s}.tile.in .viz-days i:nth-child(6){transition-delay:.5s}
+
+/* the business loop — the frozen app card, drawn for Business */
+.tile--loop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:20px;padding:30px;
+  background:linear-gradient(150deg,#FFFFFF 0%,#F2FBFB 100%)}
+.loop-copy h4{font-size:clamp(24px,2.1vw,30px);line-height:1.14;letter-spacing:-.03em}
+.loop{--size:clamp(230px,20vw,272px);position:relative;width:var(--size);height:var(--size);justify-self:center}
+.loop-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.loop-ring circle{fill:none;stroke:var(--line-2);stroke-width:1.5;stroke-dasharray:3 5}
+.loop-ring .loop-run{stroke:var(--cyan);stroke-width:3;stroke-dasharray:490;stroke-dashoffset:490;stroke-linecap:round}
+.tile.in .loop-run{animation:bf-run 6s linear infinite}
+@keyframes bf-run{to{stroke-dashoffset:0}}
+.loop-mark{position:absolute;left:50%;top:50%;width:30%;height:auto;transform:translate(-50%,-50%);filter:drop-shadow(0 10px 24px rgba(15,23,56,.16))}
+.loop-n{position:absolute;left:50%;top:50%;display:flex;flex-direction:column;align-items:center;gap:6px;width:104px;margin:-22px 0 0 -52px;
+  transform:rotate(var(--a)) translate(calc(var(--size) * .39)) rotate(calc(var(--a) * -1))}
+.loop-n .ic{box-sizing:content-box;width:20px;height:20px;padding:11px;border-radius:14px;background:#fff;color:var(--navy);
+  border:1px solid var(--line);box-shadow:var(--sh-m);transition:background .3s,color .3s}
+.loop-n b{font-size:12.5px;font-weight:800;color:var(--ink);white-space:nowrap;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.86)}
+.tile.in .loop-n .ic{animation:bf-hl 6s linear infinite;animation-delay:calc(var(--i) * 1.5s)}
+@keyframes bf-hl{0%,22%{background:var(--cyan);color:#fff;border-color:var(--cyan)}25%,100%{background:#fff;color:var(--navy)}}
+
+/* "increase revenue" — rising demand, drawn without figures */
+.tile--wash{background:linear-gradient(160deg,#FFFFFF 30%,#FFF6DA 100%)}
+.viz-rise{display:flex;gap:8px;align-items:flex-end;height:84px}
+.viz-rise i{flex:1;height:0;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--yellow),rgba(255,193,7,.22));transition:height .9s var(--ease) var(--d)}
+.tile.in .viz-rise i{height:var(--h,100%)}
+
+/* "permanent hiring for occasional demands" — the same week, twice */
+.viz-week2{display:grid;gap:10px}
+.wk-days,.wk-cells{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.wk-days{margin-left:var(--wk-lab,150px)}
+.wk-days i{font-style:normal;font-size:11px;font-weight:800;color:var(--ink-3);text-align:center}
+.wk-row{display:grid;grid-template-columns:var(--wk-lab,150px) minmax(0,1fr);align-items:center}
+.wk-row b{font-size:13px;font-weight:800;color:var(--ink-2)}
+.wk-cells i{height:30px;border-radius:8px;background:var(--tint);border:1px dashed var(--line-2);transition:background .5s var(--ease),border-color .5s var(--ease)}
+.tile.in .wk-cells i.on{background:rgba(15,23,56,.72);border-color:transparent}
+.tile.in .wk-row--sap .wk-cells i.on{background:var(--cyan)}
+.tile.in .wk-cells i:nth-child(2){transition-delay:.06s}.tile.in .wk-cells i:nth-child(3){transition-delay:.12s}
+.tile.in .wk-cells i:nth-child(4){transition-delay:.18s}.tile.in .wk-cells i:nth-child(5){transition-delay:.24s}
+.tile.in .wk-cells i:nth-child(6){transition-delay:.3s}.tile.in .wk-cells i:nth-child(7){transition-delay:.36s}
+.wk-row--sap b{color:var(--cyan-ink)}
+/* as the group's featured card (two rows tall on desktop) it gets a feature-sized title and a fuller week */
+.tile--week h4{font-size:clamp(24px,2.1vw,30px);line-height:1.14;letter-spacing:-.03em}
+@media (min-width:1001px){
+  .tile--week{padding:30px}
+  .tile--week .viz-week2{gap:14px}
+  .tile--week .wk-cells i{height:44px;border-radius:10px}
+  .tile--week .wk-row b{font-size:14px}
+}
 
 /* ───── 10 · Businesses across NZ — the frozen site's card rail ─────
    The rail (also used by the safety cards on phones) is the frozen
@@ -1195,11 +1278,22 @@ figure{margin:0}
   .b6-cycle .ic{width:21px;height:21px}
 }
 
-@media (max-width:860px){
-  /* benefits: one column, the picture leading every benefit */
-  .bn,.bn--flip{grid-template-columns:minmax(0,1fr);gap:clamp(26px,5vw,40px);margin-top:64px}
-  .bn-stage{order:-1;height:clamp(280px,70vw,420px)}
-  .bn-title{max-width:none}
+@media (max-width:1180px){
+  /* benefits: slimmer cards; the loop card stacks its copy over the drawing */
+  .tile{padding:20px}
+  .tile--navy,.tile--loop{padding:26px}
+}
+@media (max-width:1180px) and (min-width:1001px){
+  .tile--loop{grid-template-columns:minmax(0,1fr);justify-items:start}
+  .loop{justify-self:center}
+}
+@media (max-width:1000px){
+  /* benefits: two up, the featured cards full width */
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bf--crisis .bento{grid-template-areas:"p1 p1" "p3 p2" "p3 p4" "p5 p6"}
+  .bf--time   .bento{grid-template-areas:"p1 p3" "p4 p4" "p2 p5"}
+  .bf--grow   .bento{grid-template-areas:"p1 p1" "p2 p5" "p2 p3" "p4 p4"}
+  .bf--cost   .bento{grid-template-areas:"p1 p1" "p3 p2" "p3 p4"}
 }
 
 @media (max-width:760px){
@@ -1242,17 +1336,44 @@ figure{margin:0}
   .tk-ic{width:30px;height:30px;border-radius:9px}
   .tk-ic .ic{width:16px;height:16px}
 
-  /* benefits */
-  .bn-intro::before{width:60px;margin-bottom:20px}
-  .bn-lead{font-size:clamp(21px,5.7vw,25px);line-height:1.36}
-  .bn-intro + .bn{margin-top:44px}
-  .bn-tag{margin-bottom:12px;font-size:12px}
-  .bn-title{font-size:clamp(23px,6.4vw,28px)}
-  .bn-points{margin-top:22px}
-  .bn-points li{gap:14px;padding:13px 0;font-size:15.5px}
-  .bn-ic{width:38px;height:38px;border-radius:12px}
-  .bn-ic .ic{width:18px;height:18px}
-  .bn-stage{border-radius:var(--r-l)}
+  /* benefits: one column in reading order; plain cards become compact rows
+     (icon beside text) so long statements never squeeze into a half-width card */
+  .bf{margin-top:64px}
+  .bf-head{gap:10px;margin-bottom:18px}
+  .bf-tag{font-size:12px}
+  .bf-title{font-size:clamp(21px,5.8vw,25px)}
+  .bento,.bf .bento{grid-template-columns:minmax(0,1fr);grid-template-areas:none;grid-auto-rows:auto;gap:12px}
+  .bento > .tile{grid-area:auto}
+  .tile{padding:20px;border-radius:var(--r-m)}
+  .tile:hover,.js .tile[data-r].in:hover{transform:none}
+  .tile p{font-size:14.5px;max-width:none}
+  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week){display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:start;padding:16px 18px}
+  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) .tile-ic{grid-row:1 / span 3;width:40px;height:40px;border-radius:12px;margin:0}
+  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) > :not(.tile-ic):not(.viz-radar){grid-column:2}
+  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) h4{margin-top:8px}
+  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) .viz{padding-top:12px}
+  .tile-ic .ic{width:19px;height:19px}
+  .tile--navy{padding:22px}
+  .tile--navy h4{font-size:clamp(22px,6vw,26px)}
+  .viz-toggles i{padding:8px 13px;font-size:13px}
+  .tile--radar h4{padding-right:44px}
+  .viz-radar{width:104px;height:104px;right:-28px;top:-28px}
+  .viz-radar i:nth-child(2){inset:17px}.viz-radar i:nth-child(3){inset:34px}
+  .viz-radar b:nth-of-type(1){left:30px;top:64px}.viz-radar b:nth-of-type(2){left:64px;top:74px}.viz-radar b:nth-of-type(3){left:21px;top:38px}
+  .tile--pic{flex-direction:row;align-items:stretch;gap:8px;min-height:210px;padding:20px 0 0 20px}
+  .pic-copy{flex:1;min-width:0;padding-bottom:20px}
+  .pic-person{flex:none;height:200px;max-width:46%;margin:auto 0 0}
+  .tile--loop{grid-template-columns:minmax(0,1fr);padding:22px;gap:14px;justify-items:center}
+  .loop-copy{justify-self:stretch}
+  .loop-copy h4{font-size:clamp(22px,6vw,26px)}
+  .loop{--size:min(240px,calc(100vw - 130px));margin-block:8px 14px}
+  .loop-n{width:96px;margin-left:-48px}
+  .loop-n .ic{width:17px;height:17px;padding:9px;border-radius:12px}
+  .loop-n b{font-size:11.5px}
+  .viz-rise{height:64px;gap:6px}
+  .wk-row{grid-template-columns:minmax(0,1fr);gap:6px}
+  .wk-days{margin-left:0}
+  .wk-cells i{height:26px}
 
   /* industries */
   .ind-vp{--rail-gap:14px;margin-inline:-18px;padding-inline:18px}
@@ -1390,6 +1511,7 @@ figure{margin:0}
   .orb,.rd-sweep,.b6-cycle .ic,.b3-path,.ticker-inner{animation:none !important}
   .js [data-r],.js .hs [data-seq]{opacity:1 !important;transform:none !important}
   [data-split] .w i{transform:none !important}
+  .viz-toggles i:first-child{background:var(--red) !important;border-color:var(--red) !important;color:#fff !important}
   .cursor-glow,.b3-dot,.hero-meter .hero-prog{display:none}
   /* a still ticker wraps instead of running off the edge */
   .ticker-inner{width:auto}

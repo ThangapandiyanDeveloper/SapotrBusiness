@@ -46,7 +46,7 @@ cropped and converted to WebP for this site. Find the original at
 | cta-grocery.webp | 8422726 | Grocery clerk serving a customer |
 | cta-warehouse.webp | 4481328 | Warehouse team moving stock |
 | about-hero-1800.webp, about-hero-m.webp | 3770091 | Restaurant staff setting up before service |
-| tm-sarah.webp | 36730466 | **Placeholder** testimonial portrait |
+| tm-sarah.png | 36730466 | **Placeholder** testimonial portrait |
 | tm-aroha.webp | 11946133 | **Placeholder** testimonial portrait |
 | tm-priya.webp | 8230014 | **Placeholder** testimonial portrait |
 | tm-chris.webp | 4484078 | **Placeholder** testimonial portrait |
