@@ -545,6 +545,10 @@ figure{margin:0}
    columns, three from 1180px, two up on phones with the big cards full width. */
 /* the section heading is a .sec-title, the same scale as the Industries heading */
 .bf-title{max-width:30ch}
+/* a hairline where one benefit section ends and the next begins — content width, fading at the ends */
+.bf-sec + .bf-sec > .wrap{position:relative}
+.bf-sec + .bf-sec > .wrap::before{content:"";position:absolute;left:0;right:0;top:calc(-1 * var(--pad));height:1px;
+  background:linear-gradient(90deg,transparent,var(--line-2) 18%,var(--line-2) 82%,transparent)}
 
 /* the bento: each group's template places its cards (.p1–.p6, in reading order) */
 .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(196px,auto);gap:16px;margin-top:var(--title-gap)}
@@ -1330,7 +1334,7 @@ figure{margin:0}
   .bf--cost   .bento{grid-template-areas:"p1 p1" "p2 p2" "p3 p3"}
   .tile{padding:18px;border-radius:var(--r-m)}
   .tile:hover,.js .tile[data-r].in:hover{transform:none}
-  .tile h4{font-size:16px}
+  .tile:not(.tile--navy,.tile--rise,.tile--week,.tile--loop) h4{font-size:18.5px;font-weight:800;letter-spacing:-.022em;line-height:1.24}
   .tile p{font-size:13.5px;line-height:1.45}
   .tile-ic{width:38px;height:38px;border-radius:11px;margin-bottom:14px}
   .tile-ic .ic{width:19px;height:19px}
@@ -1460,6 +1464,8 @@ figure{margin:0}
   .wrap{width:calc(100% - 28px)}
   .hero{--ht:clamp(26px,7.6vw,29px)}
   .ind-vp,.safe-vp{margin-inline:-14px;padding-inline:14px}
+  /* the set two-line benefit headings: each line stays whole on the narrowest phones */
+  .bf-title .ln{white-space:nowrap;word-spacing:.02em}
   .foot-grid{grid-template-columns:1fr}
   .foot-col:last-child{grid-column:auto;grid-row:auto}
   .stat dd{font-size:26px}
