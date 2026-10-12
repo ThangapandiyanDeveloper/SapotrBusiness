@@ -9,7 +9,7 @@ build step, no dependencies.
 ## Structure
 
     index.html      header (About Us dropdown), hero (6 banners), category ticker,
-                    benefits (four picture-led zig-zag rows), industry card rail
+                    benefits (four groups on the frozen site's card bento), industry card rail
                     (details on demand), safety & trust (card rail on phones),
                     testimonials, growth, 3 hire steps, FAQ (2 columns), CTA, footer
                     · FAQPage + Organization JSON-LD

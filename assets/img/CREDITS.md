@@ -11,8 +11,8 @@ originals are the source of truth.
 | step-hire-760.webp, step-arrive-760.webp | WebP copies of the client's step-*.png | Banner 5 board |
 | Banner6.jpg | Supplied by the client | Hero banner 6 (desktop) |
 | banner6-m.jpg | Banner6.jpg cropped to the left 1010 px (the checklist panel left out) | Hero banner 6 (phones, portrait tablets) |
-| bn-crisis.webp, bn-time.webp, bn-grow.webp, bn-cost.webp | Cut out of the client's `Section 2 Images` (WA0007, WA0008, WA0009, WA0013) | How SAPOTR Benefits You — benefits 1–4 |
-| sapotr-flex.webp, sapotr-walk.webp, sapotr-watch.webp, banner4-group.webp | Copied unchanged from the frozen Brand2 site | About: mission, vision, advantage, name |
+| bn-crisis.webp, bn-grow.webp | Cut out of the client's `Section 2 Images` (WA0007, WA0009) | How SAPOTR Benefits You — replacement staff and customer service cards |
+| sapotr-flex.webp, sapotr-walk.webp, sapotr-watch.webp, banner4-group.webp | Copied unchanged from the frozen Brand2 site | About: mission, vision, advantage, name; sapotr-watch also the benefits "Unworked Break Time" card |
 | cta-team-1600.webp, cta-team-900.webp | Brand2 `cta-team-1400.png`, as WebP | Final CTA (the frozen CTA image) |
 | ind-*.webp (9) | Brand2's work-type images, as WebP, one per category | Businesses Across NZ cards |
 
@@ -21,7 +21,8 @@ picture where a transparent background should be, so the four used here were
 cut out (background removed) and saved as transparent WebP. If the client can
 supply the originals with a real transparent background, re-export from those.
 
-Not referenced by the pages any more: step-done-760.webp, app-phone-760.webp,
+Not referenced by the pages any more: bn-time.webp, bn-cost.webp (cut out from
+WA0008 and WA0013), step-done-760.webp, app-phone-760.webp,
 bf-kitchen-760.webp (replaced in Phase 3), and hero-warehouse-1600.png /
 hero-warehouse-m.png (replaced by Banner6.jpg).
 

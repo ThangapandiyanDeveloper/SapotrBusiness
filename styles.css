@@ -537,100 +537,81 @@ figure{margin:0}
 @keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 
 /* ───── 9 · How SAPOTR benefits you — the frozen site's benefit bento ─────
-   Four benefits, each a short header over a bento of key-point cards. The
-   cards are the frozen site's: white tiles, one tinted icon chip, a pointer
-   spotlight, a lift on hover, and a featured card or two per group. Each
-   group keeps a single accent (crisis red, time cyan, growth yellow, cost
-   navy), so neighbouring cards never compete for colour. */
-.bf{--acc:var(--cyan);--acc-ink:var(--cyan-ink);--acc-soft:rgba(18,199,199,.12);--acc-wash:linear-gradient(180deg,#EFFAFA 0%,#D8F3F3 100%);
-  margin-top:clamp(64px,6.4vw,96px)}
-.sec-title + .bf{margin-top:var(--title-gap)}
-.bf--crisis{--acc:var(--red);--acc-ink:var(--red-ink);--acc-soft:rgba(255,75,43,.1);--acc-wash:linear-gradient(180deg,#FFF6F3 0%,#FFE0D8 100%)}
-.bf--grow{--acc:var(--yellow);--acc-ink:var(--yellow-ink);--acc-soft:rgba(255,193,7,.18);--acc-wash:linear-gradient(180deg,#FFFBEC 0%,#FFEDBE 100%)}
-.bf--cost{--acc:var(--navy);--acc-ink:var(--navy);--acc-soft:rgba(15,23,56,.07);--acc-wash:linear-gradient(180deg,#F4F6FB 0%,#E0E5F2 100%)}
+   Four benefits, each its own heading over a bento of key-point cards. The
+   cards, grid and breakpoints are the frozen #benefits: white tiles with a
+   tinted icon chip, a cyan pointer spotlight and a lift on hover, plus the
+   frozen feature cards (navy, the SAPOTR on a cyan wash, the app loop). Four
+   columns, three from 1180px, two up on phones with the big cards full width. */
+.bf + .bf{margin-top:clamp(56px,6vw,88px)}
+.bf-title{margin:0 0 clamp(22px,2.6vw,32px);max-width:34ch;font-size:clamp(22px,2.1vw,28px);font-weight:800;line-height:1.2;letter-spacing:-.022em;word-spacing:.06em;color:var(--ink);text-wrap:balance}
 
-/* group header: number and category, then the benefit itself */
-.bf-head{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(20px,2.2vw,28px)}
-.bf-tag{display:flex;align-items:center;gap:12px;margin:0;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-ink)}
-.bf-tag b{display:grid;place-items:center;min-width:40px;height:28px;padding:0 9px;border-radius:9px;background:var(--acc-soft);font-size:12.5px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
-.bf-title{margin:0;max-width:34ch;font-size:clamp(22px,2.2vw,30px);font-weight:800;line-height:1.2;letter-spacing:-.022em;word-spacing:.06em;color:var(--ink);text-wrap:balance}
-
-/* the bento: four columns; each group's template places its cards (.p1–.p6) */
+/* the bento: each group's template places its cards (.p1–.p6, in reading order) */
 .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(196px,auto);gap:16px}
 .p1{grid-area:p1}.p2{grid-area:p2}.p3{grid-area:p3}.p4{grid-area:p4}.p5{grid-area:p5}.p6{grid-area:p6}
-.bf--crisis .bento{grid-template-areas:"p1 p1 p3 p2" "p4 p5 p3 p6"}
-.bf--time   .bento{grid-template-areas:"p1 p3 p4 p4" "p2 p5 p4 p4"}
-.bf--grow   .bento{grid-template-areas:"p2 p1 p1 p5" "p2 p3 p4 p4"}
-.bf--cost   .bento{grid-template-areas:"p1 p1 p2 p3" "p1 p1 p4 p3"}
+.bf--crisis .bento{grid-template-areas:"p1 p1 p3 p2" "p5 p6 p3 p4"}
+.bf--time   .bento{grid-template-areas:"p1 p2 p4 p4" "p3 p5 p4 p4"}
+.bf--grow   .bento{grid-template-areas:"p1 p1 p2 p3" "p4 p4 p2 p5"}
+.bf--cost   .bento{grid-template-areas:"p1 p1 p3 p2" "p1 p1 p3 p4"}
 
 /* the card — the frozen .tile */
 .tile{position:relative;display:flex;flex-direction:column;padding:24px;background:#fff;border:1px solid var(--line);
   border-radius:var(--r-l);overflow:hidden;isolation:isolate;
   transition:box-shadow .3s var(--ease),border-color .3s var(--ease),transform .4s var(--ease)}
 .tile:hover,.js .tile[data-r].in:hover{box-shadow:var(--sh-m);border-color:var(--line-2);transform:translateY(-3px)}
-/* cursor spotlight — the card lights up under the pointer, in the group's accent */
+/* cursor spotlight — the card lights up under the pointer */
 .tile::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s var(--ease);
-  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),var(--acc-soft),transparent 62%)}
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(18,199,199,.1),transparent 62%)}
 .tile:hover::before{opacity:1}
-.tile h4{margin:0 0 6px;font-size:var(--box-title);font-weight:800;letter-spacing:-.022em;line-height:1.24;color:var(--ink);text-wrap:balance}
+/* a key point: a short heading, then the rest of the point */
+.tile h4{margin:0 0 6px;font-size:18px;font-weight:700;letter-spacing:-.015em;line-height:1.3;color:var(--ink);text-wrap:balance}
 .tile p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-3);max-width:34ch}
-.tile-ic{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:13px;margin-bottom:16px;flex:none;
-  background:var(--acc-soft);color:var(--acc-ink);transition:transform .3s var(--ease)}
+.tile-ic{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:13px;margin-bottom:16px;flex:none;transition:transform .3s var(--ease)}
 .tile-ic .ic{width:21px;height:21px}
 .tile:hover .tile-ic{transform:scale(1.08) rotate(-4deg)}
 .viz{display:block;margin-top:auto;padding-top:20px}
+/* the feature cards carry a feature-sized title */
+.tile--navy h4,.tile--rise h4,.tile--week h4,.loop-copy h4{font-size:clamp(22px,2vw,28px);font-weight:800;line-height:1.16;letter-spacing:-.025em}
 
-/* featured: navy, like the frozen earnings card */
+/* navy — the frozen earnings card */
 .tile--navy{background:radial-gradient(ellipse 80% 70% at 100% 0%,#1E2A63,var(--navy) 60%);border-color:transparent;padding:30px}
-.tile--navy::before{background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(255,75,43,.16),transparent 62%)}
-.tile--navy .tile-ic{background:rgba(255,75,43,.16);color:#FF7A5F}
-.tile--navy h4{font-size:clamp(24px,2.2vw,30px);line-height:1.16;color:#fff;max-width:20ch}
-.tile--navy p{color:rgba(255,255,255,.72);font-size:16px}
+.tile--navy::before{background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(255,193,7,.14),transparent 62%)}
+.tile--navy .tile-ic{background:rgba(255,193,7,.16);color:var(--yellow)}
+.tile--navy h4{color:#fff}
+.tile--navy p{color:rgba(255,255,255,.72);font-size:15.5px}
 .viz-toggles{display:flex;flex-wrap:wrap;gap:10px}
 .viz-toggles i{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:12px;font-style:normal;font-size:13.5px;font-weight:800;
   background:rgba(255,255,255,.08);color:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.16);transition:background .4s var(--ease),color .4s var(--ease)}
 .viz-toggles .ic{width:16px;height:16px}
 .tile.in .viz-toggles i{animation:bf-tog 6s var(--ease) infinite}
 .tile.in .viz-toggles i:nth-child(2){animation-delay:3s}
-@keyframes bf-tog{0%,4%{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}8%,44%{background:var(--red);border-color:var(--red);color:#fff}50%,100%{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}}
+@keyframes bf-tog{0%,4%{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}8%,44%{background:var(--cyan);border-color:var(--cyan);color:#fff}50%,100%{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}}
 
-/* featured: a SAPOTR rising out of a tinted card, like the frozen "Work Flexibly" card */
-.tile--pic{padding-bottom:0;background:var(--acc-wash);border-color:transparent}
+/* a SAPOTR rising out of a cyan card — the frozen "Work Flexibly" card */
+.tile--pic{padding-bottom:0;background:linear-gradient(180deg,#EFFAFA 0%,#D8F3F3 100%);border-color:rgba(18,199,199,.22)}
 .tile--pic .tile-ic{background:#fff}
-.pic-copy{position:relative;z-index:1}
-.pic-person{display:block;width:auto;max-width:100%;height:clamp(220px,21vw,270px);margin:auto auto 0;object-fit:contain;object-position:50% 100%;
-  mask-image:linear-gradient(180deg,#000 84%,transparent);-webkit-mask-image:linear-gradient(180deg,#000 84%,transparent);
+.pic-person{display:block;width:auto;max-width:100%;height:clamp(230px,24vw,300px);margin:auto auto 0;padding-top:16px;object-fit:contain;object-position:50% 100%;
+  mask-image:linear-gradient(180deg,#000 82%,transparent);-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);
   transform:translateY(10px);transition:transform .6s var(--ease)}
 .tile--pic:hover .pic-person{transform:translateY(0)}
 
 /* "our tech finds staff" — the frozen radar */
-.tile--radar h4{padding-right:56px}
 .viz-radar{position:absolute;right:-34px;top:-34px;width:150px;height:150px;margin:0;padding:0;pointer-events:none}
 .viz-radar i{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(18,199,199,.22)}
 .viz-radar i:nth-child(2){inset:24px}
 .viz-radar i:nth-child(3){inset:48px;background:rgba(18,199,199,.08)}
 .viz-radar b{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(18,199,199,.18)}
-.viz-radar b:nth-of-type(1){left:44px;top:92px}
+.viz-radar b:nth-of-type(1){left:44px;top:92px;background:var(--red);box-shadow:0 0 0 4px rgba(255,75,43,.16)}
 .viz-radar b:nth-of-type(2){left:92px;top:108px}
-.viz-radar b:nth-of-type(3){left:30px;top:56px}
+.viz-radar b:nth-of-type(3){left:30px;top:56px;background:var(--yellow);box-shadow:0 0 0 4px rgba(255,193,7,.2)}
 .tile.in .viz-radar b{animation:bf-blink 2.6s var(--ease) infinite}
 .tile.in .viz-radar b:nth-of-type(2){animation-delay:.8s}
 .tile.in .viz-radar b:nth-of-type(3){animation-delay:1.6s}
 @keyframes bf-blink{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
 
-/* "hire for a few hours, a day, every week" — a week of shifts */
-.viz-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;max-width:250px}
-.viz-days i{display:grid;place-items:center;height:30px;border-radius:9px;background:var(--tint);font-style:normal;font-size:11.5px;font-weight:800;color:var(--ink-3);
-  transition:background .4s var(--ease),color .4s var(--ease)}
-.tile.in .viz-days i.on{background:var(--acc-soft);color:var(--acc-ink)}
-.tile.in .viz-days i:nth-child(2){transition-delay:.2s}.tile.in .viz-days i:nth-child(4){transition-delay:.3s}
-.tile.in .viz-days i:nth-child(5){transition-delay:.4s}.tile.in .viz-days i:nth-child(6){transition-delay:.5s}
-
-/* the business loop — the frozen app card, drawn for Business */
-.tile--loop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:20px;padding:30px;
+/* the business loop — the frozen app card */
+.tile--loop{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:24px;padding:30px;
   background:linear-gradient(150deg,#FFFFFF 0%,#F2FBFB 100%)}
-.loop-copy h4{font-size:clamp(24px,2.1vw,30px);line-height:1.14;letter-spacing:-.03em}
-.loop{--size:clamp(230px,20vw,272px);position:relative;width:var(--size);height:var(--size);justify-self:center}
+.loop{--size:260px;position:relative;width:var(--size);height:var(--size);justify-self:center}
 .loop-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .loop-ring circle{fill:none;stroke:var(--line-2);stroke-width:1.5;stroke-dasharray:3 5}
 .loop-ring .loop-run{stroke:var(--cyan);stroke-width:3;stroke-dasharray:490;stroke-dashoffset:490;stroke-linecap:round}
@@ -645,11 +626,18 @@ figure{margin:0}
 .tile.in .loop-n .ic{animation:bf-hl 6s linear infinite;animation-delay:calc(var(--i) * 1.5s)}
 @keyframes bf-hl{0%,22%{background:var(--cyan);color:#fff;border-color:var(--cyan)}25%,100%{background:#fff;color:var(--navy)}}
 
-/* "increase revenue" — rising demand, drawn without figures */
-.tile--wash{background:linear-gradient(160deg,#FFFFFF 30%,#FFF6DA 100%)}
-.viz-rise{display:flex;gap:8px;align-items:flex-end;height:84px}
-.viz-rise i{flex:1;height:0;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--yellow),rgba(255,193,7,.22));transition:height .9s var(--ease) var(--d)}
+/* "increase revenue" — the frozen weekly bars, rising */
+.viz-rise{display:flex;gap:10px;align-items:flex-end;height:96px;padding-top:28px;box-sizing:content-box}
+.viz-rise i{flex:1;height:0;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--yellow),rgba(255,193,7,.18));transition:height .9s var(--ease) var(--d)}
 .tile.in .viz-rise i{height:var(--h,100%)}
+
+/* "hire for a few hours, a day, every week" — a week of shifts */
+.viz-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;max-width:250px}
+.viz-days i{display:grid;place-items:center;height:30px;border-radius:9px;background:var(--tint);font-style:normal;font-size:11.5px;font-weight:800;color:var(--ink-3);
+  transition:background .4s var(--ease),color .4s var(--ease)}
+.tile.in .viz-days i.on{background:rgba(18,199,199,.14);color:var(--cyan-ink)}
+.tile.in .viz-days i:nth-child(2){transition-delay:.2s}.tile.in .viz-days i:nth-child(4){transition-delay:.3s}
+.tile.in .viz-days i:nth-child(5){transition-delay:.4s}.tile.in .viz-days i:nth-child(6){transition-delay:.5s}
 
 /* "permanent hiring for occasional demands" — the same week, twice */
 .viz-week2{display:grid;gap:10px}
@@ -665,9 +653,8 @@ figure{margin:0}
 .tile.in .wk-cells i:nth-child(4){transition-delay:.18s}.tile.in .wk-cells i:nth-child(5){transition-delay:.24s}
 .tile.in .wk-cells i:nth-child(6){transition-delay:.3s}.tile.in .wk-cells i:nth-child(7){transition-delay:.36s}
 .wk-row--sap b{color:var(--cyan-ink)}
-/* as the group's featured card (two rows tall on desktop) it gets a feature-sized title and a fuller week */
-.tile--week h4{font-size:clamp(24px,2.1vw,30px);line-height:1.14;letter-spacing:-.03em}
-@media (min-width:1001px){
+/* two rows tall from tablets up: a fuller week */
+@media (min-width:681px){
   .tile--week{padding:30px}
   .tile--week .viz-week2{gap:14px}
   .tile--week .wk-cells i{height:44px;border-radius:10px}
@@ -1279,21 +1266,17 @@ figure{margin:0}
 }
 
 @media (max-width:1180px){
-  /* benefits: slimmer cards; the loop card stacks its copy over the drawing */
-  .tile{padding:20px}
-  .tile--navy,.tile--loop{padding:26px}
+  /* benefits: the frozen three-column bento */
+  .bento{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bf--crisis .bento{grid-template-areas:"p1 p1 p3" "p2 p4 p3" "p5 p5 p6"}
+  .bf--time   .bento{grid-template-areas:"p1 p4 p4" "p2 p4 p4" "p3 p5 p5"}
+  .bf--grow   .bento{grid-template-areas:"p1 p1 p2" "p3 p5 p2" "p4 p4 p4"}
+  .bf--cost   .bento{grid-template-areas:"p1 p1 p3" "p1 p1 p3" "p2 p4 p4"}
+  .loop{--size:250px}
 }
-@media (max-width:1180px) and (min-width:1001px){
-  .tile--loop{grid-template-columns:minmax(0,1fr);justify-items:start}
+@media (max-width:900px) and (min-width:681px){
+  .tile--loop{grid-template-columns:1fr;justify-items:start}
   .loop{justify-self:center}
-}
-@media (max-width:1000px){
-  /* benefits: two up, the featured cards full width */
-  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .bf--crisis .bento{grid-template-areas:"p1 p1" "p3 p2" "p3 p4" "p5 p6"}
-  .bf--time   .bento{grid-template-areas:"p1 p3" "p4 p4" "p2 p5"}
-  .bf--grow   .bento{grid-template-areas:"p1 p1" "p2 p5" "p2 p3" "p4 p4"}
-  .bf--cost   .bento{grid-template-areas:"p1 p1" "p3 p2" "p3 p4"}
 }
 
 @media (max-width:760px){
@@ -1336,41 +1319,37 @@ figure{margin:0}
   .tk-ic{width:30px;height:30px;border-radius:9px}
   .tk-ic .ic{width:16px;height:16px}
 
-  /* benefits: one column in reading order; plain cards become compact rows
-     (icon beside text) so long statements never squeeze into a half-width card */
-  .bf{margin-top:64px}
-  .bf-head{gap:10px;margin-bottom:18px}
-  .bf-tag{font-size:12px}
-  .bf-title{font-size:clamp(21px,5.8vw,25px)}
-  .bento,.bf .bento{grid-template-columns:minmax(0,1fr);grid-template-areas:none;grid-auto-rows:auto;gap:12px}
-  .bento > .tile{grid-area:auto}
-  .tile{padding:20px;border-radius:var(--r-m)}
+  /* benefits: the frozen phone bento — two up, the big cards full width */
+  .bf + .bf{margin-top:56px}
+  .bf-title{margin-bottom:20px;font-size:clamp(20px,5.6vw,23px)}
+  .bento{grid-template-columns:1fr 1fr;gap:12px;grid-auto-rows:auto}
+  .bf--crisis .bento{grid-template-areas:"p1 p1" "p3 p2" "p3 p4" "p5 p6"}
+  .bf--time   .bento{grid-template-areas:"p1 p2" "p4 p4" "p3 p5"}
+  .bf--grow   .bento{grid-template-areas:"p1 p1" "p2 p3" "p2 p5" "p4 p4"}
+  .bf--cost   .bento{grid-template-areas:"p1 p1" "p3 p2" "p3 p4"}
+  .tile{padding:18px;border-radius:var(--r-m)}
   .tile:hover,.js .tile[data-r].in:hover{transform:none}
-  .tile p{font-size:14.5px;max-width:none}
-  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week){display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:start;padding:16px 18px}
-  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) .tile-ic{grid-row:1 / span 3;width:40px;height:40px;border-radius:12px;margin:0}
-  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) > :not(.tile-ic):not(.viz-radar){grid-column:2}
-  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) h4{margin-top:8px}
-  .tile:not(.tile--navy,.tile--pic,.tile--loop,.tile--wash,.tile--week) .viz{padding-top:12px}
+  .tile h4{font-size:16px}
+  .tile p{font-size:13.5px;line-height:1.45}
+  .tile-ic{width:38px;height:38px;border-radius:11px;margin-bottom:14px}
   .tile-ic .ic{width:19px;height:19px}
+  .tile--navy h4,.tile--rise h4,.tile--week h4,.loop-copy h4{font-size:clamp(20px,5.6vw,23px)}
   .tile--navy{padding:22px}
-  .tile--navy h4{font-size:clamp(22px,6vw,26px)}
+  .tile--navy p{font-size:15px}
+  .viz-toggles{gap:8px}
   .viz-toggles i{padding:8px 13px;font-size:13px}
-  .tile--radar h4{padding-right:44px}
-  .viz-radar{width:104px;height:104px;right:-28px;top:-28px}
-  .viz-radar i:nth-child(2){inset:17px}.viz-radar i:nth-child(3){inset:34px}
-  .viz-radar b:nth-of-type(1){left:30px;top:64px}.viz-radar b:nth-of-type(2){left:64px;top:74px}.viz-radar b:nth-of-type(3){left:21px;top:38px}
-  .tile--pic{flex-direction:row;align-items:stretch;gap:8px;min-height:210px;padding:20px 0 0 20px}
-  .pic-copy{flex:1;min-width:0;padding-bottom:20px}
-  .pic-person{flex:none;height:200px;max-width:46%;margin:auto 0 0}
-  .tile--loop{grid-template-columns:minmax(0,1fr);padding:22px;gap:14px;justify-items:center}
-  .loop-copy{justify-self:stretch}
-  .loop-copy h4{font-size:clamp(22px,6vw,26px)}
-  .loop{--size:min(240px,calc(100vw - 130px));margin-block:8px 14px}
-  .loop-n{width:96px;margin-left:-48px}
+  .pic-person{height:200px;padding-top:10px}
+  .viz-radar{width:110px;height:110px;right:-30px;top:-30px}
+  .viz-radar i:nth-child(2){inset:18px}.viz-radar i:nth-child(3){inset:36px}
+  .viz-radar b:nth-of-type(1){left:30px;top:70px}.viz-radar b:nth-of-type(2){left:66px;top:80px}.viz-radar b:nth-of-type(3){left:22px;top:42px}
+  .tile--loop{grid-template-columns:1fr;padding:22px;gap:10px}
+  .loop{--size:min(262px,calc(100vw - 96px))}
+  .loop-n{width:92px;margin-left:-46px}
   .loop-n .ic{width:17px;height:17px;padding:9px;border-radius:12px}
   .loop-n b{font-size:11.5px}
-  .viz-rise{height:64px;gap:6px}
+  .viz-rise{height:70px;gap:6px;padding-top:18px}
+  .viz-days{gap:3px;padding-top:14px}
+  .viz-days i{height:26px;border-radius:7px;font-size:10px}
   .wk-row{grid-template-columns:minmax(0,1fr);gap:6px}
   .wk-days{margin-left:0}
   .wk-cells i{height:26px}
@@ -1511,7 +1490,7 @@ figure{margin:0}
   .orb,.rd-sweep,.b6-cycle .ic,.b3-path,.ticker-inner{animation:none !important}
   .js [data-r],.js .hs [data-seq]{opacity:1 !important;transform:none !important}
   [data-split] .w i{transform:none !important}
-  .viz-toggles i:first-child{background:var(--red) !important;border-color:var(--red) !important;color:#fff !important}
+  .viz-toggles i:first-child{background:var(--cyan) !important;border-color:var(--cyan) !important;color:#fff !important}
   .cursor-glow,.b3-dot,.hero-meter .hero-prog{display:none}
   /* a still ticker wraps instead of running off the edge */
   .ticker-inner{width:auto}
