@@ -12,7 +12,7 @@ originals are the source of truth.
 | Banner6.jpg | Supplied by the client | Hero banner 6 (desktop) |
 | banner6-m.jpg | Banner6.jpg cropped to the left 1010 px (the checklist panel left out) | Hero banner 6 (phones, portrait tablets) |
 | bn-crisis.webp, bn-grow.webp | Cut out of the client's `Section 2 Images` (WA0007, WA0009) | How SAPOTR Benefits You — replacement staff and customer service cards |
-| sapotr-flex.webp, sapotr-walk.webp, sapotr-watch.webp, banner4-group.webp | Copied unchanged from the frozen Brand2 site | About: mission, vision, advantage, name; sapotr-watch also the benefits "Unworked Break Time" card |
+| sapotr-flex.webp, sapotr-walk.webp, sapotr-watch.webp, banner4-group.webp | Copied unchanged from the frozen Brand2 site | About: mission, vision, advantage, name; banner4-group also the "Scale Staff With Demand" card |
 | cta-team-1600.webp, cta-team-900.webp | Brand2 `cta-team-1400.png`, as WebP | Final CTA (the frozen CTA image) |
 | ind-*.webp (9) | Brand2's work-type images, as WebP, one per category | Businesses Across NZ cards |
 
