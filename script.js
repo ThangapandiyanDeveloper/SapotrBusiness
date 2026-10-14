@@ -113,25 +113,31 @@
     document.addEventListener('click', function (e) { if (!menu.hidden && !li.contains(e.target)) set(false); });
   });
 
-  /* the nav link for the section in view stays lit */
+  /* the nav link for the section in view stays lit — in the header nav and the mobile menu.
+     A link stands for its href's section, or for every section listed in data-spy
+     ("How it Benefits You" covers the four benefit sections). */
   (function scrollSpy() {
-    var links = $$('.nav-list > li > a[href^="#"]');
+    var links = $$('.nav-list > li > a[href^="#"], .mobile-nav > a[href^="#"]:not(.btn)');
     if (!links.length || !('IntersectionObserver' in window)) return;
-    var map = {};
-    links.forEach(function (a) { map[a.dataset.spy || a.getAttribute('href').slice(1)] = a; });
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        var a = map[e.target.id];
-        if (a && !e.isIntersecting && a.getAttribute('aria-current')) a.removeAttribute('aria-current');
+    var map = {};                                   /* section id → the links it lights */
+    links.forEach(function (a) {
+      (a.dataset.spy || a.getAttribute('href').slice(1)).split(/\s+/).forEach(function (id) {
+        (map[id] = map[id] || []).push(a);
       });
+    });
+    var ids = Object.keys(map).filter(function (id) { return document.getElementById(id); });
+    ids.sort(function (a, b) {                      /* page order, so the first section in view leads */
+      return document.getElementById(a).compareDocumentPosition(document.getElementById(b)) & 4 ? -1 : 1;
+    });
+    var inView = {};
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { inView[e.target.id] = e.isIntersecting; });
       /* side-by-side sections (Mission + Vision) arrive together: the first one leads */
-      var lead = es.filter(function (e) { return e.isIntersecting && map[e.target.id]; })[0];
-      if (lead) {
-        links.forEach(function (l) { l.removeAttribute('aria-current'); });
-        map[lead.target.id].setAttribute('aria-current', 'true');
-      }
+      var lead = ids.filter(function (id) { return inView[id]; })[0];
+      links.forEach(function (l) { l.removeAttribute('aria-current'); });
+      if (lead) map[lead].forEach(function (l) { l.setAttribute('aria-current', 'true'); });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    Object.keys(map).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+    ids.forEach(function (id) { io.observe(document.getElementById(id)); });
   })();
 
   /* ───── 3 · Reveals + headline word split ───── */
