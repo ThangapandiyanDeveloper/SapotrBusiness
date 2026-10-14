@@ -24,8 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="assets/img/hero-cafe-1800.png" media="(min-width:901px) and (min-aspect-ratio:1/1)">
-<link rel="preload" as="image" href="assets/img/hero-cafe-m.png" media="(max-width:900px), (max-aspect-ratio:1/1)">
+<link rel="preload" as="image" href="assets/img/banner4-group.webp" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body id="top">
@@ -126,13 +125,11 @@
       <ul class="nav-list">
         <li><a href="#top" data-spy="hero">Home</a></li>
         <li><a href="#benefits">How it Benefits You</a></li>
-        <li><a href="#safety">Safety &amp; Trust</a></li>
         <li><a href="#hire">Hire a SAPOTR</a></li>
         <li class="has-drop">
           <a href="about.html">About Us</a>
           <button class="drop-btn" type="button" aria-expanded="false" aria-controls="drop-about" aria-label="Show the About Us pages"><svg class="ic" aria-hidden="true"><use href="#i-chev-d"/></svg></button>
           <ul class="drop" id="drop-about" hidden>
-            <li><a href="about.html#name"><span class="drop-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></span>How SAPOTR Got Its Name</a></li>
             <li><a href="about.html#mission"><span class="drop-ic ic-yellow"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg></span>Our Mission</a></li>
             <li><a href="about.html#vision"><span class="drop-ic ic-red"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg></span>Our Vision</a></li>
             <li><a href="about.html#advantage"><span class="drop-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg></span>The SAPOTR Advantage</a></li>
@@ -152,7 +149,6 @@
   <nav class="mobile-nav" id="mobile-nav" aria-label="Menu" hidden>
     <a href="#top">Home</a>
     <a href="#benefits">How it Benefits You</a>
-    <a href="#safety">Safety &amp; Trust</a>
     <a href="#hire">Hire a SAPOTR</a>
     <a href="about.html">About Us</a>
     <a class="btn btn--accent" href="#hire">Need Staff Now?</a>
@@ -169,11 +165,8 @@
       <!-- ───── Banner 1 · the café that is a pair of hands short ───── -->
       <article class="hs hs--cafe is-active" id="hs-1" data-tone="dark" role="group" aria-roledescription="slide" aria-label="1 of 6">
         <div class="hs-bg">
-          <picture>
-            <source media="(max-width:900px), (max-aspect-ratio:1/1)" srcset="assets/img/hero-cafe-m.png" width="860" height="1289">
-            <img class="hs-photo" src="assets/img/hero-cafe-1800.png" width="1800" height="1202" fetchpriority="high" decoding="async" draggable="false"
-                 alt="A SAPOTR in a navy SAPOTR cap and apron giving a thumbs up in a restaurant kitchen, tablet in hand">
-          </picture>
+          <img class="hs-photo b1-photo" src="assets/img/banner4-group.png" width="1072" height="944" fetchpriority="high" decoding="async" draggable="false"
+               alt="A team of smiling SAPOTRs in navy SAPOTR caps and polos">
           <span class="hs-scrim" aria-hidden="true"></span>
         </div>
 
@@ -186,15 +179,6 @@
           </div>
         </div>
 
-        <div class="bk b1-card" aria-hidden="true">
-          <div class="bk-head"><img src="assets/img/logo-mark-256.webp" alt="" width="256" height="202"><b>New booking</b><span class="bk-live">Live</span></div>
-          <div class="bk-role">
-            <span class="ocard-ic ic-yellow"><svg class="ic"><use href="#c-hosp"/></svg></span>
-            <span class="ocard-t"><small>Hospitality &amp; Food Services</small><b>Kitchen Hand</b></span>
-          </div>
-          <div class="bk-dur"><i>Few Hours</i><i>Half Day</i><i>Full Day</i></div>
-          <div class="bk-status"><span class="bk-tick"><svg class="ic"><use href="#i-check"/></svg></span>SAPOTR matched</div>
-        </div>
       </article>
 
       <!-- ───── Banner 2 · your instant staff ───── -->
@@ -203,7 +187,7 @@
 
         <div class="wrap hs-inner b2-inner">
           <div class="hs-copy">
-            <h2 class="hs-title b2-title" data-seq="1"><span class="b2-name"><span class="hl">SAPOTR</span>,</span> Your Instant Staff.</h2>
+            <h2 class="hs-title b2-title"><span class="b2-ln"><span class="wd" style="--w:0">Hire,</span></span> <span class="b2-ln b2-name"><span class="wd" style="--w:1"><span class="hl">Hire</span></span> <span class="wd" style="--w:2"><span class="hl">SAPOTR</span>,</span></span> <span class="b2-ln"><span class="wd" style="--w:3">Your</span> <span class="wd" style="--w:4">Instant</span> <span class="wd" style="--w:5">Staff.</span></span></h2>
             <div class="hs-cta" data-seq="2">
               <a class="btn btn--accent btn--lg magnet" href="#hire">Hire Now<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
             </div>
@@ -219,10 +203,7 @@
                 <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><circle class="b2-run" cx="50" cy="50" r="44"/></svg>
                 <span><svg class="ic"><use href="#i-bolt"/></svg></span>
               </div>
-              <div class="ocard b2-note b2-note--a" aria-hidden="true">
-                <span class="ocard-ic ic-yellow"><svg class="ic"><use href="#i-bolt"/></svg></span>
-                <span class="ocard-t"><small>Staff request</small><b>Sent just now</b></span>
-              </div>
+               
               <div class="ocard b2-note b2-note--b" aria-hidden="true">
                 <span class="ocard-ic ic-cyan"><svg class="ic"><use href="#i-user-check"/></svg></span>
                 <span class="ocard-t"><small>SAPOTR confirmed</small><b>Store Assistant</b></span>
@@ -274,7 +255,7 @@
 
         <div class="wrap hs-inner b5-inner">
           <div class="hs-copy">
-            <h2 class="hs-title b5-title" data-seq="1">Our Technology FINDS <span class="b5-line">Verified <span class="hl">SAPOTR</span> Staff,</span> <span class="b5-line">in Minutes.</span></h2>
+            <h2 class="hs-title b5-title" data-seq="1">Our Tech FINDS <span class="b5-line">Verified <span class="hl">SAPOTR</span> Staff,</span> <span class="b5-line">in Minutes.</span></h2>
             <div class="hs-cta" data-seq="2">
               <a class="btn btn--accent btn--lg magnet" href="#hire">Hire Now<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
             </div>
@@ -327,11 +308,8 @@
       <!-- ───── Banner 6 · last-minute support for urgent work ───── -->
       <article class="hs hs--urgent" id="hs-6" data-tone="dark" role="group" aria-roledescription="slide" aria-label="6 of 6" hidden>
         <div class="hs-bg">
-          <picture>
-            <source media="(max-width:900px), (max-aspect-ratio:1/1)" srcset="assets/img/banner6-m.jpg" width="1010" height="1024">
-            <img class="hs-photo" src="assets/img/Banner6.jpg" width="1536" height="1024" decoding="async" fetchpriority="low" draggable="false"
-                 alt="A SAPOTR at a supermarket checkout handing groceries to a smiling customer, beside a checklist: Job Completed On Time, Assigned Work Done, Good Quality, Shop Ready, Happy Customer">
-          </picture>
+          <img class="hs-photo" src="assets/img/Banner6th.png" width="1448" height="1086" decoding="async" fetchpriority="low" draggable="false"
+               alt="A large team of smiling SAPOTRs in navy SAPOTR caps and polos, many giving a thumbs up">
           <span class="b4-panel" aria-hidden="true"></span>
           <span class="b4-stripe b4-stripe--y" aria-hidden="true"></span>
           <span class="b4-stripe b4-stripe--r" aria-hidden="true"></span>
@@ -374,7 +352,7 @@
 </section>
 
 <!-- ══════════ Category ticker ══════════ -->
-<section class="ticker" id="ticker" aria-label="Businesses SAPOTR supports">
+<!-- <section class="ticker" id="ticker" aria-label="Businesses SAPOTR supports">
   <div class="ticker-row">
     <div class="ticker-inner" id="ticker-inner">
       <ul class="ticker-track">
@@ -390,7 +368,7 @@
       </ul>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- ══════════ 2 · What support SAPOTR provides — the frozen site's benefit bento ══════════
      Sections 2–5 share the frozen #benefits cards (.tile / .tile-ic / .viz / .loop).
@@ -401,7 +379,7 @@
     <div class="bento">
       <article class="tile tile--navy p1 r" data-r data-spot>
         <span class="tile-ic"><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg></span>
-        <h4>Instant or Scheduled Support</h4>
+        <h4>Hire Instantly or Schedule Ahead</h4>
         <p>Hire staff when needed or schedule ahead.</p>
         <span class="viz viz-toggles" aria-hidden="true"><i><svg class="ic"><use href="#i-bolt"/></svg>Instantly</i><i><svg class="ic"><use href="#i-calendar"/></svg>Schedule it</i></span>
       </article>
@@ -412,10 +390,10 @@
       </article>
       <article class="tile tile--pic p3 r" data-r data-spot>
         <span class="tile-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-user-check"/></svg></span>
-        <h4>Cover Shifts When Staff Are Away</h4>
+        <h4>Get Replacement Staff When Needed</h4>
         <p>Get support when staff are sick, absent or unavailable.</p>
-        <img class="pic-person" src="assets/img/bn-crisis.webp" width="717" height="1100" loading="lazy" decoding="async"
-             alt="A SAPOTR in uniform running with his backpack, on his way to help">
+        <img class="pic-person" src="assets/img/bn-replacement.webp" width="718" height="1100" loading="lazy" decoding="async"
+             alt="A smiling SAPOTR handing a grocery box to a customer at her door">
       </article>
       <article class="tile p4 r" data-r data-spot>
         <span class="tile-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-people"/></svg></span>
@@ -462,7 +440,7 @@
       <article class="tile tile--loop p4 r" data-r data-spot>
         <div class="loop-copy">
           <span class="tile-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg></span>
-          <h4>Hire. SAPOTR Arrives. Work Gets Done. Repeat.</h4>
+          <h4 class="loop-steps"><span style="--l:0">Hire.</span> <span style="--l:1">SAPOTR Arrives.</span> <span style="--l:2">Work Done.</span> <span style="--l:3">Repeat.</span></h4>
           <p>One simple process from hiring staff to getting the work completed.</p>
         </div>
         <div class="loop" aria-hidden="true">
@@ -540,12 +518,12 @@
         <p>Hire directly through SAPOTR without traditional agency commission costs.</p>
       </article>
       <!-- a whole team of SAPOTRs: extra staff, only when the busy period needs them -->
-      <article class="tile tile--pic tile--team p3 r" data-r data-spot>
+      <article class="tile tile--pic tile--fill p3 r" data-r data-spot>
         <span class="tile-ic ic-cyan"><svg class="ic" aria-hidden="true"><use href="#i-people"/></svg></span>
-        <h4>Scale Staff With Demand</h4>
-        <p>Add extra staff during busy periods without maintaining a larger team year-round.</p>
-        <img class="pic-person" src="assets/img/banner4-group.webp" width="1072" height="944" loading="lazy" decoding="async"
-             alt="A large team of SAPOTRs in uniform, smiling together">
+        <h4>SAPOTR Staff Break Time Isn’t Billed</h4>
+        <p>Break time is excluded from work-time calculations.</p>
+        <img class="pic-person" src="assets/img/bn-breaktime.webp" width="737" height="1100" loading="lazy" decoding="async"
+             alt="A SAPOTR in a hi-vis vest giving a thumbs up from a forklift carrying boxes">
       </article>
     </div>
   </div>
@@ -599,7 +577,7 @@
           </div>
         </article>
         <article class="ind ind--yellow" data-acc-item>
-          <figure class="ind-media"><img src="assets/img/ind-delivery.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR at the wheel giving a thumbs up"><p class="ind-flag"><svg class="ic" aria-hidden="true"><use href="#i-id"/></svg>Need Valid License</p></figure>
+          <figure class="ind-media"><img src="assets/img/ind-delivery.webp" width="800" height="533" loading="lazy" decoding="async" alt="A SAPOTR at the wheel giving a thumbs up"></figure>
           <div class="ind-body">
             <div class="ind-head"><span class="ind-ic"><svg class="ic" aria-hidden="true"><use href="#c-delivery"/></svg></span><span class="ind-n" aria-hidden="true">05</span></div>
             <h3 class="ind-name"><button class="ind-q" type="button" aria-expanded="false" aria-controls="ind-a5" id="ind-q5">Delivery &amp; Driving<span class="ind-x" aria-hidden="true"></span></button></h3>
@@ -662,13 +640,35 @@
 <section class="section safe-sec" id="safety">
   <div class="wrap">
     <div class="safe-head">
-      <h2 class="sec-title safe-title" data-split><span class="ln">Your Confidence in <span class="hl">SAPOTR</span> is Our Priority</span> <span class="ln">Every SAPOTR is Verified Before Activation.</span> <span class="ln">Tracked From Hiring to Work Completion.</span></h2>
+      <h2 class="sec-title safe-title" data-split><span class="ln">Your Confidence in <span class="hl">SAPOTR</span></span> <span class="ln">is Our Priority</span> <span class="ln ln--sub">Every SAPOTR is Verified Before Activation.</span> <span class="ln ln--sub">Tracked From Hiring to Work Completion.</span></h2>
       <span class="safe-badge r" data-r aria-hidden="true"><svg class="ic"><use href="#i-shield"/></svg></span>
     </div>
 
     <!-- four cards in a row on desktop, two by two on tablets, a one-card rail on phones -->
     <div class="rail-vp safe-vp r" data-r id="safe-vp" role="group" aria-roledescription="carousel" aria-label="How every SAPOTR is checked and tracked">
       <div class="rail-track safe-grid" id="safe-grid">
+
+        <article class="safe">
+          <div class="safe-viz sv-police" aria-hidden="true">
+            <span class="sv-doc"><i></i><i></i><i></i><i></i></span>
+            <span class="sv-scan"></span>
+            <span class="sv-shield"><svg class="ic"><use href="#i-badge"/></svg></span>
+          </div>
+          <span class="safe-ic ic-red"><svg class="ic" aria-hidden="true"><use href="#i-badge"/></svg></span>
+          <h3>Police Verification</h3>
+          <p>Criminal-history screening is completed where applicable.</p>
+        </article>
+
+         <article class="safe">
+          <div class="safe-viz sv-nz" aria-hidden="true">
+            <span class="sv-doc"><b>NZ</b><i></i><i></i><i></i></span>
+            <span class="sv-stamp"><svg class="ic"><use href="#i-check"/></svg></span>
+          </div>
+          <span class="safe-ic ic-yellow"><svg class="ic" aria-hidden="true"><use href="#i-nz"/></svg></span>
+          <h3>Right to Work in NZ</h3>
+          <p>Work eligibility is verified before activation.</p>
+        </article>
+
         <article class="safe">
           <div class="safe-viz sv-id" aria-hidden="true">
             <span class="sv-card"><span class="sv-av"></span><span class="sv-lines"><i></i><i></i><i></i></span></span>
@@ -681,26 +681,9 @@
           <p>Government-issued ID, profile details and required licences are checked.</p>
         </article>
 
-        <article class="safe">
-          <div class="safe-viz sv-nz" aria-hidden="true">
-            <span class="sv-doc"><b>NZ</b><i></i><i></i><i></i></span>
-            <span class="sv-stamp"><svg class="ic"><use href="#i-check"/></svg></span>
-          </div>
-          <span class="safe-ic ic-yellow"><svg class="ic" aria-hidden="true"><use href="#i-nz"/></svg></span>
-          <h3>Right to Work in NZ</h3>
-          <p>Work eligibility is verified before activation.</p>
-        </article>
+       
 
-        <article class="safe">
-          <div class="safe-viz sv-police" aria-hidden="true">
-            <span class="sv-doc"><i></i><i></i><i></i><i></i></span>
-            <span class="sv-scan"></span>
-            <span class="sv-shield"><svg class="ic"><use href="#i-badge"/></svg></span>
-          </div>
-          <span class="safe-ic ic-red"><svg class="ic" aria-hidden="true"><use href="#i-badge"/></svg></span>
-          <h3>Police Verification</h3>
-          <p>Criminal-history screening is completed where applicable.</p>
-        </article>
+        
 
         <article class="safe">
           <div class="safe-viz sv-track" aria-hidden="true">
@@ -727,7 +710,7 @@
 <!-- ══════════ 8 · What businesses say — one at a time ══════════ -->
 <section class="section section--tint tm" id="reviews">
   <div class="wrap">
-    <h2 class="sec-title sec-title--center tm-title" data-split><span class="ln">Don’t Take Our Word for It.</span> <span class="ln ln--sub">Hear From Businesses Like Yours.</span></h2>
+    <h2 class="sec-title sec-title--center tm-title" data-split><span class="ln">Don’t Take Our Word.</span> <span class="ln ln--sub">Hear From Businesses Like Yours.</span></h2>
 
     <!-- PLACEHOLDER PORTRAITS: replace each tm-*.webp with the real customer's own photo
          (with their consent) before launch — stock photos must not imply a real endorsement. -->
@@ -786,7 +769,7 @@
       <div class="tm-ui">
         <button class="c-arrow c-arrow--lg" id="tm-prev" type="button" aria-label="Previous testimonial" aria-controls="tm-slides"><svg class="ic" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
         <span class="tm-count" aria-hidden="true"><b id="tm-now">01</b> / 06</span>
-        <div class="dots tm-dots" id="tm-dots" aria-hidden="true"></div>
+        <!-- <div class="dots tm-dots" id="tm-dots" aria-hidden="true"></div> -->
         <button class="c-arrow c-arrow--lg" id="tm-next" type="button" aria-label="Next testimonial" aria-controls="tm-slides"><svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
       </div>
     </div>
@@ -960,7 +943,7 @@
   </div>
 
   <div class="wrap cta-inner">
-    <h2 data-split><span class="ln">Need more hands?</span> <span class="ln">Add <span class="hl">SAPOTR</span>, Keep work moving.</span></h2>
+    <h2 data-split="lines"><span class="ln">Need more hands?</span> <span class="ln">Add <span class="hl">SAPOTR</span>.</span> <span class="ln">Keep work moving.</span></h2>
     <div class="r" data-r>
       <a class="btn btn--accent btn--xl magnet" href="#hire">Hire a SAPOTR<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>

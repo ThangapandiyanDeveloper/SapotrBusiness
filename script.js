@@ -162,7 +162,14 @@
     el.textContent = '';
     el.appendChild(frag);
     el.setAttribute('aria-label', label);   /* read as one phrase, not word by word */
-    $$('.w i', el).forEach(function (i, n) { i.style.transitionDelay = (n * 55) + 'ms'; });
+    /* words rise one after another; data-split="lines" lets each line finish before the next begins */
+    if (el.dataset.split === 'lines') {
+      $$('.ln', el).forEach(function (ln, l) {
+        $$('.w i', ln).forEach(function (i, n) { i.style.transitionDelay = (l * 380 + n * 55) + 'ms'; });
+      });
+    } else {
+      $$('.w i', el).forEach(function (i, n) { i.style.transitionDelay = (n * 55) + 'ms'; });
+    }
   });
 
   (function reveals() {

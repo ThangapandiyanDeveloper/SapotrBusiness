@@ -28,7 +28,8 @@
   --pad:clamp(80px,8.4vw,128px);
   --title-gap:clamp(44px,4.6vw,64px);
   --ease:cubic-bezier(.22,.68,.28,1);
-  --head-h:76px;
+  --head-top:12px;      /* empty space above the header row */
+  --head-h:88px;
   --box-title:21px;     /* important card/box titles across the page */
 }
 
@@ -100,7 +101,7 @@ figure{margin:0}
 /* ───── 4 · Header ───── */
 .site-header{position:fixed;top:0;left:0;right:0;z-index:80;border-bottom:1px solid transparent;
   transition:background .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease)}
-.header-inner{height:var(--head-h);display:flex;align-items:center;gap:28px}
+.header-inner{height:var(--head-h);padding-top:var(--head-top);display:flex;align-items:center;gap:28px}
 /* the plain SAPOTR wordmark, set larger than the two-line Partner lock-up */
 .brand{position:relative;display:block;height:46px;flex:none}
 .brand img{height:46px;width:auto;object-fit:contain;transition:opacity .3s var(--ease)}
@@ -292,7 +293,16 @@ figure{margin:0}
 
 /* ───── 7 · Banners ───── */
 /* 1 · the café that is a pair of hands short */
-.hs--cafe .hs-photo{object-position:68% 38%}
+/* the SAPOTR team (a transparent cut-out) stands on the floor to the right of the headline,
+   in front of a soft glow — above the scrim, so the people keep their colour */
+.hs--cafe .hs-bg{background:radial-gradient(ellipse 58% 72% at 74% 62%,#1B2862 0%,#0F1738 55%,#080D26 100%)}
+.hs--cafe .b1-photo{z-index:1;inset:auto;right:max(24px,calc((100% - 1240px) / 2));bottom:0;width:min(43%,680px);height:calc(100% - var(--head-h) - 3vh);
+  object-fit:contain;object-position:100% 100%;transform-origin:70% 100%;filter:drop-shadow(0 30px 50px rgba(0,0,0,.35))}
+/* web view: the group sits further right (as far as the page margin allows) and higher —
+   raised by lifting its floor, so on short screens it shrinks rather than sliding under the header.
+   Phones and tablets set their own position. */
+.hs--cafe{--b1-x:min(4vw,64px,max(24px,(100vw - 1240px) / 2 - 10px));--b1-up:clamp(32px,6vh,64px)}
+.hs--cafe .b1-photo{bottom:var(--b1-up);height:calc(100% - var(--head-h) - 3vh - var(--b1-up));translate:var(--b1-x) 0}
 .hs--cafe.is-active .hs-photo{animation:kb 12s var(--ease) both}
 .hs--cafe .hs-scrim{background:
   linear-gradient(90deg,rgba(10,16,48,.95) 0%,rgba(10,16,48,.86) 28%,rgba(10,16,48,.42) 52%,rgba(10,16,48,.06) 72%),
@@ -300,26 +310,6 @@ figure{margin:0}
 .b1-title{font-size:calc(var(--ht) * 1.04)}
 .b1-line{display:block;margin-top:.1em}
 
-.bk{display:flex;flex-direction:column;gap:11px;padding:16px;background:rgba(255,255,255,.97);color:var(--ink);border-radius:20px;
-  box-shadow:0 30px 70px rgba(0,0,0,.36),0 0 0 1px rgba(255,255,255,.4)}
-.b1-card{position:absolute;z-index:3;width:296px;right:max(24px,calc((100% - 1240px) / 2));bottom:calc(var(--ui-h) + clamp(44px,9vh,100px))}
-.hs--cafe.is-active .b1-card{animation:pop .7s var(--ease) .9s both,bob 8s ease-in-out 1.8s infinite}
-.bk-head{display:flex;align-items:center;gap:8px;font-size:13.5px}
-.bk-head img{width:22px;height:auto}
-.bk-head b{font-weight:800}
-.bk-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;background:rgba(18,199,199,.12);
-  font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--cyan-ink)}
-.bk-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px rgba(18,199,199,.22)}
-.bk-role{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:14px}
-.bk-dur{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.bk-dur i{padding:8px 4px;border-radius:10px;background:var(--tint);border:1px solid transparent;text-align:center;font-style:normal;font-size:12px;font-weight:800;color:var(--ink-2)}
-.hs--cafe.is-active .bk-dur i{animation:dur 7.2s var(--ease) infinite}
-.hs--cafe.is-active .bk-dur i:nth-child(2){animation-delay:2.4s}
-.hs--cafe.is-active .bk-dur i:nth-child(3){animation-delay:4.8s}
-@keyframes dur{0%,4%{background:var(--tint);color:var(--ink-2)}8%,30%{background:var(--navy);color:#fff}36%,100%{background:var(--tint);color:var(--ink-2)}}
-.bk-status{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:12px;background:var(--navy);color:#fff;font-size:13.5px;font-weight:800}
-.bk-tick{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--cyan);color:var(--navy)}
-.bk-tick .ic{width:13px;height:13px;stroke-width:3}
 
 /* 2 · your instant staff */
 .hs--instant .hs-bg{background:linear-gradient(160deg,#FFFFFF 0%,#F5FAFB 48%,#E2F5F5 100%)}
@@ -331,7 +321,12 @@ figure{margin:0}
 .b2-inner,.b3-inner,.b5-inner,.b6-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(30px,5vw,80px)}
 .b2-inner .hs-copy,.b3-inner .hs-copy,.b5-inner .hs-copy,.b6-inner .hs-copy{max-width:600px}
 .b2-title{font-size:calc(var(--ht) * 1.12)}
-.b2-name{display:block}
+.b2-ln{display:block}
+/* the headline arrives a word at a time (each .wd carries its turn in --w), then the button */
+.b2-title .wd{display:inline-block}
+.js .hs .b2-title .wd{opacity:0}
+.hs.is-active .b2-title .wd{animation:hs-rise .7s var(--ease) both;animation-delay:calc(240ms + var(--w) * 150ms)}
+.b2-inner .hs-cta{--seq:1060ms}
 .b2-art{display:flex;justify-content:center}
 .b2-stage{position:relative;height:min(64vh,560px);aspect-ratio:4/5}
 .b2-frame{position:absolute;inset:0;border-radius:28px;overflow:hidden;border:8px solid #fff;background:#e9eef4;
@@ -409,7 +404,7 @@ figure{margin:0}
    headline width + a gap) rather than a fixed share of the screen, so the
    headline, the bands and his face never meet at any width. */
 .hs--urgent{--b4-cut:calc(max(24px,(100% - 1240px) / 2) + min(470px,35%) + 16px)}
-.hs--urgent .hs-photo{left:auto;width:68%;object-position:100% 50%;transform-origin:70% 30%}
+.hs--urgent .hs-photo{left:auto;width:68%;object-fit:contain;object-position:100% 100%;transform-origin:70% 100%}
 .hs--urgent.is-active .hs-photo{animation:kb 12s var(--ease) both}
 .b4-panel{position:absolute;inset:0;background:linear-gradient(125deg,#0A1030 0%,#0F1738 55%,#17225A 100%);
   clip-path:polygon(0 0,calc(var(--b4-cut) + 2.5%) 0,calc(var(--b4-cut) - 2.5%) 100%,0 100%)}
@@ -598,8 +593,6 @@ figure{margin:0}
   mask-image:linear-gradient(180deg,#000 82%,transparent);-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);
   transform:translateY(10px);transition:transform .6s var(--ease)}
 .tile--pic:hover .pic-person{transform:translateY(0)}
-/* the team picture takes whatever height the card has left, and never less than 240px */
-.tile--team .pic-person{flex:1 1 0;width:100%;height:auto;min-height:240px}
 
 /* "our tech finds staff" — the frozen radar */
 .viz-radar{position:absolute;right:-34px;top:-34px;width:150px;height:150px;margin:0;padding:0;pointer-events:none}
@@ -616,7 +609,7 @@ figure{margin:0}
 @keyframes bf-blink{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
 
 /* the business loop — the frozen app card */
-.tile--loop{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:24px;padding:30px;
+.tile--loop{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:24px;padding:30px;
   background:linear-gradient(150deg,#FFFFFF 0%,#F2FBFB 100%)}
 .loop{--size:260px;position:relative;width:var(--size);height:var(--size);justify-self:center}
 .loop-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
@@ -631,6 +624,11 @@ figure{margin:0}
   border:1px solid var(--line);box-shadow:var(--sh-m);transition:background .3s,color .3s}
 .loop-n b{font-size:12.5px;font-weight:800;color:var(--ink);white-space:nowrap;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.86)}
 .tile.in .loop-n .ic{animation:bf-hl 6s linear infinite;animation-delay:calc(var(--i) * 1.5s)}
+/* "Hire. SAPOTR Arrives. Work Done. Repeat." — one step per line, each arriving in turn */
+.loop-steps > span{display:block}
+.js .loop-steps > span{opacity:0;transform:translateY(10px)}
+.tile.in .loop-steps > span{animation:bf-step .5s var(--ease) forwards;animation-delay:calc(.25s + var(--l) * .32s)}
+@keyframes bf-step{to{opacity:1;transform:none}}
 @keyframes bf-hl{0%,22%{background:var(--cyan);color:#fff;border-color:var(--cyan)}25%,100%{background:#fff;color:var(--navy)}}
 
 /* "increase revenue" — the frozen weekly bars, rising */
@@ -662,6 +660,8 @@ figure{margin:0}
 .wk-row--sap b{color:var(--cyan-ink)}
 /* two rows tall from tablets up: a fuller week */
 @media (min-width:681px){
+  /* the cost card's picture takes whatever height the card has left */
+  .tile--fill .pic-person{flex:1 1 0;width:100%;height:auto;min-height:240px}
   .tile--week{padding:30px}
   .tile--week .viz-week2{gap:14px}
   .tile--week .wk-cells i{height:44px;border-radius:10px}
@@ -754,8 +754,8 @@ figure{margin:0}
 .safe-head{display:flex;align-items:flex-end;justify-content:space-between;gap:36px}
 .safe-title{max-width:none;line-height:1.16}
 /* the two lines under the headline read like the site's sublines (.sec-sub) */
-.safe-title .ln + .ln,.sec-title .ln--sub{font-size:clamp(18px,1.6vw,21.5px);font-weight:500;line-height:1.5;letter-spacing:normal;word-spacing:.02em;color:var(--ink-2)}
-.safe-title .ln:nth-child(2),.sec-title .ln--sub{margin-top:18px}
+.sec-title .ln--sub{font-size:clamp(18px,1.6vw,21.5px);font-weight:500;line-height:1.5;letter-spacing:normal;word-spacing:.02em;color:var(--ink-2)}
+.sec-title .ln:not(.ln--sub) + .ln--sub{margin-top:18px}
 .safe-badge{position:relative;display:grid;place-items:center;flex:none;width:96px;height:96px;margin:0 12px 12px 0;border-radius:28px;
   background:linear-gradient(150deg,var(--navy-2),var(--navy));color:var(--cyan);box-shadow:0 24px 50px rgba(15,23,56,.24)}
 .safe-badge .ic{width:44px;height:44px;stroke-width:1.5}
@@ -1018,7 +1018,7 @@ figure{margin:0}
 .sw-y{stroke:var(--yellow)} .sw-r{stroke:var(--red)} .sw-c{stroke:var(--cyan)}
 .cta-inner{position:relative}
 .cta h2{margin:0 0 clamp(26px,3vw,38px);max-width:17ch;color:#fff;font-size:clamp(30px,3.5vw,52px);line-height:1.08;text-wrap:balance}
-.cta h2 .ln{display:inline}
+.cta h2 .ln{display:block}
 
 /* the About page keeps its own brand CTA card */
 .cta-sec{position:relative;padding:0 0 var(--pad)}
@@ -1062,13 +1062,23 @@ figure{margin:0}
 /* full screen: the fixed header sits transparent over the hero and .ph-inner pads for it,
    so the hero takes the whole viewport (svh: the screen with the mobile browser bars showing) */
 .page-hero{position:relative;isolation:isolate;overflow:hidden;display:flex;min-height:max(600px,100vh);min-height:max(600px,100svh);background:var(--navy-deep);color:#fff}
-.page-hero .hs-photo{object-position:60% 40%}
+/* the line of SAPOTRs is cropped at the thighs, so the legs fade into the navy instead of ending on an edge */
+.ph-group{display:block;height:auto;max-width:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 66%,transparent 97%);mask-image:linear-gradient(180deg,#000 66%,transparent 97%)}
+.ph-title{position:relative;z-index:1}
 .ph-scrim{position:absolute;inset:0;z-index:0;background:
   linear-gradient(90deg,rgba(10,16,48,.95) 0%,rgba(10,16,48,.82) 34%,rgba(10,16,48,.36) 62%,rgba(10,16,48,.12) 100%),
   linear-gradient(180deg,rgba(10,16,48,.6) 0%,transparent 26%,transparent 70%,rgba(10,16,48,.75) 100%)}
 .ph-inner{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;
   padding-top:calc(var(--head-h) + clamp(30px,6vh,64px));padding-bottom:clamp(56px,9vh,96px)}
 .ph-title{margin:0;max-width:13ch;color:#fff;font-size:clamp(38px,min(5.2vw,8.4vh),72px);line-height:1.06;text-wrap:balance}
+/* wide screens: title and strip share one row — the title takes its width, the strip the rest */
+@media (min-width:901px) and (min-aspect-ratio:1/1){
+  .ph-inner{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;align-content:center;column-gap:clamp(32px,4vw,64px)}
+  .ph-group{justify-self:end;width:100%;max-width:900px}
+  /* the same three title lines, in a box no wider than its longest line */
+  .ph-title{max-width:10ch}
+}
 
 /* how the name came about: the copy beside the whole SAPOTR crowd */
 .name-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(40px,6vw,96px);align-items:center}
@@ -1225,9 +1235,17 @@ figure{margin:0}
 
   /* 1 · the photo fills the screen; the copy sits at the foot */
   .hs--cafe .hs-inner{justify-content:flex-end;gap:clamp(20px,3vh,28px)}
-  .hs--cafe .hs-photo{object-position:42% 22%}
+  /* About hero: the line of SAPOTRs runs wider than the screen, centred, so faces stay a readable size */
+  /* About hero: the line of SAPOTRs sits under the title, wider than the screen with its far ends fading */
+  .ph-group{width:150vw;margin:clamp(28px,5vh,48px) 0 0 calc(50% - 75vw);
+    -webkit-mask-image:linear-gradient(180deg,#000 66%,transparent 97%),linear-gradient(90deg,transparent 4%,#000 17%,#000 83%,transparent 96%);
+    mask-image:linear-gradient(180deg,#000 66%,transparent 97%),linear-gradient(90deg,transparent 4%,#000 17%,#000 83%,transparent 96%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  /* the group fills the space between the header and the copy at the foot, standing just above the headline */
+  .hs--cafe .b1-photo{right:auto;left:50%;translate:-50% 0;top:calc(var(--head-h) + 12px);bottom:auto;width:min(100% - 32px,600px);
+    height:calc(100% - var(--head-h) - var(--b1-copy,300px));object-position:50% 100%;transform-origin:50% 100%}
+  .hs--cafe{--b1-copy:calc(var(--ui-h) + 14px + var(--ht) * 2.3 + 51px + clamp(20px,3vh,28px) + 40px)}
   .hs--cafe .hs-scrim{background:linear-gradient(180deg,rgba(10,16,48,.55) 0%,rgba(10,16,48,0) 20%,rgba(10,16,48,0) 36%,rgba(10,16,48,.78) 58%,rgba(10,16,48,.97) 100%)}
-  .b1-card{display:none}
 
   /* 2 · copy, then the framed photo with its two cards */
   .b2-title{font-size:calc(var(--ht) * 1.08)}
@@ -1296,7 +1314,7 @@ figure{margin:0}
 
 @media (max-width:680px){
   /* phones get more air than the desktop, not less */
-  :root{--pad:clamp(84px,24vw,104px);--title-gap:44px;--head-h:64px;--box-title:19.5px}
+  :root{--pad:clamp(84px,24vw,104px);--title-gap:44px;--head-top:8px;--head-h:72px;--box-title:19.5px}
   body{font-size:15.5px}
   .wrap{width:calc(100% - 36px)}
   .sec-title{font-size:clamp(27px,7.4vw,33px)}
@@ -1309,6 +1327,15 @@ figure{margin:0}
   .btn--lg{padding:15px 20px;font-size:15.5px}
   .btn--xl{padding:17px 22px}
   .hs-cta .btn{width:100%}
+  .b2-inner .hs-copy,.b3-inner .hs-copy,.b5-inner .hs-copy,.b6-inner .hs-copy,.b4-inner .hs-copy{display:contents}
+  .b2-inner .hs-cta,.b3-inner .hs-cta,.b5-inner .hs-cta,.b6-inner .hs-cta{order:2;margin-top:clamp(16px,2.6vh,24px)}
+  /* banner 6: the cut rises, the team stands between the bands and the button */
+  .b4-inner .hs-cta{margin-top:auto}
+  .b4-panel{clip-path:polygon(0 0,100% 0,100% 40%,0 46%)}
+  .b4-stripe--y{clip-path:polygon(0 46.6%,100% 40.6%,100% 41.6%,0 47.6%)}
+  .b4-stripe--r{clip-path:polygon(0 48.2%,100% 42.2%,100% 43.2%,0 49.2%)}
+  .b4-stripe--c{clip-path:polygon(0 49.8%,100% 43.8%,100% 44.8%,0 50.8%)}
+  .hs--urgent .hs-photo{top:48%;bottom:auto;height:calc(52% - var(--ui-h) - 84px);object-position:50% 100%}
   .ocard{padding:7px 12px 7px 7px;gap:8px;border-radius:13px}
   .ocard-ic{width:32px;height:32px;border-radius:10px}
   .ocard-ic .ic{width:17px;height:17px}
@@ -1331,7 +1358,7 @@ figure{margin:0}
   .bf--crisis .bento{grid-template-areas:"p1 p1" "p3 p2" "p3 p4" "p5 p6"}
   .bf--time   .bento{grid-template-areas:"p1 p2" "p4 p4" "p3 p5"}
   .bf--grow   .bento{grid-template-areas:"p1 p1" "p2 p3" "p2 p4"}
-  .bf--cost   .bento{grid-template-areas:"p1 p1" "p2 p2" "p3 p3"}
+  .bf--cost   .bento{grid-template-areas:"p1 p1" "p3 p2"}
   .tile{padding:18px;border-radius:var(--r-m)}
   .tile:hover,.js .tile[data-r].in:hover{transform:none}
   .tile:not(.tile--navy,.tile--rise,.tile--week,.tile--loop) h4{font-size:18.5px;font-weight:800;letter-spacing:-.022em;line-height:1.24}
@@ -1370,8 +1397,8 @@ figure{margin:0}
   /* safety: the heading on its own, then a one-card rail */
   .safe-head{align-items:center}
   .safe-title{font-size:clamp(25px,6.8vw,31px)}
-  .safe-title .ln + .ln,.sec-title .ln--sub{font-size:18px}
-  .safe-title .ln:nth-child(2),.sec-title .ln--sub{margin-top:14px}
+  .sec-title .ln--sub{font-size:18px}
+  .sec-title .ln:not(.ln--sub) + .ln--sub{margin-top:14px}
   .safe-badge{display:none}
   .safe-vp{--rail-gap:14px;margin-inline:-18px;padding-inline:18px;margin-top:28px}
   .safe-grid{flex-wrap:nowrap}
@@ -1464,6 +1491,10 @@ figure{margin:0}
   .wrap{width:calc(100% - 28px)}
   .hero{--ht:clamp(26px,7.6vw,29px)}
   .ind-vp,.safe-vp{margin-inline:-14px;padding-inline:14px}
+  /* banner 1: the headline runs to three lines here, so the group leaves room for them */
+  .hs--cafe{--b1-copy:calc(var(--ui-h) + 14px + var(--ht) * 3.7 + 51px + clamp(20px,3vh,28px) + 40px)}
+  /* the safety headline's two lines scale together so each stays on one row */
+  .safe-title{font-size:min(25px,6.8vw)}
   /* the set two-line benefit headings: each line stays whole on the narrowest phones */
   .bf-title .ln{white-space:nowrap;word-spacing:.02em}
   .foot-grid{grid-template-columns:1fr}
@@ -1487,7 +1518,7 @@ figure{margin:0}
 }
 @media (max-height:560px) and (min-aspect-ratio:1/1) and (min-width:901px){
   .hero{--ht:clamp(28px,4.4vw,40px)}
-  .b1-card,.b3-todo,.b4-card{display:none}
+  .b3-todo,.b4-card{display:none}
 }
 
 /* ───── 21 · Reduced motion ───── */
@@ -1495,7 +1526,7 @@ figure{margin:0}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;animation-delay:0s !important;transition-duration:.01ms !important;transition-delay:0s !important}
   .orb,.rd-sweep,.b6-cycle .ic,.b3-path,.ticker-inner{animation:none !important}
-  .js [data-r],.js .hs [data-seq]{opacity:1 !important;transform:none !important}
+  .js [data-r],.js .hs [data-seq],.js .hs .b2-title .wd,.js .loop-steps > span{opacity:1 !important;transform:none !important}
   [data-split] .w i{transform:none !important}
   .viz-toggles i:first-child{background:var(--cyan) !important;border-color:var(--cyan) !important;color:#fff !important}
   .cursor-glow,.b3-dot,.hero-meter .hero-prog{display:none}
