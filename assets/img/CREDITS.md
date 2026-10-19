@@ -72,6 +72,22 @@ git (commit `b4bd89c`); to bring one back: `git checkout b4bd89c -- assets/img/<
 - Earlier-phase cut-outs and copies no longer used: app-phone-760.webp,
   bf-kitchen-760.webp, step-done-760.webp, bn-cost.webp, bn-crisis.webp, bn-time.webp
 
-The client's original files are all kept, including the ones the pages no longer
-use. New web copies: tm-sarah-849.webp (of the current tm-sarah.png) and
-`assets/favicon-96.png` (the logo mark, square, for the browser tab).
+New web copies: tm-sarah-849.webp (of tm-sarah.png) and `assets/favicon-96.png`
+(the logo mark, square, for the browser tab).
+
+## Originals removed (19 October 2026)
+
+The client's full-size originals were removed too, as no page uses them — only
+the web copies above are served. They are still in git (commit `b7b3db5`); to
+bring one back: `git checkout b7b3db5 -- "assets/img/<file>"`.
+
+- The whole `Section 2 Images` folder (WA0007–WA0014)
+- AboutUs.jpg, AboutUs.png, Aboutusehero.png, aboutassection2.png,
+  about-hero-1800.png, about-hero-m.png, about-name-group.png
+- Banner6th.png, BannerSix.jpg, BannerSix.png, banner4-group.png
+- hero-cafe-1800.png, hero-cafe-m.png, hero-instant.png,
+  hero-warehouse-1600.png, hero-warehouse-m.png
+- step-arrive.png, step-done.png, step-hire.png, step-repeat.png
+- bn-cost.jpg, bn-crisis.png, ind-cleaning.jpg, ind-moving.jpg, tm-sarah.png
+
+Only files that a page, stylesheet or script refers to are kept in `assets/`.
