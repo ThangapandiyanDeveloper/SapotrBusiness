@@ -8,7 +8,7 @@
     4 Scroll FX          11 Count-up numbers
     5 Carousel engine    12 Store links + back to top
     6 Hero               13 Micro-interactions
-    7 Testimonials
+    7 Testimonials       14 Image loading states
    ═══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -806,6 +806,18 @@
       el.addEventListener('pointerleave', function () { el.style.transform = ''; });
     });
   }
+
+  /* ───── 14 · Image loading states ─────
+     Each image keeps its loading shimmer (styles.css 20b) until it has
+     loaded; a failed one gets a quiet tint instead. Images that were
+     already in (cached) are marked straight away. Lazy and hidden-slide
+     images are marked whenever they arrive. */
+  $$('main img').forEach(function (img) {
+    function done() { img.classList.add(img.naturalWidth ? 'is-loaded' : 'is-failed'); }
+    if (img.complete && img.getAttribute('src')) { done(); return; }
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', function () { img.classList.add('is-failed'); }, { once: true });
+  });
 
   /* ───── Misc ───── */
   var year = $('#year');
