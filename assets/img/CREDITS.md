@@ -57,3 +57,21 @@ cropped and converted to WebP for this site. Find the original at
 The Pexels License does not allow identifiable people to appear to endorse a
 product. The six `tm-*` portraits sit beside named customer quotes, so replace
 them with the real customers' own photos (with consent) before launch.
+
+## Asset clean-up (19 October 2026)
+
+Removed because no page, stylesheet or script refers to them. Each is still in
+git (commit `b4bd89c`); to bring one back: `git checkout b4bd89c -- assets/img/<file>`.
+
+- Stock photos the pages no longer show: about-hero-1800.webp, about-hero-m.webp,
+  cta-cafe.webp, cta-groceryy.webp, cta-warehouse.webp, hero-cafe-1800.webp,
+  hero-cafe-m.webp, hero-instant.webp, hero-warehouse-1600.webp, hero-warehouse-m.webp,
+  step-done.webp, step-hire.webp, step-repeat.webp, tm-sarah.webp
+- Older web copies replaced by newer ones: about-name-group.webp, banner4-group.webp,
+  ind-cleaning.webp, ind-moving.webp, tm-sarah-800.webp
+- Earlier-phase cut-outs and copies no longer used: app-phone-760.webp,
+  bf-kitchen-760.webp, step-done-760.webp, bn-cost.webp, bn-crisis.webp, bn-time.webp
+
+The client's original files are all kept, including the ones the pages no longer
+use. New web copies: tm-sarah-849.webp (of the current tm-sarah.png) and
+`assets/favicon-96.png` (the logo mark, square, for the browser tab).

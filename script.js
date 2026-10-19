@@ -9,6 +9,7 @@
     5 Carousel engine    12 Store links + back to top
     6 Hero               13 Micro-interactions
     7 Testimonials       14 Image loading states
+                         15 Image fetch order
    ═══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -59,8 +60,12 @@
   var mnav = $('#mobile-nav');
   var NAV_BP = 1100;                      /* keep in step with the burger breakpoint in styles.css */
 
+  /* The header is see-through only while the hero rests at the top. Once the
+     page scrolls, the hero's photos and titles would slide under it, so it
+     takes its solid look straight away, as it does over every other section.
+     (8px: less than the room the hero leaves below the header.) */
   function syncHeader(y) {
-    var overHero = heroEl && (y === undefined ? window.scrollY : y) < heroEl.offsetHeight - 90;
+    var overHero = heroEl && (y === undefined ? window.scrollY : y) < 8;
     header.dataset.mode = (overHero && mnav.hidden) ? 'over' : 'solid';
   }
   onScroll(syncHeader);
@@ -818,6 +823,63 @@
     img.addEventListener('load', done, { once: true });
     img.addEventListener('error', function () { img.classList.add('is-failed'); }, { once: true });
   });
+
+  /* ───── 15 · Image fetch order ─────
+     Two sets of photos sit where the browser's own lazy loading can't see
+     them coming, so they would only start downloading once on show:
+     – the hero's banners 2–6 (lazy, and skipped by styles.css until their
+       turn). They wait until banner 1's photo is in, so it has the line to
+       itself, and are fetched only while the hero is in view: a visitor
+       who scrolls straight down isn't slowed by banners they can't see.
+     – the industry cards waiting outside the rail's window, fetched as
+       the section comes within about two screens (the distance browsers
+       use for lazy images themselves).
+     Each set is fetched in the order it will be shown, two at a time. */
+  function fetchQueue(imgs) {
+    var i = 0, busy = 0, on = false;
+    function done() { busy--; pump(); }
+    function pump() {
+      while (on && busy < 2) {
+        while (i < imgs.length && imgs[i].complete) i++;   /* already in (or failed) */
+        var img = imgs[i++];
+        if (!img) return;
+        busy++;
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+        img.loading = 'eager';
+      }
+    }
+    return function (go) { on = go; pump(); };
+  }
+  var near = 'IntersectionObserver' in window;
+
+  (function heroBanners() {
+    var hero = $('#hero'), first = $('#hs-1 .b1-photo');
+    if (!hero) return;
+    var run = fetchQueue($$('img[loading="lazy"]', hero));
+    var ready = !first || first.complete, seen = true;
+    function sync() { run(ready && seen); }
+    if (!ready) {
+      var go = function () { ready = true; sync(); };
+      first.addEventListener('load', go, { once: true });
+      first.addEventListener('error', go, { once: true });
+    }
+    if (near) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; sync(); }).observe(hero);
+    sync();
+  })();
+
+  (function industryCards() {
+    var vp = $('#ind-vp');
+    if (!vp) return;
+    var run = fetchQueue($$('img[loading="lazy"]', vp));
+    if (!near) { run(true); return; }
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      io.disconnect();
+      run(true);
+    }, { rootMargin: '200% 0px' });
+    io.observe(vp);
+  })();
 
   /* ───── Misc ───── */
   var year = $('#year');
